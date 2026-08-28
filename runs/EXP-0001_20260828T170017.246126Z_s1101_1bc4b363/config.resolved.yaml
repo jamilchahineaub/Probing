@@ -1,0 +1,42 @@
+schema_version: 1
+experiment:
+  id: EXP-0001
+  title: Kelvin-Voigt analytical validation under a bounded smooth ramp
+  stage: A
+  hypothesis: A Kelvin-Voigt evaluator driven by a prescribed smooth ramp will reproduce
+    the analytical force decomposition and mechanical energy balance within configured
+    numerical tolerances while respecting the probe safety bounds.
+  seed_set: development
+  random_seed: 1101
+target:
+  model: kelvin_voigt
+  stiffness_n_per_m: 500.0
+  damping_n_s_per_m: 20.0
+  contact_mode: bilateral
+uav:
+  model: prescribed_indentation_boundary_condition
+  parameters: {}
+  limitation: No UAV dynamics are included in Stage A EXP-0001.
+probe:
+  signal: raised_cosine_ramp
+  amplitude_m: 0.005
+  rise_duration_s: 1.0
+  hold_duration_s: 0.25
+  sample_period_s: 0.001
+estimator:
+  name: none
+  settings: {}
+controller:
+  name: prescribed_trajectory
+  settings:
+    feedback: false
+safety_limits:
+  max_abs_force_n: 3.0
+  max_displacement_m: 0.0051
+  max_abs_velocity_m_per_s: 0.01
+acceptance:
+  max_force_rmse_n: 1.0e-12
+  max_force_error_n: 1.0e-12
+  max_relative_energy_balance_error: 1.0e-05
+  max_displacement_overshoot_m: 1.0e-12
+  require_no_safety_violations: true

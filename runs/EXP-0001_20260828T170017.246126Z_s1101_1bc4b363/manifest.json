@@ -1,0 +1,135 @@
+{
+  "acceptance_checks": {
+    "displacement_bound_respected": true,
+    "energy_balance_within_tolerance": true,
+    "force_max_error_within_tolerance": true,
+    "force_rmse_within_tolerance": true,
+    "safety_limits_respected": true
+  },
+  "calculated_metrics": {
+    "displacement_overshoot_m": 0.0,
+    "dissipated_energy_j": 0.0006168502750680846,
+    "final_energy_balance_error_j": -5.140419804660484e-09,
+    "final_stored_energy_j": 0.00625,
+    "final_work_j": 0.00686684513464828,
+    "force_rmse_n": 0.0,
+    "max_abs_energy_balance_error_j": 5.140419804660484e-09,
+    "max_force_error_n": 0.0,
+    "peak_abs_force_n": 2.5098306749339105,
+    "peak_abs_velocity_m_per_s": 0.007853981633974483,
+    "peak_displacement_m": 0.005,
+    "relative_energy_balance_error": 7.485853698262815e-07,
+    "sample_count": 1251
+  },
+  "completed_timestamp_utc": "2026-08-28T17:00:17.761069+00:00",
+  "configuration": {
+    "acceptance": {
+      "max_displacement_overshoot_m": 1e-12,
+      "max_force_error_n": 1e-12,
+      "max_force_rmse_n": 1e-12,
+      "max_relative_energy_balance_error": 1e-05,
+      "require_no_safety_violations": true
+    },
+    "controller": {
+      "name": "prescribed_trajectory",
+      "settings": {
+        "feedback": false
+      }
+    },
+    "estimator": {
+      "name": "none",
+      "settings": {}
+    },
+    "experiment": {
+      "hypothesis": "A Kelvin-Voigt evaluator driven by a prescribed smooth ramp will reproduce the analytical force decomposition and mechanical energy balance within configured numerical tolerances while respecting the probe safety bounds.",
+      "id": "EXP-0001",
+      "random_seed": 1101,
+      "seed_set": "development",
+      "stage": "A",
+      "title": "Kelvin-Voigt analytical validation under a bounded smooth ramp"
+    },
+    "probe": {
+      "amplitude_m": 0.005,
+      "hold_duration_s": 0.25,
+      "rise_duration_s": 1.0,
+      "sample_period_s": 0.001,
+      "signal": "raised_cosine_ramp"
+    },
+    "safety_limits": {
+      "max_abs_force_n": 3.0,
+      "max_abs_velocity_m_per_s": 0.01,
+      "max_displacement_m": 0.0051
+    },
+    "schema_version": 1,
+    "target": {
+      "contact_mode": "bilateral",
+      "damping_n_s_per_m": 20.0,
+      "model": "kelvin_voigt",
+      "stiffness_n_per_m": 500.0
+    },
+    "uav": {
+      "limitation": "No UAV dynamics are included in Stage A EXP-0001.",
+      "model": "prescribed_indentation_boundary_condition",
+      "parameters": {}
+    }
+  },
+  "controller_settings": {
+    "name": "prescribed_trajectory",
+    "settings": {
+      "feedback": false
+    }
+  },
+  "estimator_settings": {
+    "name": "none",
+    "settings": {}
+  },
+  "experiment_id": "EXP-0001",
+  "files": {
+    "acceptance_checks": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/acceptance_checks.json",
+    "indexed_figure_pdf": "results/figures/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363__kelvin_voigt_validation.pdf",
+    "indexed_figure_png": "results/figures/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363__kelvin_voigt_validation.png",
+    "indexed_metrics_table": "results/tables/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363__metrics.csv",
+    "metrics": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/metrics.json",
+    "raw_csv": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/raw_timeseries.csv",
+    "raw_npz": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/raw_timeseries.npz",
+    "resolved_config": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/config.resolved.yaml",
+    "run_figure_pdf": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/figures/kelvin_voigt_validation.pdf",
+    "run_figure_png": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/figures/kelvin_voigt_validation.png",
+    "safety_events": "runs/EXP-0001_20260828T170017.246126Z_s1101_1bc4b363/safety_events.json"
+  },
+  "git": {
+    "commit_sha": null,
+    "status": "workspace_not_git_root",
+    "top_level": "/home/jimmy"
+  },
+  "git_commit_sha": null,
+  "random_seed": 1101,
+  "run_id": "EXP-0001_20260828T170017.246126Z_s1101_1bc4b363",
+  "safety_violations": [],
+  "schema_version": 1,
+  "seed_set": "development",
+  "software_versions": {
+    "PyYAML": "5.4.1",
+    "matplotlib": "3.5.1",
+    "numpy": "1.26.4",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "pytest": "6.2.5",
+    "python": "3.10.12",
+    "python_implementation": "CPython",
+    "scipy": "1.8.0"
+  },
+  "status": "success",
+  "success": true,
+  "target_model_parameters": {
+    "contact_mode": "bilateral",
+    "damping_n_s_per_m": 20.0,
+    "model": "kelvin_voigt",
+    "stiffness_n_per_m": 500.0
+  },
+  "timestamp_utc": "2026-08-28T17:00:17.246126+00:00",
+  "uav_parameters": {
+    "limitation": "No UAV dynamics are included in Stage A EXP-0001.",
+    "model": "prescribed_indentation_boundary_condition",
+    "parameters": {}
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "displacement_bound_respected": true,
+  "energy_balance_within_tolerance": true,
+  "force_max_error_within_tolerance": true,
+  "force_rmse_within_tolerance": true,
+  "safety_limits_respected": true
+}

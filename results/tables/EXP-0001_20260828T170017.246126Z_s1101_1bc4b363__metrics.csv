@@ -1,0 +1,14 @@
+metric,value
+displacement_overshoot_m,0.0
+dissipated_energy_j,0.0006168502750680846
+final_energy_balance_error_j,-5.140419804660484e-09
+final_stored_energy_j,0.00625
+final_work_j,0.00686684513464828
+force_rmse_n,0.0
+max_abs_energy_balance_error_j,5.140419804660484e-09
+max_force_error_n,0.0
+peak_abs_force_n,2.5098306749339105
+peak_abs_velocity_m_per_s,0.007853981633974483
+peak_displacement_m,0.005
+relative_energy_balance_error,7.485853698262815e-07
+sample_count,1251
