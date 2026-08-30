@@ -23,6 +23,7 @@ from .decision_sufficiency import (
 )
 from .passive_ringdown import PassiveRingdownResult, run_passive_ringdown
 from .locked_policy_replication import LockedReplicationResult, run_locked_policy_replication
+from .coupled_uav_contact import build_vehicle, no_contact_validation, simulate_no_contact
 
 __all__ = [
     "MilestoneAExperimentResult",
@@ -38,4 +39,7 @@ __all__ = [
     "run_decision_sufficiency",
     "PassiveRingdownResult",
     "run_passive_ringdown",
+    "build_vehicle",
+    "no_contact_validation",
+    "simulate_no_contact",
 ]
