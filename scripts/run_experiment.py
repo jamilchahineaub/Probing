@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 from datetime import datetime, timezone
+import gzip
 import importlib.metadata
 import json
 import os
@@ -21,8 +22,12 @@ from typing import Any, Mapping
 import numpy as np
 import yaml
 
+from probeing.experiments import run_interaction_identification
 from probeing.experiments.reduced_kelvin_voigt import run_kelvin_voigt_validation
-from probeing.plotting import plot_kelvin_voigt_validation
+from probeing.plotting import (
+    plot_interaction_identification,
+    plot_kelvin_voigt_validation,
+)
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +46,15 @@ def _write_json(path: Path, value: Any) -> None:
     with path.open("x", encoding="utf-8") as stream:
         json.dump(value, stream, indent=2, sort_keys=True)
         stream.write("\n")
+
+
+def _artifact_reference(path: Path) -> str:
+    """Prefer repository-relative paths while supporting external smoke roots."""
+
+    try:
+        return str(path.relative_to(REPOSITORY_ROOT))
+    except ValueError:
+        return str(path)
 
 
 def _git_provenance(repository_root: Path) -> Mapping[str, Any]:
@@ -81,7 +95,30 @@ def _git_provenance(repository_root: Path) -> Mapping[str, Any]:
             "status": "git_repository_has_no_commit",
             "top_level": top_level,
         }
-    return {"commit_sha": commit, "status": "available", "top_level": top_level}
+    try:
+        worktree_status = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(repository_root),
+                "status",
+                "--porcelain=v1",
+                "--untracked-files=all",
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        ).stdout.splitlines()
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        worktree_status = ["status unavailable"]
+    return {
+        "commit_sha": commit,
+        "status": "available",
+        "top_level": top_level,
+        "worktree_dirty": bool(worktree_status),
+        "worktree_status": worktree_status,
+    }
 
 
 def _software_versions() -> Mapping[str, str]:
@@ -104,10 +141,24 @@ def _write_raw_csv(path: Path, raw: Mapping[str, np.ndarray]) -> None:
     lengths = {len(raw[name]) for name in names}
     if len(lengths) != 1:
         raise ValueError("raw output columns must have equal length")
-    with path.open("x", encoding="utf-8", newline="") as stream:
+    open_stream = gzip.open if path.suffix == ".gz" else Path.open
+    mode = "xt" if path.suffix == ".gz" else "x"
+    with open_stream(path, mode, encoding="utf-8", newline="") as stream:
         writer = csv.writer(stream)
         writer.writerow(names)
         writer.writerows(zip(*(raw[name] for name in names)))
+
+
+def _write_row_table(path: Path, rows: tuple[Mapping[str, Any], ...]) -> None:
+    if not rows:
+        raise ValueError("row table cannot be empty")
+    names = list(rows[0])
+    if any(list(row) != names for row in rows):
+        raise ValueError("all table rows must have the same ordered fields")
+    with path.open("x", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=names)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def _write_metric_table(path: Path, metrics: Mapping[str, float | int]) -> None:
@@ -153,10 +204,14 @@ def run(config_path: Path, runs_root: Path, results_root: Path) -> tuple[str, bo
         "git": git,
         "software_versions": _software_versions(),
         "configuration": config,
-        "target_model_parameters": config["target"],
-        "uav_parameters": config["uav"],
-        "estimator_settings": config["estimator"],
-        "controller_settings": config["controller"],
+        "target_model_parameters": config.get("targets", config.get("target")),
+        "uav_parameters": config.get(
+            "uav", {"status": "excluded from Milestone A"}
+        ),
+        "estimator_settings": config.get("estimators", config.get("estimator")),
+        "controller_settings": config.get(
+            "controller", {"status": "excluded from Milestone A"}
+        ),
         "files": {},
     }
     _write_json(manifest_path, manifest)
@@ -166,8 +221,13 @@ def run(config_path: Path, runs_root: Path, results_root: Path) -> tuple[str, bo
         with config_output.open("x", encoding="utf-8") as stream:
             yaml.safe_dump(config, stream, sort_keys=False)
 
-        result = run_kelvin_voigt_validation(config)
-        raw_csv = run_directory / "raw_timeseries.csv"
+        milestone_a_identification = "targets" in config
+        result = (
+            run_interaction_identification(config)
+            if milestone_a_identification
+            else run_kelvin_voigt_validation(config)
+        )
+        raw_csv = run_directory / "raw_timeseries.csv.gz"
         _write_raw_csv(raw_csv, result.raw)
         raw_npz = run_directory / "raw_timeseries.npz"
         with raw_npz.open("xb") as stream:
@@ -180,26 +240,75 @@ def run(config_path: Path, runs_root: Path, results_root: Path) -> tuple[str, bo
         _write_json(safety_path, list(result.safety_events))
         _write_json(acceptance_path, result.acceptance_checks)
 
-        figure_base = run_directory / "figures" / "kelvin_voigt_validation"
-        figure_png, figure_pdf = plot_kelvin_voigt_validation(
-            raw=result.raw,
-            stiffness_n_per_m=float(config["target"]["stiffness_n_per_m"]),
-            damping_n_s_per_m=float(config["target"]["damping_n_s_per_m"]),
-            output_base=figure_base,
-        )
-
         results_figure_dir = results_root / "figures"
         results_table_dir = results_root / "tables"
         results_figure_dir.mkdir(parents=True, exist_ok=True)
         results_table_dir.mkdir(parents=True, exist_ok=True)
-        indexed_png = results_figure_dir / f"{run_id}__kelvin_voigt_validation.png"
-        indexed_pdf = results_figure_dir / f"{run_id}__kelvin_voigt_validation.pdf"
         indexed_table = results_table_dir / f"{run_id}__metrics.csv"
-        for path in (indexed_png, indexed_pdf, indexed_table):
-            if path.exists():
-                raise FileExistsError(f"refusing to overwrite indexed result {path}")
-        shutil.copy2(figure_png, indexed_png)
-        shutil.copy2(figure_pdf, indexed_pdf)
+        figure_files: dict[str, str] = {}
+        indexed_figure_files: dict[str, str] = {}
+
+        if milestone_a_identification:
+            case_table = run_directory / "case_metrics.csv"
+            _write_row_table(case_table, result.case_metrics)
+            indexed_case_table = results_table_dir / f"{run_id}__case_metrics.csv"
+            if indexed_case_table.exists():
+                raise FileExistsError(
+                    f"refusing to overwrite indexed result {indexed_case_table}"
+                )
+            shutil.copy2(case_table, indexed_case_table)
+            figures = plot_interaction_identification(
+                raw=result.raw,
+                case_metrics=result.case_metrics,
+                representative_case_id=result.representative_case_id,
+                output_directory=run_directory / "figures",
+            )
+            for figure_name, (figure_png, figure_pdf) in figures.items():
+                figure_files[f"run_figure_{figure_name}_png"] = _artifact_reference(
+                    figure_png
+                )
+                figure_files[f"run_figure_{figure_name}_pdf"] = _artifact_reference(
+                    figure_pdf
+                )
+                indexed_png = results_figure_dir / f"{run_id}__{figure_name}.png"
+                indexed_pdf = results_figure_dir / f"{run_id}__{figure_name}.pdf"
+                for path in (indexed_png, indexed_pdf):
+                    if path.exists():
+                        raise FileExistsError(f"refusing to overwrite indexed result {path}")
+                shutil.copy2(figure_png, indexed_png)
+                shutil.copy2(figure_pdf, indexed_pdf)
+                indexed_figure_files[
+                    f"indexed_figure_{figure_name}_png"
+                ] = _artifact_reference(indexed_png)
+                indexed_figure_files[
+                    f"indexed_figure_{figure_name}_pdf"
+                ] = _artifact_reference(indexed_pdf)
+        else:
+            figure_base = run_directory / "figures" / "kelvin_voigt_validation"
+            figure_png, figure_pdf = plot_kelvin_voigt_validation(
+                raw=result.raw,
+                stiffness_n_per_m=float(config["target"]["stiffness_n_per_m"]),
+                damping_n_s_per_m=float(config["target"]["damping_n_s_per_m"]),
+                output_base=figure_base,
+            )
+            indexed_png = results_figure_dir / f"{run_id}__kelvin_voigt_validation.png"
+            indexed_pdf = results_figure_dir / f"{run_id}__kelvin_voigt_validation.pdf"
+            for path in (indexed_png, indexed_pdf):
+                if path.exists():
+                    raise FileExistsError(f"refusing to overwrite indexed result {path}")
+            shutil.copy2(figure_png, indexed_png)
+            shutil.copy2(figure_pdf, indexed_pdf)
+            figure_files = {
+                "run_figure_png": _artifact_reference(figure_png),
+                "run_figure_pdf": _artifact_reference(figure_pdf),
+            }
+            indexed_figure_files = {
+                "indexed_figure_png": _artifact_reference(indexed_png),
+                "indexed_figure_pdf": _artifact_reference(indexed_pdf),
+            }
+
+        if indexed_table.exists():
+            raise FileExistsError(f"refusing to overwrite indexed result {indexed_table}")
         _write_metric_table(indexed_table, result.metrics)
 
         manifest["status"] = "success" if result.success else "failed_acceptance"
@@ -209,17 +318,23 @@ def run(config_path: Path, runs_root: Path, results_root: Path) -> tuple[str, bo
         manifest["safety_violations"] = list(result.safety_events)
         manifest["acceptance_checks"] = result.acceptance_checks
         manifest["files"] = {
-            "resolved_config": str(config_output.relative_to(REPOSITORY_ROOT)),
-            "raw_csv": str(raw_csv.relative_to(REPOSITORY_ROOT)),
-            "raw_npz": str(raw_npz.relative_to(REPOSITORY_ROOT)),
-            "metrics": str(metrics_path.relative_to(REPOSITORY_ROOT)),
-            "safety_events": str(safety_path.relative_to(REPOSITORY_ROOT)),
-            "acceptance_checks": str(acceptance_path.relative_to(REPOSITORY_ROOT)),
-            "run_figure_png": str(figure_png.relative_to(REPOSITORY_ROOT)),
-            "run_figure_pdf": str(figure_pdf.relative_to(REPOSITORY_ROOT)),
-            "indexed_figure_png": str(indexed_png.relative_to(REPOSITORY_ROOT)),
-            "indexed_figure_pdf": str(indexed_pdf.relative_to(REPOSITORY_ROOT)),
-            "indexed_metrics_table": str(indexed_table.relative_to(REPOSITORY_ROOT)),
+            "resolved_config": _artifact_reference(config_output),
+            "raw_csv": _artifact_reference(raw_csv),
+            "raw_npz": _artifact_reference(raw_npz),
+            "metrics": _artifact_reference(metrics_path),
+            "safety_events": _artifact_reference(safety_path),
+            "acceptance_checks": _artifact_reference(acceptance_path),
+            "indexed_metrics_table": _artifact_reference(indexed_table),
+            **(
+                {
+                    "case_metrics": _artifact_reference(case_table),
+                    "indexed_case_metrics": _artifact_reference(indexed_case_table),
+                }
+                if milestone_a_identification
+                else {}
+            ),
+            **figure_files,
+            **indexed_figure_files,
         }
     except Exception as error:
         manifest["status"] = "execution_error"
@@ -260,4 +375,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

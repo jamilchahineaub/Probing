@@ -1,0 +1,843 @@
+{
+  "acceptance_checks": {
+    "adaptive_selection_does_not_receive_truth": true,
+    "all_requested_strategies_present": true,
+    "force_dose_budget_respected": true,
+    "maximum_probe_count_respected": true,
+    "minimum_monte_carlo_seeds": true,
+    "no_safety_events": true,
+    "representative_raw_present": true,
+    "unique_validation_seeds": true
+  },
+  "calculated_metrics": {
+    "adaptive_full_vector_success_probability": 0.65,
+    "adaptive_median_absolute_input_energy_j": 0.032363389083414594,
+    "adaptive_median_duration_s": 7.5,
+    "adaptive_median_force_squared_dose_n2_s": 3.1491697671987864,
+    "adaptive_median_probe_count": 2.5,
+    "full_vector_success_improvement": -0.15833333333333333,
+    "matched_fixed_full_vector_success_probability": 0.8083333333333333,
+    "matched_force_dose_relative_difference": 0.05982560165433148,
+    "probe_execution_count": 1219,
+    "safety_event_count": 0,
+    "selection_candidate_evaluation_count": 973,
+    "sequential_improvement_is_significant": false,
+    "stage1_gate_pass": false,
+    "trial_sequence_count": 600,
+    "utility_spearman": -0.47831002278922197,
+    "validation_seed_count": 20
+  },
+  "completed_timestamp_utc": "2026-08-28T23:28:22.641113+00:00",
+  "configuration": {
+    "accuracy_thresholds": {
+      "damping": 0.3,
+      "effective_mass": 0.3,
+      "stiffness": 0.2
+    },
+    "disturbance_budget": {
+      "maximum_absolute_impulse_n_s": 5.0,
+      "maximum_absolute_input_energy_j": 0.25,
+      "maximum_command_force_squared_dose_n2_s": 4.55,
+      "maximum_duration_s": 9.0,
+      "maximum_probe_count": 3,
+      "prediction_normalizers": {
+        "absolute_input_energy_j": 0.05,
+        "force_squared_dose_n2_s": 1.5,
+        "peak_target_acceleration_m_per_s2": 15.0,
+        "peak_target_displacement_m": 0.025
+      }
+    },
+    "estimation": {
+      "iv_input_delays_s": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1
+      ],
+      "jackknife_blocks": 6,
+      "note": "TLS on alpha-beta-gamma kinematics supplies k, OLS on causal-low-pass kinematics supplies c, and IV on causal-low-pass kinematics supplies m_eff. This transparent parameter-specific EIV baseline follows EXP-0003's estimator evidence and was fixed before validation; no internally consistent joint-estimator claim is made.",
+      "predictive_parameter_bounds": {
+        "damping_n_s_per_m": [
+          0.1,
+          100.0
+        ],
+        "effective_mass_kg": [
+          0.05,
+          10.0
+        ],
+        "stiffness_n_per_m": [
+          25.0,
+          4000.0
+        ]
+      },
+      "primary": "parameter_specific_tls_k_ols_c_iv_mass",
+      "selection_covariance": "block_jackknife_plus_analytic_ols",
+      "uncertainty_scale_floors": [
+        25.0,
+        0.25,
+        0.05
+      ]
+    },
+    "experiment": {
+      "id": "EXP-0004",
+      "scientific_question": "Can sequential, uncertainty-driven probing identify the complete target dynamics more reliably than a single fixed probe while respecting the same physical disturbance limits?",
+      "seed_set": "validation",
+      "stage": 1,
+      "title": "Stage 1 sequential uncertainty-driven probing"
+    },
+    "frozen_references": {
+      "exp_0001": {
+        "expected_artifact_fingerprint": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39"
+      },
+      "exp_0002": {
+        "expected_artifact_fingerprint": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc",
+        "run_id": "EXP-0002_20260828T212540.955871Z_s2101_e8713743"
+      },
+      "exp_0003": {
+        "expected_artifact_fingerprint": "067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8",
+        "run_id": "EXP-0003_20260828T225126.077199Z_s3101_b2da5c53"
+      }
+    },
+    "integrity_acceptance": {
+      "forbidden_validation_seeds_before_final_run": [
+        4101,
+        4102,
+        4103,
+        4104,
+        4105,
+        4106,
+        4107,
+        4108,
+        4109,
+        4110,
+        4111,
+        4112,
+        4113,
+        4114,
+        4115,
+        4116,
+        4117,
+        4118,
+        4119,
+        4120
+      ],
+      "minimum_monte_carlo_seeds": 20
+    },
+    "kill_criterion": {
+      "matched_force_dose_relative_tolerance": 0.2,
+      "minimum_full_vector_success_improvement": 0.1,
+      "require_non_worse_worst_target_p95": true,
+      "rule": "Stop pursuing active identification of all three physical parameters if the adaptive strategy does not improve full-vector success by at least ten percentage points over the best matched-dose fixed multi-probe strategy without worsening worst-target p95 error."
+    },
+    "probe_library": {
+      "amplitude_n": 1.0,
+      "amplitude_policy": "Fixed at 1 N for every candidate and every target.",
+      "candidates": [
+        {
+          "end_frequency_hz": 2.0,
+          "name": "low_chirp",
+          "start_frequency_hz": 0.25,
+          "type": "chirp"
+        },
+        {
+          "end_frequency_hz": 5.0,
+          "name": "low_mid_chirp",
+          "start_frequency_hz": 0.5,
+          "type": "chirp"
+        },
+        {
+          "end_frequency_hz": 15.0,
+          "name": "high_chirp",
+          "start_frequency_hz": 5.0,
+          "type": "chirp"
+        },
+        {
+          "end_frequency_hz": 15.0,
+          "name": "wide_chirp",
+          "start_frequency_hz": 0.5,
+          "type": "chirp"
+        },
+        {
+          "frequencies_hz": [
+            0.25,
+            0.75,
+            1.5,
+            2.0
+          ],
+          "name": "low_multisine",
+          "phases_rad": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "type": "multisine"
+        },
+        {
+          "frequencies_hz": [
+            0.5,
+            2.0,
+            5.0,
+            10.0
+          ],
+          "name": "broad_multisine",
+          "phases_rad": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "type": "multisine"
+        },
+        {
+          "frequencies_hz": [
+            4.0,
+            7.0,
+            10.0,
+            14.0
+          ],
+          "name": "high_multisine",
+          "phases_rad": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "type": "multisine"
+        }
+      ]
+    },
+    "representative_raw": {
+      "seed": 4101,
+      "strategy": "uncertainty_driven",
+      "target": "high_effective_mass"
+    },
+    "safety_limits": {
+      "max_peak_force_n": 1.000000000001,
+      "max_peak_target_acceleration_m_per_s2": 15.0,
+      "max_peak_target_displacement_m": 0.025,
+      "max_peak_target_velocity_m_per_s": 0.5
+    },
+    "schema_version": 1,
+    "scope_exclusions": [
+      "MATLAB",
+      "Simulink",
+      "EKF",
+      "UAV dynamics",
+      "Gazebo",
+      "PX4",
+      "ROS 2",
+      "MPC",
+      "Isaac Sim"
+    ],
+    "selection": {
+      "candidate_prediction": "Simulate each discrete candidate with the current clipped parameter estimate; ground truth is never supplied to selection.",
+      "minimum_expected_weak_parameter_variance_reduction": 0.02,
+      "relative_standard_error_thresholds": [
+        0.15,
+        0.25,
+        0.25
+      ],
+      "score": "Predicted weak-parameter variance reduction, with normalized disturbance as a tie-break and an explicit hard constraint.",
+      "stopping_conditions": [
+        "all relative standard errors meet thresholds",
+        "best expected weak-parameter variance reduction is below 0.02",
+        "cumulative disturbance budget would be exceeded",
+        "maximum probe count is reached"
+      ]
+    },
+    "sensing": {
+      "analysis_trim_s": 0.15,
+      "noise": {
+        "acceleration_std_m_per_s2": 0.1,
+        "displacement_std_m": 5e-05,
+        "force_std_n": 0.02,
+        "velocity_std_m_per_s": 0.002
+      },
+      "parameter_pipelines": {
+        "damping": "causal_low_pass",
+        "effective_mass": "causal_low_pass",
+        "stiffness": "alpha_beta_gamma"
+      },
+      "pipeline": "causal_low_pass",
+      "pipeline_settings": {
+        "low_pass_cutoff_hz": 10.0,
+        "observer_alpha": 0.4,
+        "observer_beta": 0.08,
+        "observer_force_cutoff_hz": 10.0,
+        "observer_gamma": 0.008,
+        "polynomial_order": 3,
+        "polynomial_window_duration_s": 0.11
+      },
+      "policy": "One predeclared synchronized causal pipeline per parameter, with common settings for every target and probe. The parameter-specific choices come from EXP-0003 and are not target-tuned.",
+      "sample_rate_hz": 200.0,
+      "timestamp_offsets_s": {
+        "acceleration": 0.0,
+        "displacement": 0.0,
+        "force": 0.0,
+        "velocity": 0.0
+      }
+    },
+    "simulation": {
+      "carry_state_between_probes": true,
+      "contact_mode": "unilateral",
+      "equation": "F_contact = m_eff*x_ddot + c*x_dot + k*x",
+      "integrator": "rk4",
+      "model": "one_dimensional_mass_spring_damper",
+      "probe_duration_s": 3.0,
+      "sample_period_s": 0.002
+    },
+    "stage1_gate": {
+      "minimum_full_vector_success_probability": 0.8,
+      "require_each_target_p95_below_parameter_threshold": true,
+      "require_no_safety_events": true,
+      "rule": "MATLAB/Simulink validation is allowed only if one causal bounded sequential strategy meets all parameter tail limits for all targets and succeeds on at least 80% of held-out trials without a safety violation."
+    },
+    "strategies": [
+      {
+        "mode": "fixed",
+        "name": "single_fixed_chirp",
+        "sequence": [
+          "low_mid_chirp"
+        ]
+      },
+      {
+        "mode": "fixed",
+        "name": "single_multisine",
+        "sequence": [
+          "broad_multisine"
+        ]
+      },
+      {
+        "mode": "fixed",
+        "name": "repeated_identical_chirp",
+        "sequence": [
+          "low_mid_chirp",
+          "low_mid_chirp",
+          "low_mid_chirp"
+        ]
+      },
+      {
+        "mode": "fixed",
+        "name": "predefined_multistage",
+        "sequence": [
+          "low_chirp",
+          "low_mid_chirp",
+          "high_chirp"
+        ]
+      },
+      {
+        "candidate_names": [
+          "low_chirp",
+          "low_mid_chirp",
+          "high_chirp",
+          "wide_chirp",
+          "low_multisine",
+          "broad_multisine",
+          "high_multisine"
+        ],
+        "initial_probe": "low_mid_chirp",
+        "mode": "adaptive",
+        "name": "uncertainty_driven"
+      }
+    ],
+    "targets": [
+      {
+        "damping_n_s_per_m": 20.0,
+        "effective_mass_kg": 1.0,
+        "name": "rigid_high_stiffness",
+        "stiffness_n_per_m": 2000.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 1.0,
+        "name": "compliant",
+        "stiffness_n_per_m": 100.0
+      },
+      {
+        "damping_n_s_per_m": 0.5,
+        "effective_mass_kg": 1.0,
+        "name": "lightly_damped_flexible",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 50.0,
+        "effective_mass_kg": 1.0,
+        "name": "high_damping",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 0.1,
+        "name": "low_effective_mass",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 5.0,
+        "name": "high_effective_mass",
+        "stiffness_n_per_m": 300.0
+      }
+    ],
+    "validation_seeds": [
+      4101,
+      4102,
+      4103,
+      4104,
+      4105,
+      4106,
+      4107,
+      4108,
+      4109,
+      4110,
+      4111,
+      4112,
+      4113,
+      4114,
+      4115,
+      4116,
+      4117,
+      4118,
+      4119,
+      4120
+    ]
+  },
+  "experiment_id": "EXP-0004",
+  "files": {
+    "acceptance_checks": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/acceptance_checks.json",
+    "frequency_information": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/frequency_information.csv",
+    "indexed_figure_cumulative_energy_vs_accuracy_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__cumulative_energy_vs_accuracy.pdf",
+    "indexed_figure_cumulative_energy_vs_accuracy_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__cumulative_energy_vs_accuracy.png",
+    "indexed_figure_fixed_vs_adaptive_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__fixed_vs_adaptive.pdf",
+    "indexed_figure_fixed_vs_adaptive_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__fixed_vs_adaptive.png",
+    "indexed_figure_information_vs_disturbance_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__information_vs_disturbance.pdf",
+    "indexed_figure_information_vs_disturbance_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__information_vs_disturbance.png",
+    "indexed_figure_parameter_error_after_each_probe_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__parameter_error_after_each_probe.pdf",
+    "indexed_figure_parameter_error_after_each_probe_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__parameter_error_after_each_probe.png",
+    "indexed_figure_parameter_information_by_probe_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__parameter_information_by_probe.pdf",
+    "indexed_figure_parameter_information_by_probe_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__parameter_information_by_probe.png",
+    "indexed_figure_second_probe_resolution_examples_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__second_probe_resolution_examples.pdf",
+    "indexed_figure_second_probe_resolution_examples_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__second_probe_resolution_examples.png",
+    "indexed_figure_selected_probe_sequence_by_target_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__selected_probe_sequence_by_target.pdf",
+    "indexed_figure_selected_probe_sequence_by_target_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__selected_probe_sequence_by_target.png",
+    "indexed_figure_success_rate_vs_probe_count_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__success_rate_vs_probe_count.pdf",
+    "indexed_figure_success_rate_vs_probe_count_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__success_rate_vs_probe_count.png",
+    "indexed_figure_uncertainty_after_each_probe_pdf": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__uncertainty_after_each_probe.pdf",
+    "indexed_figure_uncertainty_after_each_probe_png": "results/figures/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__uncertainty_after_each_probe.png",
+    "indexed_frequency_information": "results/tables/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__frequency_information.csv",
+    "indexed_metrics": "results/tables/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__metrics.csv",
+    "indexed_stage_aggregate": "results/tables/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__stage_aggregate.csv",
+    "indexed_strategy_summary": "results/tables/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2__strategy_summary.csv",
+    "metrics": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/metrics.json",
+    "probe_trials_csv": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/probe_trials.csv.gz",
+    "probe_trials_npz": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/probe_trials.npz",
+    "representative_csv": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/representative_timeseries.csv.gz",
+    "representative_npz": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/representative_timeseries.npz",
+    "resolved_config": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/config.resolved.yaml",
+    "run_figure_cumulative_energy_vs_accuracy_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/cumulative_energy_vs_accuracy.pdf",
+    "run_figure_cumulative_energy_vs_accuracy_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/cumulative_energy_vs_accuracy.png",
+    "run_figure_fixed_vs_adaptive_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/fixed_vs_adaptive.pdf",
+    "run_figure_fixed_vs_adaptive_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/fixed_vs_adaptive.png",
+    "run_figure_information_vs_disturbance_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/information_vs_disturbance.pdf",
+    "run_figure_information_vs_disturbance_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/information_vs_disturbance.png",
+    "run_figure_parameter_error_after_each_probe_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/parameter_error_after_each_probe.pdf",
+    "run_figure_parameter_error_after_each_probe_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/parameter_error_after_each_probe.png",
+    "run_figure_parameter_information_by_probe_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/parameter_information_by_probe.pdf",
+    "run_figure_parameter_information_by_probe_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/parameter_information_by_probe.png",
+    "run_figure_second_probe_resolution_examples_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/second_probe_resolution_examples.pdf",
+    "run_figure_second_probe_resolution_examples_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/second_probe_resolution_examples.png",
+    "run_figure_selected_probe_sequence_by_target_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/selected_probe_sequence_by_target.pdf",
+    "run_figure_selected_probe_sequence_by_target_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/selected_probe_sequence_by_target.png",
+    "run_figure_success_rate_vs_probe_count_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/success_rate_vs_probe_count.pdf",
+    "run_figure_success_rate_vs_probe_count_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/success_rate_vs_probe_count.png",
+    "run_figure_uncertainty_after_each_probe_pdf": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/uncertainty_after_each_probe.pdf",
+    "run_figure_uncertainty_after_each_probe_png": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/figures/uncertainty_after_each_probe.png",
+    "safety_events": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/safety_events.json",
+    "selection_candidates_csv": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/selection_candidates.csv.gz",
+    "selection_candidates_npz": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/selection_candidates.npz",
+    "stage1_decision": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/stage1_decision.json",
+    "stage_aggregate": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/stage_aggregate.csv",
+    "strategy_summary": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/strategy_summary.csv",
+    "summary": "runs/EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2/summary.json"
+  },
+  "git": {
+    "commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+    "status": "available",
+    "top_level": "/home/jimmy/Desktop/Drones/Probeing",
+    "worktree_dirty": true,
+    "worktree_status": [
+      " M ACHIEVEMENTS.md",
+      " M DECISIONS.md",
+      " M EXPERIMENTS.md",
+      " M PROJECT_STATE.md",
+      " M README_DEV.md",
+      " M configs/README.md",
+      " M configs/experiments/exp_0001_kelvin_voigt_validation.yaml",
+      " M lab/daily/2026-08-28.md",
+      " M lab/experiments/EXP-0001.md",
+      " M runs/README.md",
+      " M scripts/run_experiment.py",
+      " M src/probeing/estimators/__init__.py",
+      " M src/probeing/experiments/__init__.py",
+      " M src/probeing/metrics/__init__.py",
+      " M src/probeing/models/__init__.py",
+      " M src/probeing/plotting/__init__.py",
+      " M src/probeing/probing/__init__.py",
+      " M src/probeing/probing/signals.py",
+      "?? configs/experiments/exp_0001_interaction_identification.yaml",
+      "?? configs/experiments/exp_0002_practical_identifiability.yaml",
+      "?? configs/experiments/exp_0003_causal_eiv_identifiability.yaml",
+      "?? configs/experiments/exp_0004_sequential_active_identification.yaml",
+      "?? lab/daily/2026-08-29.md",
+      "?? lab/experiments/EXP-0002.md",
+      "?? lab/experiments/EXP-0003.md",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__contact_mode_comparison.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__contact_mode_comparison.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__errors_in_variables.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__errors_in_variables.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__failure_heatmap.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__failure_heatmap.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__information_disturbance.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__information_disturbance.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__noise_and_sampling.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__noise_and_sampling.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__observability_by_probe.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__observability_by_probe.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__pipeline_and_parameter_errors.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__pipeline_and_parameter_errors.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__ramp_failure_analysis.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__ramp_failure_analysis.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__representative_signals.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__representative_signals.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__sensorless_force_exploratory.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__sensorless_force_exploratory.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__causal_filter_tradeoff.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__causal_filter_tradeoff.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__estimator_comparison.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__estimator_comparison.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__frequency_band_errors.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__frequency_band_errors.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__information_disturbance_pareto.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__information_disturbance_pareto.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__mass_vs_acceleration_strength.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__mass_vs_acceleration_strength.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameterization_comparison.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameterization_comparison.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__regressor_geometry.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__regressor_geometry.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__representative_causal_signals.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__representative_causal_signals.png",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_bias.pdf",
+      "?? results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_bias.png",
+      "?? results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__case_metrics.csv",
+      "?? results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__metrics.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__aggregate_metrics.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__go_no_go_candidates.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__metrics.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__identification_aggregate.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__metrics.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameter_classifications.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_aggregate.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_profile_aggregate.csv",
+      "?? results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_thresholds.csv",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/acceptance_checks.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/case_metrics.csv",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/config.resolved.yaml",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/manifest.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/metrics.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.csv.gz",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.npz",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/safety_events.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/acceptance_checks.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/aggregate_metrics.csv",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/config.resolved.yaml",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_contact_mode_comparison.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_contact_mode_comparison.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_errors_in_variables.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_errors_in_variables.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_failure_heatmap.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_failure_heatmap.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_information_disturbance.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_information_disturbance.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_noise_and_sampling.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_noise_and_sampling.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_observability_by_probe.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_observability_by_probe.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_pipeline_and_parameter_errors.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_pipeline_and_parameter_errors.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_ramp_failure_analysis.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_ramp_failure_analysis.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_representative_signals.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_representative_signals.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_sensorless_force_exploratory.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_sensorless_force_exploratory.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/go_no_go_candidates.csv",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/manifest.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/metrics.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/monte_carlo_trials.csv.gz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/monte_carlo_trials.npz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/ramp_failure_analysis.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/representative_timeseries.csv.gz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/representative_timeseries.npz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/safety_events.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/stage1_decision.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/acceptance_checks.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/config.resolved.yaml",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_causal_filter_tradeoff.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_causal_filter_tradeoff.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_estimator_comparison.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_estimator_comparison.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_frequency_band_errors.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_frequency_band_errors.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_information_disturbance_pareto.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_information_disturbance_pareto.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_mass_vs_acceleration_strength.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_mass_vs_acceleration_strength.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_parameterization_comparison.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_parameterization_comparison.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_regressor_geometry.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_regressor_geometry.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_representative_causal_signals.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_representative_causal_signals.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_timing_bias.pdf",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_timing_bias.png",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_aggregate.csv",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_trials.csv.gz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_trials.npz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/manifest.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/metrics.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/parameter_classifications.csv",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/representative_timeseries.csv.gz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/representative_timeseries.npz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/safety_events.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/stage1_decision.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/summary.json",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_aggregate.csv",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_profile_aggregate.csv",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_profile_trials.csv.gz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_thresholds.csv",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_trials.csv.gz",
+      "?? runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_trials.npz",
+      "?? scripts/run_exp_0002.py",
+      "?? scripts/run_exp_0003.py",
+      "?? scripts/run_exp_0004.py",
+      "?? src/probeing/estimators/eiv.py",
+      "?? src/probeing/estimators/linear.py",
+      "?? src/probeing/experiments/causal_eiv_identifiability.py",
+      "?? src/probeing/experiments/interaction_identification.py",
+      "?? src/probeing/experiments/practical_identifiability.py",
+      "?? src/probeing/experiments/sequential_identification.py",
+      "?? src/probeing/measurements/__init__.py",
+      "?? src/probeing/measurements/causal.py",
+      "?? src/probeing/measurements/practical.py",
+      "?? src/probeing/measurements/synthetic.py",
+      "?? src/probeing/metrics/practical_identifiability.py",
+      "?? src/probeing/models/contact.py",
+      "?? src/probeing/models/mass_spring_damper.py",
+      "?? src/probeing/plotting/causal_eiv_identifiability.py",
+      "?? src/probeing/plotting/interaction_identification.py",
+      "?? src/probeing/plotting/practical_identifiability.py",
+      "?? src/probeing/plotting/sequential_identification.py",
+      "?? tests/test_causal_eiv_identifiability.py",
+      "?? tests/test_contact_and_practical_sensing.py",
+      "?? tests/test_force_probes.py",
+      "?? tests/test_mass_spring_damper.py",
+      "?? tests/test_measurements_and_estimators.py",
+      "?? tests/test_milestone_a_experiment.py",
+      "?? tests/test_sequential_identification.py"
+    ]
+  },
+  "git_commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+  "predecessor_fingerprints_after": {
+    "EXP-0001": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39",
+    "EXP-0002": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc",
+    "EXP-0003": "067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8"
+  },
+  "predecessor_fingerprints_before": {
+    "EXP-0001": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39",
+    "EXP-0002": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc",
+    "EXP-0003": "067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8"
+  },
+  "run_id": "EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2",
+  "safety_violations": [],
+  "schema_version": 1,
+  "scientific_summary": {
+    "adaptive_non_worse_worst_target_p95": false,
+    "adaptive_strategy": {
+      "damping_p95_abs_relative_error": 0.510516782295226,
+      "damping_relative_bias": -0.18568248086232378,
+      "damping_relative_rmse": 0.2837952051789508,
+      "damping_threshold_success_probability": 0.6666666666666666,
+      "damping_worst_target_p95_abs_relative_error": 0.5682849360700412,
+      "effective_mass_p95_abs_relative_error": 0.22037890124535955,
+      "effective_mass_relative_bias": 0.08689265950566624,
+      "effective_mass_relative_rmse": 0.13542707580282215,
+      "effective_mass_threshold_success_probability": 0.9833333333333333,
+      "effective_mass_worst_target_p95_abs_relative_error": 0.30353142613196105,
+      "full_vector_success_probability": 0.65,
+      "maximum_peak_force_n": 1.0,
+      "maximum_peak_target_acceleration_m_per_s2": 5.322724284692054,
+      "maximum_peak_target_displacement_m": 0.01567936727940557,
+      "maximum_peak_target_velocity_m_per_s": 0.2706930536403658,
+      "median_absolute_impulse_n_s": 2.367174914979904,
+      "median_absolute_input_energy_j": 0.032363389083414594,
+      "median_duration_s": 7.5,
+      "median_force_squared_dose_n2_s": 3.1491697671987864,
+      "median_information_per_force_dose": 5.480127017445153,
+      "median_probe_count": 2.5,
+      "p95_probe_count": 3.0,
+      "parameter_error_p95": 0.30399488821382614,
+      "parameter_error_rmse": 0.18927850420500464,
+      "stiffness_p95_abs_relative_error": 0.21694811177735418,
+      "stiffness_relative_bias": 0.016219106167293686,
+      "stiffness_relative_rmse": 0.09272995804585348,
+      "stiffness_threshold_success_probability": 0.8333333333333334,
+      "stiffness_worst_target_p95_abs_relative_error": 0.22420876617206706,
+      "strategy": "uncertainty_driven",
+      "trial_count": 120,
+      "worst_target_parameter_error_p95": 0.3369644285914062
+    },
+    "adaptive_target_p95": {
+      "compliant": {
+        "damping": 0.07690055541774572,
+        "effective_mass": 0.12872931033348903,
+        "stiffness": 0.035649838140724026
+      },
+      "high_damping": {
+        "damping": 0.09721383429136839,
+        "effective_mass": 0.30353142613196105,
+        "stiffness": 0.01989419903486547
+      },
+      "high_effective_mass": {
+        "damping": 0.19847639764499536,
+        "effective_mass": 0.27582449025821737,
+        "stiffness": 0.06538508265357128
+      },
+      "lightly_damped_flexible": {
+        "damping": 0.5682849360700412,
+        "effective_mass": 0.19736286929834945,
+        "stiffness": 0.04084125347689546
+      },
+      "low_effective_mass": {
+        "damping": 0.10551585898257,
+        "effective_mass": 0.15392097388032905,
+        "stiffness": 0.018600461820571648
+      },
+      "rigid_high_stiffness": {
+        "damping": 0.4644102705983509,
+        "effective_mass": 0.08912196485772915,
+        "stiffness": 0.22420876617206706
+      }
+    },
+    "frequency_information_winners": {
+      "damping": "broad_multisine",
+      "effective_mass": "broad_multisine",
+      "stiffness": "low_multisine"
+    },
+    "full_vector_success_improvement": -0.15833333333333333,
+    "kill_criterion_decision": "STOP_ACTIVE_FULL_VECTOR_IDENTIFICATION",
+    "matched_fixed_comparator": {
+      "base_strategy": "predefined_multistage",
+      "comparison_probe_index": 2,
+      "damping_p95_abs_relative_error": 0.4038582566284339,
+      "damping_relative_bias": -0.12048396779786907,
+      "damping_relative_rmse": 0.19543767414838067,
+      "damping_threshold_success_probability": 0.8333333333333334,
+      "damping_worst_target_p95_abs_relative_error": 0.42612083291026176,
+      "effective_mass_p95_abs_relative_error": 0.2693545136900813,
+      "effective_mass_relative_bias": 0.0732044999709779,
+      "effective_mass_relative_rmse": 0.14554888910463276,
+      "effective_mass_threshold_success_probability": 0.975,
+      "effective_mass_worst_target_p95_abs_relative_error": 0.33338828528955466,
+      "full_vector_success_probability": 0.8083333333333333,
+      "maximum_peak_force_n": 1.0,
+      "maximum_peak_target_acceleration_m_per_s2": 7.528880295733976,
+      "maximum_peak_target_displacement_m": 0.013835454654178478,
+      "maximum_peak_target_velocity_m_per_s": 0.2391853066277591,
+      "median_absolute_impulse_n_s": 2.2162490646739315,
+      "median_absolute_input_energy_j": 0.04338524328623386,
+      "median_duration_s": 6.0,
+      "median_force_squared_dose_n2_s": 2.960768791164488,
+      "median_information_per_force_dose": 5.404283675425171,
+      "median_probe_count": 2.0,
+      "p95_probe_count": 2.0,
+      "parameter_error_p95": 0.240878771007652,
+      "parameter_error_rmse": 0.14215150774206434,
+      "stiffness_p95_abs_relative_error": 0.06289797808473552,
+      "stiffness_relative_bias": -0.029279657236154742,
+      "stiffness_relative_rmse": 0.035224847251694794,
+      "stiffness_threshold_success_probability": 1.0,
+      "stiffness_worst_target_p95_abs_relative_error": 0.07192513754034831,
+      "strategy": "predefined_multistage_after_2",
+      "trial_count": 120,
+      "worst_target_parameter_error_p95": 0.2566506067821372
+    },
+    "matched_force_dose_relative_difference": 0.05982560165433148,
+    "median_adaptive_probe_count": 2.5,
+    "scope": "Stage 1 one-dimensional model only",
+    "selected_next_probe_useful_fraction": 0.41007194244604317,
+    "selected_probe_utility_spearman": -0.47831002278922197,
+    "sequential_improvement_is_significant": false,
+    "stage1_decision": "CONTINUE_STAGE_1",
+    "stage1_gate_pass": false,
+    "uncertainty_predicts_usefulness": false
+  },
+  "seed_set": "validation",
+  "software_versions": {
+    "PyYAML": "5.4.1",
+    "matplotlib": "3.5.1",
+    "numpy": "1.26.4",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "pytest": "6.2.5",
+    "python": "3.10.12",
+    "python_implementation": "CPython",
+    "scipy": "1.8.0"
+  },
+  "stage1_decision": "CONTINUE_STAGE_1",
+  "status": "success",
+  "success": true,
+  "timestamp_utc": "2026-08-28T23:25:23.568285+00:00",
+  "validation_seeds": [
+    4101,
+    4102,
+    4103,
+    4104,
+    4105,
+    4106,
+    4107,
+    4108,
+    4109,
+    4110,
+    4111,
+    4112,
+    4113,
+    4114,
+    4115,
+    4116,
+    4117,
+    4118,
+    4119,
+    4120
+  ]
+}

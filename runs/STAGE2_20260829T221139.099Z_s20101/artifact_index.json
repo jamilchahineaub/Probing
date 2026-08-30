@@ -1,0 +1,30 @@
+{
+  "run_id": "STAGE2_20260829T221139.099Z_s20101",
+  "status": "complete",
+  "stage2_decision": "PASS",
+  "independent_validation_targets": 1360,
+  "prediction_rows": 4080,
+  "predictions_generated_before_outcomes": true,
+  "locked_policy_sha256": "7cc1669f897ea1c917b5f3b289412bdbbc0187ac9a3979ca38240078f1d8c015",
+  "git_sha": "6b95560de738f74356576e4496ba794604009c4b",
+  "files": {
+    "manifest": "manifest.json",
+    "config": "config.json",
+    "environment": "environment.txt",
+    "simulink_model": "stage2_locked_interaction.slx",
+    "summary": "summary.json",
+    "raw_workspace": "raw_workspace.mat",
+    "cases": "validation_cases.csv",
+    "predictions": "validation_predictions.csv",
+    "ground_truth": "sustained_contact_truth.csv",
+    "primary_metrics": "metrics_summary.csv",
+    "secondary_metrics": "secondary_summary.csv",
+    "physics_validation": "physics_validation.csv",
+    "matlab_tests": "matlab_test_results.csv",
+    "simulink_crosscheck": "matlab_simulink_crosscheck.csv",
+    "python_crosscheck": "python_matlab_crosscheck.csv",
+    "safety_events": "probe_safety_events.csv",
+    "boundary_selection": "boundary_selection.csv",
+    "figures": "figures/"
+  }
+}

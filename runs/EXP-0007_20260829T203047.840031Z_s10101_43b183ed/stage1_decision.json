@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "stage1_decision": "PASS_TO_INDEPENDENT_MATLAB_SIMULINK",
+  "stage1_replication_criterion": {
+    "maximum_binary_accuracy_degradation_from_exp_0006": 0.05,
+    "maximum_boundary_false_safe_one_sided_95_upper": 0.025,
+    "maximum_boundary_false_safe_rate": 0.02,
+    "maximum_high_noise_false_safe_one_sided_95_upper": 0.02,
+    "maximum_high_noise_false_safe_rate": 0.02,
+    "maximum_nominal_false_safe_one_sided_95_upper": 0.01,
+    "maximum_nominal_false_safe_rate": 0.01,
+    "minimum_boundary_binary_accuracy": 0.75,
+    "minimum_high_noise_binary_accuracy": 0.85,
+    "minimum_high_noise_non_safe_recall": 0.98,
+    "minimum_high_noise_safe_precision": 0.99,
+    "minimum_nominal_binary_accuracy": 0.85,
+    "minimum_nominal_non_safe_recall": 0.99,
+    "minimum_nominal_safe_precision": 0.99,
+    "require_nominal_and_high_boundary_pass": true,
+    "require_zero_probe_safety_events": true,
+    "rule": "Stage 1 may proceed to independent MATLAB/Simulink validation only if the immutable policy bundle passes all nominal/high overall and boundary false-safe confidence limits, binary accuracy/precision/recall limits, population-degradation checks, integrity checks, and probe safety checks. Secondary CAUTION/UNSAFE confusion does not veto progression unless it creates a SAFE prediction for a truly NON-SAFE target."
+  }
+}

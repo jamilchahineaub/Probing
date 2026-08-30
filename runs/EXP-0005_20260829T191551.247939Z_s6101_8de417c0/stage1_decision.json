@@ -1,0 +1,21 @@
+{
+  "decision_sufficiency_supported": false,
+  "explicit_full_parameters_needed": true,
+  "kill_criterion": {
+    "maximum_false_safe_rate_each_noise_regime": 0.05,
+    "minimum_accuracy_high_noise": 0.8,
+    "minimum_accuracy_nominal": 0.85,
+    "minimum_displacement_upper_bound_coverage": 0.95,
+    "minimum_safe_force_lower_bound_coverage": 0.95,
+    "minimum_unsafe_recall_each_noise_regime": 0.85,
+    "rule": "Stop and reconsider the probing architecture if the primary combined-task outcome-bound predictor violates any false-safe, accuracy, unsafe-recall, or conservative-bound criterion on untouched validation cases."
+  },
+  "kill_criterion_decision": "RECONSIDER_PROBING_ARCHITECTURE",
+  "stage1_decision": "CONTINUE_STAGE_1",
+  "stage1_gate": {
+    "require_decision_accuracy_in_worst_mass_error_quartile": 0.8,
+    "require_kill_criterion_pass": true,
+    "require_no_probe_safety_events": true,
+    "rule": "Independent MATLAB/Simulink validation is allowed only if the causal primary predictor passes the decision-sufficiency kill criterion and retains at least 80 percent accuracy in the worst quartile of effective-mass diagnostic error."
+  }
+}

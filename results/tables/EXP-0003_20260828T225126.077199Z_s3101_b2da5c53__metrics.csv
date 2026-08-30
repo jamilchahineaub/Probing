@@ -1,0 +1,11 @@
+metric,value
+estimator_count,3
+frequency_band_count,6
+identification_trial_count,10800
+pipeline_count,5
+safety_event_count,0
+stage1_ready_candidate_count,0
+target_count,6
+timing_profile_trial_count,2400
+timing_trial_count,4680
+validation_seed_count,20

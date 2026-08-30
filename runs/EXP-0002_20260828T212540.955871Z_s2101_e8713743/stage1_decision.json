@@ -1,0 +1,47 @@
+{
+  "best_candidate": {
+    "candidate_score": 0.42339834667052645,
+    "contact_mode": "unilateral",
+    "full_rank_fraction": 1.0,
+    "maximum_peak_force_n": 0.9999985396147314,
+    "maximum_peak_target_displacement_m": 0.012082686857662856,
+    "passes_bias": false,
+    "passes_disturbance": true,
+    "passes_observability": true,
+    "passes_parameter_tail": false,
+    "pipeline": "savitzky_golay",
+    "probe": "chirp",
+    "ratio_estimate_valid_fraction": 1.0,
+    "sensing_regime": "no_direct_acceleration",
+    "severity": "nominal",
+    "stage1_go_candidate": false,
+    "trial_count": 60,
+    "worst_target_damping_abs_relative_bias": 0.2800770655206,
+    "worst_target_damping_p95_abs_relative_error": 0.3298275259709164,
+    "worst_target_damping_ratio_p95_abs_relative_error": 0.6490301616842588,
+    "worst_target_effective_mass_abs_relative_bias": 0.36750284001260336,
+    "worst_target_effective_mass_p95_abs_relative_error": 0.6257506182504191,
+    "worst_target_natural_frequency_p95_abs_relative_error": 0.3670457285524617,
+    "worst_target_stiffness_abs_relative_bias": 0.14136765403446244,
+    "worst_target_stiffness_p95_abs_relative_error": 0.19351601164019666
+  },
+  "criteria": {
+    "contact_mode": "unilateral",
+    "decision_rule": "GO only if one probe plus practical no-direct-acceleration or IMU-like pipeline passes every target-wise 95th-percentile, bias, observability, and disturbance threshold under nominal unilateral contact. Exploratory sensorless-force cases cannot trigger GO.",
+    "max_damping_abs_relative_bias": 0.15,
+    "max_damping_p95_abs_relative_error": 0.3,
+    "max_effective_mass_abs_relative_bias": 0.15,
+    "max_effective_mass_p95_abs_relative_error": 0.3,
+    "max_peak_force_n": 1.000000000001,
+    "max_peak_target_displacement_m": 0.025,
+    "max_stiffness_abs_relative_bias": 0.1,
+    "max_stiffness_p95_abs_relative_error": 0.2,
+    "min_full_rank_fraction": 0.99,
+    "practical_regimes": [
+      "no_direct_acceleration",
+      "imu_like"
+    ],
+    "severity": "nominal"
+  },
+  "stage1_decision": "CONTINUE_STAGE_1"
+}

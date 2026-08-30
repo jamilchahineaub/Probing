@@ -1,0 +1,110 @@
+{
+  "best_causal_pipeline": "causal_low_pass",
+  "best_estimator_by_median_cross_case_score": "ols",
+  "best_ols_target_band_pipeline": {
+    "damping_p95_abs_relative_error": 0.219457527252467,
+    "effective_mass_p95_abs_relative_error": 0.13683499810398453,
+    "frequency_band": "baseline_0p5_10_hz",
+    "pipeline": "causal_low_pass",
+    "stiffness_p95_abs_relative_error": 0.05329680635360608,
+    "target": "low_effective_mass"
+  },
+  "estimator_scores": {
+    "iv": 1.3097953826509623,
+    "ols": 0.7848953677900941,
+    "tls": 1.3735682511381628
+  },
+  "parameterization_change_supported": false,
+  "parameterization_recommendation": "retain_direct_parameters_and_modal_diagnostics",
+  "stage1_gate": {
+    "passing_candidate_count": 0,
+    "passing_candidates": []
+  },
+  "timing_profile_comparison": {
+    "alpha_beta_gamma": {
+      "damping": {
+        "absolute_error_increase": -0.030946745226274386,
+        "exp_0002_like_median_abs_relative_error": 1.5428934040828148,
+        "synchronized_median_abs_relative_error": 1.5738401493090892
+      },
+      "effective_mass": {
+        "absolute_error_increase": -0.028227684941885767,
+        "exp_0002_like_median_abs_relative_error": 0.4471533436087508,
+        "synchronized_median_abs_relative_error": 0.4753810285506366
+      },
+      "stiffness": {
+        "absolute_error_increase": -0.018081546722918757,
+        "exp_0002_like_median_abs_relative_error": 0.1933404647332131,
+        "synchronized_median_abs_relative_error": 0.21142201145613185
+      }
+    },
+    "backward_difference": {
+      "damping": {
+        "absolute_error_increase": -0.08290980236437187,
+        "exp_0002_like_median_abs_relative_error": 0.22242608913092418,
+        "synchronized_median_abs_relative_error": 0.30533589149529605
+      },
+      "effective_mass": {
+        "absolute_error_increase": 0.0005117994071988097,
+        "exp_0002_like_median_abs_relative_error": 1.0019653959072596,
+        "synchronized_median_abs_relative_error": 1.0014535965000608
+      },
+      "stiffness": {
+        "absolute_error_increase": -0.016102291135577596,
+        "exp_0002_like_median_abs_relative_error": 0.5340200722385983,
+        "synchronized_median_abs_relative_error": 0.5501223633741759
+      }
+    },
+    "causal_low_pass": {
+      "damping": {
+        "absolute_error_increase": -0.006979559603114693,
+        "exp_0002_like_median_abs_relative_error": 0.18594352980791146,
+        "synchronized_median_abs_relative_error": 0.19292308941102615
+      },
+      "effective_mass": {
+        "absolute_error_increase": 0.00460691271110325,
+        "exp_0002_like_median_abs_relative_error": 0.8569470113610895,
+        "synchronized_median_abs_relative_error": 0.8523400986499863
+      },
+      "stiffness": {
+        "absolute_error_increase": -0.009452277237113005,
+        "exp_0002_like_median_abs_relative_error": 0.3894111574895932,
+        "synchronized_median_abs_relative_error": 0.3988634347267062
+      }
+    },
+    "causal_polynomial": {
+      "damping": {
+        "absolute_error_increase": -0.07450908721539395,
+        "exp_0002_like_median_abs_relative_error": 1.2217287604014748,
+        "synchronized_median_abs_relative_error": 1.2962378476168688
+      },
+      "effective_mass": {
+        "absolute_error_increase": -0.003693116684332809,
+        "exp_0002_like_median_abs_relative_error": 0.5602394473879022,
+        "synchronized_median_abs_relative_error": 0.563932564072235
+      },
+      "stiffness": {
+        "absolute_error_increase": -0.025865775550544146,
+        "exp_0002_like_median_abs_relative_error": 0.25676513945875656,
+        "synchronized_median_abs_relative_error": 0.2826309150093007
+      }
+    },
+    "centered_savitzky_golay": {
+      "damping": {
+        "absolute_error_increase": 0.04999022211565858,
+        "exp_0002_like_median_abs_relative_error": 0.08598869346677401,
+        "synchronized_median_abs_relative_error": 0.03599847135111543
+      },
+      "effective_mass": {
+        "absolute_error_increase": -0.09585106029155777,
+        "exp_0002_like_median_abs_relative_error": 0.14479325089162004,
+        "synchronized_median_abs_relative_error": 0.2406443111831778
+      },
+      "stiffness": {
+        "absolute_error_increase": -0.0026319882667952058,
+        "exp_0002_like_median_abs_relative_error": 0.027694333516486657,
+        "synchronized_median_abs_relative_error": 0.030326321783281863
+      }
+    }
+  }
+}

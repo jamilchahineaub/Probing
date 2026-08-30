@@ -1,0 +1,10 @@
+{
+  "all_core_metrics_finite": true,
+  "both_contact_modes_present": true,
+  "complete_trial_matrix": true,
+  "go_no_go_evaluated": true,
+  "monte_carlo_seed_count_sufficient": true,
+  "representative_raw_saved": true,
+  "safety_limits_respected": true,
+  "untouched_validation_seed_partition": true
+}

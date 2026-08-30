@@ -1,0 +1,4 @@
+noise_regime,stratum,trial_count,safe_count,non_safe_count,true_safe_count,true_non_safe_count,false_safe_count,false_positive_count,false_negative_count,false_safe_rate,false_safe_ci95_lower,false_safe_ci95_upper,false_safe_one_sided95_upper,binary_accuracy,safe_precision,non_safe_recall,sensitivity_non_safe,specificity_safe,false_positive_rate,false_negative_rate
+low,boundary,400,200,200,134,200,0,66,0,0.0,0.0,0.018275340355136244,0.014867039231272083,0.835,1.0,1.0,1.0,0.67,0.33,0.0
+nominal,boundary,400,200,200,142,200,0,58,0,0.0,0.0,0.018275340355136244,0.014867039231272083,0.855,1.0,1.0,1.0,0.71,0.29,0.0
+high,boundary,400,200,200,148,199,1,52,1,0.005,0.00012658102786701866,0.02754189845720526,0.023498470434950344,0.8675,0.9932885906040269,0.995,0.995,0.74,0.26,0.005

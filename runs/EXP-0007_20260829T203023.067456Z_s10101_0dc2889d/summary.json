@@ -1,0 +1,14 @@
+{
+  "boundary_candidate_count": 1200,
+  "boundary_case_count": 400,
+  "boundary_selection_used_policy": false,
+  "broad_case_count": 960,
+  "exp_0006_reference_run_id": "EXP-0006_20260829T194621.991365Z_s8101_2966d3d2",
+  "false_safe_cases_any_noise": 3,
+  "false_safe_cases_high_noise": 2,
+  "policy_id": "EXP-0006-primary-0p5s-chirp-ringdown",
+  "predictions_created_before_hidden_outcomes": true,
+  "stage1_decision": "PASS_TO_INDEPENDENT_MATLAB_SIMULINK",
+  "stage1_replication_criterion_pass": true,
+  "validation_case_count": 1360
+}

@@ -1,0 +1,110 @@
+{
+  "criteria": {
+    "category_A": "One safe fixed causal pipeline/band/estimator passes every target.",
+    "category_B": "No universal candidate passes, but one safe fixed causal candidate passes at least four of six predefined target classes.",
+    "category_C": "No fixed causal candidate satisfies the restricted-condition rule.",
+    "max_abs_relative_bias": {
+      "damping": 0.15,
+      "damping_ratio": 0.15,
+      "effective_mass": 0.15,
+      "inverse_mass": 0.15,
+      "natural_frequency": 0.1,
+      "stiffness": 0.1
+    },
+    "max_failure_fraction": 0.05,
+    "max_p95_abs_relative_error": {
+      "damping": 0.3,
+      "damping_ratio": 0.3,
+      "effective_mass": 0.3,
+      "inverse_mass": 0.3,
+      "natural_frequency": 0.2,
+      "stiffness": 0.2
+    },
+    "practically_significant_timing_bias": {
+      "damping": 0.15,
+      "effective_mass": 0.15,
+      "stiffness": 0.1
+    },
+    "restricted_min_target_count": 4
+  },
+  "gate": {
+    "passing_candidate_count": 0,
+    "passing_candidates": []
+  },
+  "parameter_classifications": [
+    {
+      "category": "A_practically_identifiable",
+      "estimator": "tls",
+      "frequency_band": "low_0p25_2_hz",
+      "parameter": "stiffness",
+      "passing_target_count": 6,
+      "passing_target_fraction": 1.0,
+      "pipeline": "alpha_beta_gamma",
+      "worst_target_abs_relative_bias": 0.05519026773103145,
+      "worst_target_failure_fraction": 0.0,
+      "worst_target_p95_abs_relative_error": 0.06738316661378947
+    },
+    {
+      "category": "B_restricted_conditions",
+      "estimator": "ols",
+      "frequency_band": "low_mid_0p5_5_hz",
+      "parameter": "damping",
+      "passing_target_count": 4,
+      "passing_target_fraction": 0.6666666666666666,
+      "pipeline": "causal_low_pass",
+      "worst_target_abs_relative_bias": 0.29784779193922867,
+      "worst_target_failure_fraction": 0.0,
+      "worst_target_p95_abs_relative_error": 0.32233965743913284
+    },
+    {
+      "category": "B_restricted_conditions",
+      "estimator": "iv",
+      "frequency_band": "low_mid_0p5_5_hz",
+      "parameter": "effective_mass",
+      "passing_target_count": 5,
+      "passing_target_fraction": 0.8333333333333334,
+      "pipeline": "causal_low_pass",
+      "worst_target_abs_relative_bias": 0.15119149386533864,
+      "worst_target_failure_fraction": 0.0,
+      "worst_target_p95_abs_relative_error": 0.3461989119331597
+    },
+    {
+      "category": "B_restricted_conditions",
+      "estimator": "ols",
+      "frequency_band": "mid_2_10_hz",
+      "parameter": "natural_frequency",
+      "passing_target_count": 5,
+      "passing_target_fraction": 0.8333333333333334,
+      "pipeline": "causal_low_pass",
+      "worst_target_abs_relative_bias": 1000000000.0,
+      "worst_target_failure_fraction": 1.0,
+      "worst_target_p95_abs_relative_error": 1000000000.0
+    },
+    {
+      "category": "C_not_practically_identifiable",
+      "estimator": "ols",
+      "frequency_band": "low_0p25_2_hz",
+      "parameter": "damping_ratio",
+      "passing_target_count": 1,
+      "passing_target_fraction": 0.16666666666666666,
+      "pipeline": "causal_polynomial",
+      "worst_target_abs_relative_bias": 1000000000.0,
+      "worst_target_failure_fraction": 1.0,
+      "worst_target_p95_abs_relative_error": 1000000000.0
+    },
+    {
+      "category": "C_not_practically_identifiable",
+      "estimator": "ols",
+      "frequency_band": "mid_2_10_hz",
+      "parameter": "inverse_mass",
+      "passing_target_count": 3,
+      "passing_target_fraction": 0.5,
+      "pipeline": "alpha_beta_gamma",
+      "worst_target_abs_relative_bias": 0.5720955328580635,
+      "worst_target_failure_fraction": 0.0,
+      "worst_target_p95_abs_relative_error": 0.591762367248368
+    }
+  ],
+  "parameterization_recommendation": "retain_direct_parameters_and_modal_diagnostics",
+  "stage1_decision": "CONTINUE_STAGE_1"
+}

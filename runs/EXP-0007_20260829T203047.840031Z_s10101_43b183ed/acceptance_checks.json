@@ -1,0 +1,13 @@
+{
+  "finite_predictions": true,
+  "locked_policy_hash": true,
+  "minimum_boundary_cases": true,
+  "minimum_broad_cases": true,
+  "minimum_non_safe_cases": true,
+  "minimum_total_cases": true,
+  "new_seed_set_disjoint": true,
+  "no_exp_0007_fit_or_calibration": true,
+  "predictions_precede_outcome_join": true,
+  "primary_policy_is_causal": true,
+  "zero_probe_safety_events": true
+}

@@ -1,0 +1,76 @@
+{
+  "interpretation": "The ramp is dominated by a static/DC hold, so stiffness explains most of the force after the short transition. Its acceleration column is weak relative to the elastic contribution, leaving effective mass sensitive to small regressor noise. Broadband chirp and multisine inputs sustain acceleration excitation and reduce this errors-in-variables sensitivity.",
+  "near_ideal_ramp_mean_relative_error_rms": 0.13082131072063435,
+  "probe_diagnostics": {
+    "chirp": {
+      "acceleration_feature_rms_m_per_s2": 0.9745178510128467,
+      "damping_contribution_rms_fraction": 0.6088151552698516,
+      "damping_relative_error": -0.0003362781572494811,
+      "displacement_feature_rms_m": 0.0005458752744527076,
+      "effective_mass_relative_error": -0.0004873151360520467,
+      "elastic_contribution_rms_fraction": 1.5550794113612953,
+      "force_dc_energy_fraction": 0.012752402542729661,
+      "force_energy_above_natural_frequency_fraction": 0.2988769704955981,
+      "force_spectral_centroid_hz": 5.460994037440116,
+      "inertial_contribution_rms_fraction": 1.3880942378581989,
+      "maximum_abs_parameter_correlation": 0.8623698789905149,
+      "normalized_condition_number": 3.6785679054788,
+      "normalized_singular_values": [
+        1.364683432820987,
+        1.000005645692342,
+        0.370982259370134
+      ],
+      "parameter_relative_error_rms": 0.0004022290108577126,
+      "stiffness_relative_error": -0.00036715867231782795,
+      "velocity_feature_rms_m_per_s": 0.021371071955931468
+    },
+    "multisine": {
+      "acceleration_feature_rms_m_per_s2": 0.3912569826141723,
+      "damping_contribution_rms_fraction": 0.4692659564347173,
+      "damping_relative_error": -0.0002810982977326404,
+      "displacement_feature_rms_m": 0.0002296237897379903,
+      "effective_mass_relative_error": -3.0497492815584337e-05,
+      "elastic_contribution_rms_fraction": 1.3087581421796242,
+      "force_dc_energy_fraction": 0.07002445776171823,
+      "force_energy_above_natural_frequency_fraction": 0.24033327257388826,
+      "force_spectral_centroid_hz": 3.6187605686810453,
+      "inertial_contribution_rms_fraction": 1.1149993697630611,
+      "maximum_abs_parameter_correlation": 0.7486086813660179,
+      "normalized_condition_number": 2.6374571811013703,
+      "normalized_singular_values": [
+        1.3223486995589406,
+        1.0000097286274814,
+        0.5013725754617725
+      ],
+      "parameter_relative_error_rms": 0.00016636978204881251,
+      "stiffness_relative_error": -5.559103417533606e-05,
+      "velocity_feature_rms_m_per_s": 0.00823334914517562
+    },
+    "ramp": {
+      "acceleration_feature_rms_m_per_s2": 0.0063549255968315356,
+      "damping_contribution_rms_fraction": 0.007837267544463124,
+      "damping_relative_error": -0.07739821031539976,
+      "displacement_feature_rms_m": 0.0004556092609448101,
+      "effective_mass_relative_error": -0.6267813182732596,
+      "elastic_contribution_rms_fraction": 0.9983227310060732,
+      "force_dc_energy_fraction": 0.957502517374677,
+      "force_energy_above_natural_frequency_fraction": 0.0014797797396887099,
+      "force_spectral_centroid_hz": 1.9048198386928845,
+      "inertial_contribution_rms_fraction": 0.006962398727379871,
+      "maximum_abs_parameter_correlation": 0.2494865517347326,
+      "normalized_condition_number": 1.3012369660798133,
+      "normalized_singular_values": [
+        1.124517406865301,
+        0.9943009312892306,
+        0.8641911013741728
+      ],
+      "parameter_relative_error_rms": 0.3646209471351705,
+      "stiffness_relative_error": -3.705205022333757e-05,
+      "velocity_feature_rms_m_per_s": 0.0003576730813452617
+    }
+  },
+  "reference_run_id": "EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69",
+  "target_compared": "rigid_high_stiffness",
+  "worst_case_effective_mass_relative_error": -0.6267813182732596,
+  "worst_case_id": "near_ideal__rigid_high_stiffness__ramp"
+}

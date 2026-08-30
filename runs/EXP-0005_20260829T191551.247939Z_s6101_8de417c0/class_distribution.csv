@@ -1,0 +1,4 @@
+partition,risk_class,case_count,fraction
+validation,SAFE,163,0.6791666666666667
+validation,CAUTION,26,0.10833333333333334
+validation,UNSAFE,51,0.2125

@@ -1,0 +1,7 @@
+parameter,category,frequency_band,pipeline,estimator,passing_target_count,passing_target_fraction,worst_target_p95_abs_relative_error,worst_target_abs_relative_bias,worst_target_failure_fraction
+stiffness,A_practically_identifiable,low_0p25_2_hz,alpha_beta_gamma,tls,6,1.0,0.06738316661378947,0.05519026773103145,0.0
+damping,B_restricted_conditions,low_mid_0p5_5_hz,causal_low_pass,ols,4,0.6666666666666666,0.32233965743913284,0.29784779193922867,0.0
+effective_mass,B_restricted_conditions,low_mid_0p5_5_hz,causal_low_pass,iv,5,0.8333333333333334,0.3461989119331597,0.15119149386533864,0.0
+natural_frequency,B_restricted_conditions,mid_2_10_hz,causal_low_pass,ols,5,0.8333333333333334,1000000000.0,1000000000.0,1.0
+damping_ratio,C_not_practically_identifiable,low_0p25_2_hz,causal_polynomial,ols,1,0.16666666666666666,1000000000.0,1000000000.0,1.0
+inverse_mass,C_not_practically_identifiable,mid_2_10_hz,alpha_beta_gamma,ols,3,0.5,0.591762367248368,0.5720955328580635,0.0

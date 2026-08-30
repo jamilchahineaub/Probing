@@ -1,0 +1,13 @@
+MATLAB version: 26.1.0.3346908 (R2026a) Update 5
+Simulink license: 1
+SystemIdentificationToolbox: 0
+ControlSystemToolbox: 1
+SignalProcessingToolbox: 0
+StatisticsAndMachineLearningToolbox: 0
+Simscape: 1
+SimscapeMultibody: 1
+OptimizationToolbox: 1
+ModelPredictiveControlToolbox: 1
+UAVToolbox: 1
+ROSToolbox: 0
+RoboticsSystemToolbox: 0

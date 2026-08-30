@@ -1,0 +1,14 @@
+metric,value
+all_partition_safety_event_count,0
+baseline_high_false_safe_rate,0.036585365853658534
+baseline_nominal_false_safe_rate,0.024390243902439025
+probe_safety_event_count,0
+qualifying_duration_count,0
+selected_high_accuracy,0.8291666666666667
+selected_high_false_safe_rate,0.0
+selected_nominal_accuracy,0.8333333333333334
+selected_nominal_false_safe_rate,0.0
+selected_reporting_duration_s,0.5
+stage1_gate_pass,False
+validation_case_count,240
+validation_prediction_count,20160

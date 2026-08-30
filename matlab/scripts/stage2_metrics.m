@@ -1,0 +1,9 @@
+function M = stage2_metrics(rows,stratum,noise)
+noise=string(noise); stratum=string(stratum);
+mask=rows.stratum==stratum & rows.noise_regime==noise; R=rows(mask,:); as=R.actual_binary=="SAFE"; ps=R.predicted_binary=="SAFE";
+fs=sum(~as & ps); ns=sum(~as); ts=sum(as & ps); tn=sum(~as & ~ps); fp=sum(as & ~ps);
+M=table(noise,stratum,height(R),sum(as),ns,fs,fp,fs/max(ns,1),binomial_upper95(fs,ns),mean(as==ps), ...
+ ts/max(ts+fs,1),tn/max(ns,1),tn/max(ns,1),ts/max(sum(as),1), ...
+ 'VariableNames',{'noise_regime','stratum','trial_count','safe_count','non_safe_count','false_safe_count','false_positive_count', ...
+ 'false_safe_rate','false_safe_upper95','binary_accuracy','safe_precision','non_safe_recall','sensitivity','specificity'});
+end

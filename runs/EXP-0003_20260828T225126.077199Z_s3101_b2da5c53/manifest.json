@@ -1,0 +1,618 @@
+{
+  "acceptance_checks": {
+    "all_estimators_present": true,
+    "all_frequency_bands_respect_safety_limits": true,
+    "all_pipelines_present": true,
+    "chirp_only": true,
+    "complete_identification_matrix": true,
+    "complete_timing_matrix": true,
+    "complete_timing_profile_matrix": true,
+    "monte_carlo_seed_count_sufficient": true,
+    "new_untouched_validation_seed_partition": true,
+    "representative_raw_saved": true,
+    "sensorless_force_excluded": true
+  },
+  "calculated_metrics": {
+    "estimator_count": 3,
+    "frequency_band_count": 6,
+    "identification_trial_count": 10800,
+    "pipeline_count": 5,
+    "safety_event_count": 0,
+    "stage1_ready_candidate_count": 0,
+    "target_count": 6,
+    "timing_profile_trial_count": 2400,
+    "timing_trial_count": 4680,
+    "validation_seed_count": 20
+  },
+  "completed_timestamp_utc": "2026-08-28T22:51:49.858803+00:00",
+  "configuration": {
+    "chirp_frequency_bands": [
+      {
+        "end_frequency_hz": 2.0,
+        "name": "low_0p25_2_hz",
+        "start_frequency_hz": 0.25
+      },
+      {
+        "end_frequency_hz": 5.0,
+        "name": "low_mid_0p5_5_hz",
+        "start_frequency_hz": 0.5
+      },
+      {
+        "end_frequency_hz": 10.0,
+        "name": "baseline_0p5_10_hz",
+        "start_frequency_hz": 0.5
+      },
+      {
+        "end_frequency_hz": 10.0,
+        "name": "mid_2_10_hz",
+        "start_frequency_hz": 2.0
+      },
+      {
+        "end_frequency_hz": 15.0,
+        "name": "high_5_15_hz",
+        "start_frequency_hz": 5.0
+      },
+      {
+        "end_frequency_hz": 20.0,
+        "name": "wide_0p5_20_hz",
+        "start_frequency_hz": 0.5
+      }
+    ],
+    "classification": {
+      "category_A": "One safe fixed causal pipeline/band/estimator passes every target.",
+      "category_B": "No universal candidate passes, but one safe fixed causal candidate passes at least four of six predefined target classes.",
+      "category_C": "No fixed causal candidate satisfies the restricted-condition rule.",
+      "max_abs_relative_bias": {
+        "damping": 0.15,
+        "damping_ratio": 0.15,
+        "effective_mass": 0.15,
+        "inverse_mass": 0.15,
+        "natural_frequency": 0.1,
+        "stiffness": 0.1
+      },
+      "max_failure_fraction": 0.05,
+      "max_p95_abs_relative_error": {
+        "damping": 0.3,
+        "damping_ratio": 0.3,
+        "effective_mass": 0.3,
+        "inverse_mass": 0.3,
+        "natural_frequency": 0.2,
+        "stiffness": 0.2
+      },
+      "practically_significant_timing_bias": {
+        "damping": 0.15,
+        "effective_mass": 0.15,
+        "stiffness": 0.1
+      },
+      "restricted_min_target_count": 4
+    },
+    "estimators": {
+      "alternate_parameterization": {
+        "ratios": [
+          "omega_n_squared",
+          "two_zeta_omega_n",
+          "inverse_mass"
+        ],
+        "reported": [
+          "omega_n",
+          "zeta",
+          "inverse_mass"
+        ]
+      },
+      "iv_input_delays_s": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1
+      ],
+      "names": [
+        "ols",
+        "tls",
+        "iv"
+      ],
+      "weighted_tls": {
+        "enabled": false,
+        "reason": "Derived velocity and acceleration errors are correlated, colored, and target-dependent; a defensible full covariance model is not available. Diagonal ad-hoc weights would create false confidence."
+      }
+    },
+    "experiment": {
+      "id": "EXP-0003",
+      "scientific_question": "Are the poor damping and effective-mass estimates caused primarily by timing/filtering/errors-in-variables effects that can be corrected causally, or are they fundamentally too weakly identifiable under safe bounded probing?",
+      "seed_set": "validation",
+      "stage": 1,
+      "title": "Stage 1 causal timing and errors-in-variables identifiability study"
+    },
+    "frozen_references": {
+      "exp_0001": {
+        "expected_artifact_fingerprint": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39"
+      },
+      "exp_0002": {
+        "expected_artifact_fingerprint": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc",
+        "run_id": "EXP-0002_20260828T212540.955871Z_s2101_e8713743"
+      }
+    },
+    "integrity_acceptance": {
+      "forbidden_validation_seeds_before_final_run": [
+        3101,
+        3102,
+        3103,
+        3104,
+        3105,
+        3106,
+        3107,
+        3108,
+        3109,
+        3110,
+        3111,
+        3112,
+        3113,
+        3114,
+        3115,
+        3116,
+        3117,
+        3118,
+        3119,
+        3120
+      ],
+      "minimum_monte_carlo_seeds": 20
+    },
+    "pipeline_settings": {
+      "common_settings_policy": "One setting per pipeline for all targets, bands, and seeds.",
+      "low_pass_cutoff_hz": 10.0,
+      "observer_alpha": 0.4,
+      "observer_beta": 0.08,
+      "observer_force_cutoff_hz": 10.0,
+      "observer_gamma": 0.008,
+      "polynomial_order": 3,
+      "polynomial_window_duration_s": 0.11
+    },
+    "pipelines": [
+      {
+        "causal": true,
+        "name": "backward_difference"
+      },
+      {
+        "causal": true,
+        "name": "causal_low_pass"
+      },
+      {
+        "causal": true,
+        "name": "causal_polynomial"
+      },
+      {
+        "causal": true,
+        "name": "alpha_beta_gamma"
+      },
+      {
+        "causal": false,
+        "name": "centered_savitzky_golay",
+        "role": "offline_reference_only"
+      }
+    ],
+    "probe": {
+      "amplitude_n": 1.0,
+      "amplitude_policy": "Fixed across every band; no force scaling is used to improve estimates.",
+      "baseline_band": "baseline_0p5_10_hz",
+      "type": "chirp"
+    },
+    "representative_raw": {
+      "band": "baseline_0p5_10_hz",
+      "seed": 3101,
+      "target": "low_effective_mass"
+    },
+    "safety_limits": {
+      "max_peak_force_n": 1.000000000001,
+      "max_peak_target_acceleration_m_per_s2": 15.0,
+      "max_peak_target_displacement_m": 0.025,
+      "max_peak_target_velocity_m_per_s": 0.5
+    },
+    "schema_version": 1,
+    "scope_exclusions": [
+      "MATLAB",
+      "Simulink",
+      "EKF",
+      "UAV dynamics",
+      "Gazebo",
+      "PX4",
+      "ROS 2",
+      "MPC",
+      "Isaac Sim",
+      "sensorless force estimation"
+    ],
+    "sensing": {
+      "analysis_trim_s": 0.15,
+      "direct_acceleration_used_for_timing_sweep_only": true,
+      "noise": {
+        "acceleration_std_m_per_s2": 0.1,
+        "displacement_std_m": 5e-05,
+        "force_std_n": 0.02,
+        "velocity_std_m_per_s": 0.002
+      },
+      "sample_rate_hz": 200.0,
+      "synchronized_by_default": true
+    },
+    "simulation": {
+      "contact_mode": "unilateral",
+      "duration_s": 3.0,
+      "equation": "F_contact = m_eff*x_ddot + c*x_dot + k*x",
+      "integrator": "rk4",
+      "model": "one_dimensional_mass_spring_damper",
+      "sample_period_s": 0.002
+    },
+    "stage1_gate": {
+      "rule": "Ready for independent MATLAB/Simulink validation only if one safe fixed causal candidate makes stiffness and damping category A and makes either effective mass category A or both natural frequency and damping behavior category A. Offline centered filtering cannot trigger readiness."
+    },
+    "targets": [
+      {
+        "damping_n_s_per_m": 20.0,
+        "effective_mass_kg": 1.0,
+        "name": "rigid_high_stiffness",
+        "stiffness_n_per_m": 2000.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 1.0,
+        "name": "compliant",
+        "stiffness_n_per_m": 100.0
+      },
+      {
+        "damping_n_s_per_m": 0.5,
+        "effective_mass_kg": 1.0,
+        "name": "lightly_damped_flexible",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 50.0,
+        "effective_mass_kg": 1.0,
+        "name": "high_damping",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 0.1,
+        "name": "low_effective_mass",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 5.0,
+        "name": "high_effective_mass",
+        "stiffness_n_per_m": 300.0
+      }
+    ],
+    "timing_study": {
+      "displacement_offset_also_applies_to_direct_velocity": true,
+      "group_delay_values_ms": [
+        0.0,
+        2.5,
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "offset_values_ms": [
+        -20.0,
+        -10.0,
+        -5.0,
+        -2.5,
+        -1.0,
+        0.0,
+        1.0,
+        2.5,
+        5.0,
+        10.0,
+        20.0
+      ],
+      "one_factor_at_a_time": true,
+      "profiles": [
+        {
+          "acceleration_offset_s": 0.0,
+          "displacement_offset_s": 0.0,
+          "force_offset_s": 0.0,
+          "mismatch_std_s": 0.0,
+          "name": "synchronized",
+          "velocity_offset_s": 0.0
+        },
+        {
+          "acceleration_offset_s": 0.005,
+          "displacement_offset_s": 0.01,
+          "force_offset_s": 0.012,
+          "mismatch_std_s": 0.0,
+          "name": "exp_0002_nominal_timing",
+          "velocity_offset_s": 0.01
+        },
+        {
+          "acceleration_offset_s": 0.005,
+          "displacement_offset_s": 0.01,
+          "force_offset_s": 0.012,
+          "mismatch_std_s": 0.002,
+          "name": "exp_0002_nominal_plus_mismatch",
+          "velocity_offset_s": 0.01
+        },
+        {
+          "acceleration_offset_s": 0.012,
+          "displacement_offset_s": 0.012,
+          "force_offset_s": 0.012,
+          "mismatch_std_s": 0.0,
+          "name": "corrected_common_delay",
+          "velocity_offset_s": 0.012
+        }
+      ]
+    },
+    "validation_seeds": [
+      3101,
+      3102,
+      3103,
+      3104,
+      3105,
+      3106,
+      3107,
+      3108,
+      3109,
+      3110,
+      3111,
+      3112,
+      3113,
+      3114,
+      3115,
+      3116,
+      3117,
+      3118,
+      3119,
+      3120
+    ]
+  },
+  "experiment_id": "EXP-0003",
+  "files": {
+    "acceptance_checks": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/acceptance_checks.json",
+    "identification_aggregate": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_aggregate.csv",
+    "identification_trials_csv": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_trials.csv.gz",
+    "identification_trials_npz": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/identification_trials.npz",
+    "indexed_figure_causal_filter_tradeoff_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__causal_filter_tradeoff.pdf",
+    "indexed_figure_causal_filter_tradeoff_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__causal_filter_tradeoff.png",
+    "indexed_figure_estimator_comparison_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__estimator_comparison.pdf",
+    "indexed_figure_estimator_comparison_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__estimator_comparison.png",
+    "indexed_figure_frequency_band_errors_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__frequency_band_errors.pdf",
+    "indexed_figure_frequency_band_errors_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__frequency_band_errors.png",
+    "indexed_figure_information_disturbance_pareto_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__information_disturbance_pareto.pdf",
+    "indexed_figure_information_disturbance_pareto_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__information_disturbance_pareto.png",
+    "indexed_figure_mass_vs_acceleration_strength_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__mass_vs_acceleration_strength.pdf",
+    "indexed_figure_mass_vs_acceleration_strength_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__mass_vs_acceleration_strength.png",
+    "indexed_figure_parameterization_comparison_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameterization_comparison.pdf",
+    "indexed_figure_parameterization_comparison_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameterization_comparison.png",
+    "indexed_figure_regressor_geometry_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__regressor_geometry.pdf",
+    "indexed_figure_regressor_geometry_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__regressor_geometry.png",
+    "indexed_figure_representative_causal_signals_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__representative_causal_signals.pdf",
+    "indexed_figure_representative_causal_signals_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__representative_causal_signals.png",
+    "indexed_figure_timing_bias_pdf": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_bias.pdf",
+    "indexed_figure_timing_bias_png": "results/figures/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_bias.png",
+    "indexed_identification_aggregate": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__identification_aggregate.csv",
+    "indexed_metrics": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__metrics.csv",
+    "indexed_parameter_classifications": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__parameter_classifications.csv",
+    "indexed_timing_aggregate": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_aggregate.csv",
+    "indexed_timing_profile_aggregate": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_profile_aggregate.csv",
+    "indexed_timing_thresholds": "results/tables/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53__timing_thresholds.csv",
+    "metrics": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/metrics.json",
+    "parameter_classifications": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/parameter_classifications.csv",
+    "representative_csv": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/representative_timeseries.csv.gz",
+    "representative_npz": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/representative_timeseries.npz",
+    "resolved_config": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/config.resolved.yaml",
+    "run_figure_causal_filter_tradeoff_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_causal_filter_tradeoff.pdf",
+    "run_figure_causal_filter_tradeoff_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_causal_filter_tradeoff.png",
+    "run_figure_estimator_comparison_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_estimator_comparison.pdf",
+    "run_figure_estimator_comparison_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_estimator_comparison.png",
+    "run_figure_frequency_band_errors_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_frequency_band_errors.pdf",
+    "run_figure_frequency_band_errors_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_frequency_band_errors.png",
+    "run_figure_information_disturbance_pareto_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_information_disturbance_pareto.pdf",
+    "run_figure_information_disturbance_pareto_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_information_disturbance_pareto.png",
+    "run_figure_mass_vs_acceleration_strength_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_mass_vs_acceleration_strength.pdf",
+    "run_figure_mass_vs_acceleration_strength_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_mass_vs_acceleration_strength.png",
+    "run_figure_parameterization_comparison_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_parameterization_comparison.pdf",
+    "run_figure_parameterization_comparison_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_parameterization_comparison.png",
+    "run_figure_regressor_geometry_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_regressor_geometry.pdf",
+    "run_figure_regressor_geometry_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_regressor_geometry.png",
+    "run_figure_representative_causal_signals_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_representative_causal_signals.pdf",
+    "run_figure_representative_causal_signals_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_representative_causal_signals.png",
+    "run_figure_timing_bias_pdf": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_timing_bias.pdf",
+    "run_figure_timing_bias_png": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/figures/exp_0003_timing_bias.png",
+    "safety_events": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/safety_events.json",
+    "stage1_decision": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/stage1_decision.json",
+    "summary": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/summary.json",
+    "timing_aggregate": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_aggregate.csv",
+    "timing_profile_aggregate": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_profile_aggregate.csv",
+    "timing_profile_trials_csv": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_profile_trials.csv.gz",
+    "timing_thresholds": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_thresholds.csv",
+    "timing_trials_csv": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_trials.csv.gz",
+    "timing_trials_npz": "runs/EXP-0003_20260828T225126.077199Z_s3101_b2da5c53/timing_trials.npz"
+  },
+  "git": {
+    "commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+    "status": "available",
+    "top_level": "/home/jimmy/Desktop/Drones/Probeing",
+    "worktree_dirty": true,
+    "worktree_status": [
+      " M ACHIEVEMENTS.md",
+      " M DECISIONS.md",
+      " M EXPERIMENTS.md",
+      " M PROJECT_STATE.md",
+      " M README_DEV.md",
+      " M configs/README.md",
+      " M configs/experiments/exp_0001_kelvin_voigt_validation.yaml",
+      " M lab/daily/2026-08-28.md",
+      " M lab/experiments/EXP-0001.md",
+      " M runs/README.md",
+      " M scripts/run_experiment.py",
+      " M src/probeing/estimators/__init__.py",
+      " M src/probeing/experiments/__init__.py",
+      " M src/probeing/metrics/__init__.py",
+      " M src/probeing/models/__init__.py",
+      " M src/probeing/plotting/__init__.py",
+      " M src/probeing/probing/__init__.py",
+      " M src/probeing/probing/signals.py",
+      "?? configs/experiments/exp_0001_interaction_identification.yaml",
+      "?? configs/experiments/exp_0002_practical_identifiability.yaml",
+      "?? configs/experiments/exp_0003_causal_eiv_identifiability.yaml",
+      "?? lab/daily/2026-08-29.md",
+      "?? lab/experiments/EXP-0002.md",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.png",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.pdf",
+      "?? results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__contact_mode_comparison.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__contact_mode_comparison.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__errors_in_variables.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__errors_in_variables.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__failure_heatmap.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__failure_heatmap.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__information_disturbance.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__information_disturbance.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__noise_and_sampling.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__noise_and_sampling.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__observability_by_probe.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__observability_by_probe.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__pipeline_and_parameter_errors.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__pipeline_and_parameter_errors.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__ramp_failure_analysis.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__ramp_failure_analysis.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__representative_signals.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__representative_signals.png",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__sensorless_force_exploratory.pdf",
+      "?? results/figures/EXP-0002_20260828T212540.955871Z_s2101_e8713743__sensorless_force_exploratory.png",
+      "?? results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__case_metrics.csv",
+      "?? results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__metrics.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__aggregate_metrics.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__go_no_go_candidates.csv",
+      "?? results/tables/EXP-0002_20260828T212540.955871Z_s2101_e8713743__metrics.csv",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/acceptance_checks.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/case_metrics.csv",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/config.resolved.yaml",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.pdf",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.png",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/manifest.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/metrics.json",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.csv.gz",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.npz",
+      "?? runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/safety_events.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/acceptance_checks.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/aggregate_metrics.csv",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/config.resolved.yaml",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_contact_mode_comparison.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_contact_mode_comparison.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_errors_in_variables.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_errors_in_variables.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_failure_heatmap.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_failure_heatmap.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_information_disturbance.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_information_disturbance.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_noise_and_sampling.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_noise_and_sampling.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_observability_by_probe.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_observability_by_probe.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_pipeline_and_parameter_errors.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_pipeline_and_parameter_errors.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_ramp_failure_analysis.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_ramp_failure_analysis.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_representative_signals.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_representative_signals.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_sensorless_force_exploratory.pdf",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/figures/exp_0002_sensorless_force_exploratory.png",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/go_no_go_candidates.csv",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/manifest.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/metrics.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/monte_carlo_trials.csv.gz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/monte_carlo_trials.npz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/ramp_failure_analysis.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/representative_timeseries.csv.gz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/representative_timeseries.npz",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/safety_events.json",
+      "?? runs/EXP-0002_20260828T212540.955871Z_s2101_e8713743/stage1_decision.json",
+      "?? scripts/run_exp_0002.py",
+      "?? scripts/run_exp_0003.py",
+      "?? src/probeing/estimators/eiv.py",
+      "?? src/probeing/estimators/linear.py",
+      "?? src/probeing/experiments/causal_eiv_identifiability.py",
+      "?? src/probeing/experiments/interaction_identification.py",
+      "?? src/probeing/experiments/practical_identifiability.py",
+      "?? src/probeing/measurements/__init__.py",
+      "?? src/probeing/measurements/causal.py",
+      "?? src/probeing/measurements/practical.py",
+      "?? src/probeing/measurements/synthetic.py",
+      "?? src/probeing/metrics/practical_identifiability.py",
+      "?? src/probeing/models/contact.py",
+      "?? src/probeing/models/mass_spring_damper.py",
+      "?? src/probeing/plotting/causal_eiv_identifiability.py",
+      "?? src/probeing/plotting/interaction_identification.py",
+      "?? src/probeing/plotting/practical_identifiability.py",
+      "?? tests/test_causal_eiv_identifiability.py",
+      "?? tests/test_contact_and_practical_sensing.py",
+      "?? tests/test_force_probes.py",
+      "?? tests/test_mass_spring_damper.py",
+      "?? tests/test_measurements_and_estimators.py",
+      "?? tests/test_milestone_a_experiment.py"
+    ]
+  },
+  "git_commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+  "predecessor_fingerprints_after": {
+    "EXP-0001": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39",
+    "EXP-0002": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc"
+  },
+  "predecessor_fingerprints_before": {
+    "EXP-0001": "fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39",
+    "EXP-0002": "f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc"
+  },
+  "run_id": "EXP-0003_20260828T225126.077199Z_s3101_b2da5c53",
+  "safety_violations": [],
+  "schema_version": 1,
+  "seed_set": "validation",
+  "software_versions": {
+    "PyYAML": "5.4.1",
+    "matplotlib": "3.5.1",
+    "numpy": "1.26.4",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "pytest": "6.2.5",
+    "python": "3.10.12",
+    "python_implementation": "CPython",
+    "scipy": "1.8.0"
+  },
+  "stage1_decision": "CONTINUE_STAGE_1",
+  "status": "success",
+  "success": true,
+  "timestamp_utc": "2026-08-28T22:51:26.077199+00:00",
+  "validation_seeds": [
+    3101,
+    3102,
+    3103,
+    3104,
+    3105,
+    3106,
+    3107,
+    3108,
+    3109,
+    3110,
+    3111,
+    3112,
+    3113,
+    3114,
+    3115,
+    3116,
+    3117,
+    3118,
+    3119,
+    3120
+  ]
+}

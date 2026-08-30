@@ -1,3 +1,5 @@
+# Historical pilot configuration. The current Milestone A EXP-0001 is
+# exp_0001_interaction_identification.yaml.
 schema_version: 1
 
 experiment:
@@ -49,4 +51,3 @@ acceptance:
   max_relative_energy_balance_error: 1.0e-5
   max_displacement_overshoot_m: 1.0e-12
   require_no_safety_violations: true
-

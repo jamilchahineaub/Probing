@@ -1,0 +1,339 @@
+{
+  "acceptance_checks": {
+    "all_perfect_cases_full_rank": true,
+    "near_ideal_batch_median_within_tolerance": true,
+    "near_ideal_rls_median_within_tolerance": true,
+    "normalized_condition_within_limit": true,
+    "perfect_batch_error_within_tolerance": true,
+    "perfect_rls_error_within_tolerance": true,
+    "safety_limits_respected": true
+  },
+  "calculated_metrics": {
+    "case_count": 60,
+    "maximum_abs_acceleration_m_per_s2": 12.037939025056193,
+    "maximum_abs_displacement_m": 0.016204507480986903,
+    "maximum_abs_parameter_correlation_perfect": 0.985042530154121,
+    "maximum_abs_probe_force_n": 1.0,
+    "maximum_abs_velocity_m_per_s": 0.296682309974626,
+    "maximum_near_ideal_batch_relative_error_rms": 0.3646209471351705,
+    "maximum_near_ideal_rls_relative_error_rms": 0.36462094713505416,
+    "maximum_normalized_condition_number_perfect": 11.522353339799144,
+    "maximum_perfect_batch_relative_error_rms": 2.2335275588593345e-13,
+    "maximum_perfect_rls_relative_error_rms": 6.499459330016288e-12,
+    "median_near_ideal_batch_relative_error_rms": 0.004884200989517382,
+    "median_near_ideal_rls_relative_error_rms": 0.004884200989907317,
+    "minimum_regression_rank_perfect": 3,
+    "near_ideal_case_count": 30,
+    "perfect_case_count": 30,
+    "safety_event_count": 0,
+    "sample_count": 90060
+  },
+  "completed_timestamp_utc": "2026-08-28T20:49:55.705814+00:00",
+  "configuration": {
+    "acceptance": {
+      "max_near_ideal_batch_median_relative_error_rms": 0.15,
+      "max_near_ideal_rls_median_relative_error_rms": 0.15,
+      "max_normalized_condition_number": 1000.0,
+      "max_perfect_batch_relative_error_rms": 1e-09,
+      "max_perfect_rls_relative_error_rms": 1e-06,
+      "near_ideal_scenario": "near_ideal",
+      "perfect_scenario": "perfect"
+    },
+    "estimators": {
+      "batch_least_squares": {
+        "regularization": "none"
+      },
+      "recursive_least_squares": {
+        "feature_preconditioning": "rms",
+        "forgetting_factor": 1.0,
+        "initial_covariance": "1.0e10",
+        "initial_parameters": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "experiment": {
+      "hypothesis": "The linear interaction parameters will be independently recoverable by batch least squares and RLS when the sampled response regression has full rank and acceptable normalized conditioning. Probe-dependent correlation and failures will be reported rather than repaired by estimator tuning.",
+      "id": "EXP-0001",
+      "random_seed": 1101,
+      "scientific_question": "Can k, c, and m_eff of an unknown interaction target be identified from a small bounded probing interaction under ideal or near-ideal measurements?",
+      "seed_set": "development",
+      "stage": "A",
+      "title": "Milestone A bounded interaction identification"
+    },
+    "measurement_scenarios": [
+      {
+        "name": "perfect",
+        "noise": {
+          "acceleration_std_m_per_s2": 0.0,
+          "displacement_std_m": 0.0,
+          "force_std_n": 0.0,
+          "velocity_std_m_per_s": 0.0
+        },
+        "seed_offset": 0
+      },
+      {
+        "name": "near_ideal",
+        "noise": {
+          "acceleration_std_m_per_s2": 0.005,
+          "displacement_std_m": 1e-06,
+          "force_std_n": 0.001,
+          "velocity_std_m_per_s": 0.0001
+        },
+        "seed_offset": 10000
+      }
+    ],
+    "plotting": {
+      "representative_case": {
+        "probe": "chirp",
+        "scenario": "near_ideal",
+        "target": "compliant"
+      }
+    },
+    "probes": [
+      {
+        "amplitude_n": 1.0,
+        "name": "ramp",
+        "rise_duration_s": 0.75
+      },
+      {
+        "amplitude_n": 1.0,
+        "name": "half_sine",
+        "pulse_duration_s": 1.0
+      },
+      {
+        "amplitude_n": 1.0,
+        "frequency_hz": 2.0,
+        "name": "sinusoid"
+      },
+      {
+        "amplitude_n": 1.0,
+        "end_frequency_hz": 10.0,
+        "name": "chirp",
+        "start_frequency_hz": 0.5
+      },
+      {
+        "amplitude_n": 1.0,
+        "frequencies_hz": [
+          0.5,
+          1.5,
+          4.0,
+          8.0
+        ],
+        "name": "multisine",
+        "phases_rad": [
+          0.0,
+          0.7,
+          1.4,
+          2.1
+        ],
+        "weights": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    ],
+    "safety_limits": {
+      "max_abs_acceleration_m_per_s2": 15.0,
+      "max_abs_displacement_m": 0.025,
+      "max_abs_probe_force_n": 1.000000000001,
+      "max_abs_velocity_m_per_s": 0.5
+    },
+    "schema_version": 1,
+    "scope_exclusions": [
+      "Gazebo",
+      "PX4",
+      "ROS 2",
+      "MPC",
+      "Isaac Sim",
+      "full quadrotor dynamics"
+    ],
+    "simulation": {
+      "duration_s": 3.0,
+      "equation": "F = m_eff*x_ddot + c*x_dot + k*x",
+      "initial_displacement_m": 0.0,
+      "initial_velocity_m_per_s": 0.0,
+      "integrator": "rk4",
+      "model": "one_dimensional_mass_spring_damper",
+      "sample_period_s": 0.002
+    },
+    "targets": [
+      {
+        "damping_n_s_per_m": 20.0,
+        "effective_mass_kg": 1.0,
+        "name": "rigid_high_stiffness",
+        "stiffness_n_per_m": 2000.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 1.0,
+        "name": "compliant",
+        "stiffness_n_per_m": 100.0
+      },
+      {
+        "damping_n_s_per_m": 0.5,
+        "effective_mass_kg": 1.0,
+        "name": "lightly_damped_flexible",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 50.0,
+        "effective_mass_kg": 1.0,
+        "name": "high_damping",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 0.1,
+        "name": "low_effective_mass",
+        "stiffness_n_per_m": 300.0
+      },
+      {
+        "damping_n_s_per_m": 5.0,
+        "effective_mass_kg": 5.0,
+        "name": "high_effective_mass",
+        "stiffness_n_per_m": 300.0
+      }
+    ]
+  },
+  "controller_settings": {
+    "status": "excluded from Milestone A"
+  },
+  "estimator_settings": {
+    "batch_least_squares": {
+      "regularization": "none"
+    },
+    "recursive_least_squares": {
+      "feature_preconditioning": "rms",
+      "forgetting_factor": 1.0,
+      "initial_covariance": "1.0e10",
+      "initial_parameters": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "experiment_id": "EXP-0001",
+  "files": {
+    "acceptance_checks": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/acceptance_checks.json",
+    "case_metrics": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/case_metrics.csv",
+    "indexed_case_metrics": "results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__case_metrics.csv",
+    "indexed_figure_observability_pdf": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.pdf",
+    "indexed_figure_observability_png": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__observability.png",
+    "indexed_figure_parameter_comparison_pdf": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.pdf",
+    "indexed_figure_parameter_comparison_png": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__parameter_comparison.png",
+    "indexed_figure_probe_error_pdf": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.pdf",
+    "indexed_figure_probe_error_png": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__probe_error.png",
+    "indexed_figure_rls_error_pdf": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.pdf",
+    "indexed_figure_rls_error_png": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__rls_error.png",
+    "indexed_figure_timeseries_pdf": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.pdf",
+    "indexed_figure_timeseries_png": "results/figures/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__timeseries.png",
+    "indexed_metrics_table": "results/tables/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69__metrics.csv",
+    "metrics": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/metrics.json",
+    "raw_csv": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.csv.gz",
+    "raw_npz": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/raw_timeseries.npz",
+    "resolved_config": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/config.resolved.yaml",
+    "run_figure_observability_pdf": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.pdf",
+    "run_figure_observability_png": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_observability.png",
+    "run_figure_parameter_comparison_pdf": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.pdf",
+    "run_figure_parameter_comparison_png": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_parameter_comparison.png",
+    "run_figure_probe_error_pdf": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.pdf",
+    "run_figure_probe_error_png": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_probe_error.png",
+    "run_figure_rls_error_pdf": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.pdf",
+    "run_figure_rls_error_png": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_rls_error.png",
+    "run_figure_timeseries_pdf": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.pdf",
+    "run_figure_timeseries_png": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/figures/exp_0001_timeseries.png",
+    "safety_events": "runs/EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69/safety_events.json"
+  },
+  "git": {
+    "commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+    "status": "available",
+    "top_level": "/home/jimmy/Desktop/Drones/Probeing",
+    "worktree_dirty": true,
+    "worktree_status": [
+      " M scripts/run_experiment.py",
+      " M src/probeing/estimators/__init__.py",
+      " M src/probeing/experiments/__init__.py",
+      " M src/probeing/models/__init__.py",
+      " M src/probeing/plotting/__init__.py",
+      " M src/probeing/probing/__init__.py",
+      " M src/probeing/probing/signals.py",
+      "?? configs/experiments/exp_0001_interaction_identification.yaml",
+      "?? src/probeing/estimators/linear.py",
+      "?? src/probeing/experiments/interaction_identification.py",
+      "?? src/probeing/measurements/__init__.py",
+      "?? src/probeing/measurements/synthetic.py",
+      "?? src/probeing/models/mass_spring_damper.py",
+      "?? src/probeing/plotting/interaction_identification.py",
+      "?? tests/test_force_probes.py",
+      "?? tests/test_mass_spring_damper.py",
+      "?? tests/test_measurements_and_estimators.py",
+      "?? tests/test_milestone_a_experiment.py"
+    ]
+  },
+  "git_commit_sha": "6b95560de738f74356576e4496ba794604009c4b",
+  "random_seed": 1101,
+  "run_id": "EXP-0001_20260828T204945.797835Z_s1101_4eb1fe69",
+  "safety_violations": [],
+  "schema_version": 1,
+  "seed_set": "development",
+  "software_versions": {
+    "PyYAML": "5.4.1",
+    "matplotlib": "3.5.1",
+    "numpy": "1.26.4",
+    "platform": "Linux-6.8.0-136-generic-x86_64-with-glibc2.35",
+    "pytest": "6.2.5",
+    "python": "3.10.12",
+    "python_implementation": "CPython",
+    "scipy": "1.8.0"
+  },
+  "status": "success",
+  "success": true,
+  "target_model_parameters": [
+    {
+      "damping_n_s_per_m": 20.0,
+      "effective_mass_kg": 1.0,
+      "name": "rigid_high_stiffness",
+      "stiffness_n_per_m": 2000.0
+    },
+    {
+      "damping_n_s_per_m": 5.0,
+      "effective_mass_kg": 1.0,
+      "name": "compliant",
+      "stiffness_n_per_m": 100.0
+    },
+    {
+      "damping_n_s_per_m": 0.5,
+      "effective_mass_kg": 1.0,
+      "name": "lightly_damped_flexible",
+      "stiffness_n_per_m": 300.0
+    },
+    {
+      "damping_n_s_per_m": 50.0,
+      "effective_mass_kg": 1.0,
+      "name": "high_damping",
+      "stiffness_n_per_m": 300.0
+    },
+    {
+      "damping_n_s_per_m": 5.0,
+      "effective_mass_kg": 0.1,
+      "name": "low_effective_mass",
+      "stiffness_n_per_m": 300.0
+    },
+    {
+      "damping_n_s_per_m": 5.0,
+      "effective_mass_kg": 5.0,
+      "name": "high_effective_mass",
+      "stiffness_n_per_m": 300.0
+    }
+  ],
+  "timestamp_utc": "2026-08-28T20:49:45.797835+00:00",
+  "uav_parameters": {
+    "status": "excluded from Milestone A"
+  }
+}

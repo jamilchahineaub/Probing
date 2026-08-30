@@ -1,0 +1,291 @@
+schema_version: 1
+experiment:
+  id: EXP-0005
+  title: Stage 1 decision-sufficient interaction identification
+  stage: 1
+  scientific_question: Can one fixed low-mid-frequency chirp reliably estimate task-relevant
+    interaction properties and classify whether sustained contact is safe, without
+    requiring accurate separate estimates of k, c, and m_eff?
+frozen_references:
+  exp_0001:
+    expected_artifact_fingerprint: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+  exp_0002:
+    expected_artifact_fingerprint: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+  exp_0003:
+    expected_artifact_fingerprint: 067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8
+  exp_0004:
+    run_id: EXP-0004_20260828T232523.568285Z_s4101_0ceb48c2
+    expected_artifact_fingerprint: d17c85e6e520d08ee4c59650675a3c0135d7371484c030ca2ce36b1952c45968
+seed_partitions:
+  training:
+  - 5101
+  - 5102
+  - 5103
+  - 5104
+  - 5105
+  - 5106
+  - 5107
+  - 5108
+  - 5109
+  - 5110
+  - 5111
+  - 5112
+  - 5113
+  - 5114
+  - 5115
+  - 5116
+  - 5117
+  - 5118
+  - 5119
+  - 5120
+  calibration:
+  - 5201
+  - 5202
+  - 5203
+  - 5204
+  - 5205
+  - 5206
+  - 5207
+  - 5208
+  - 5209
+  - 5210
+  validation:
+  - 6101
+  - 6102
+  - 6103
+  - 6104
+  - 6105
+  - 6106
+  - 6107
+  - 6108
+  - 6109
+  - 6110
+  - 6111
+  - 6112
+  - 6113
+  - 6114
+  - 6115
+  - 6116
+  - 6117
+  - 6118
+  - 6119
+  - 6120
+  cases_per_seed: 12
+  generation: independent log-Latin-hypercube within every seed
+target_population:
+  stiffness_n_per_m:
+  - 75.0
+  - 2500.0
+  damping_n_s_per_m:
+  - 0.3
+  - 60.0
+  effective_mass_kg:
+  - 0.1
+  - 6.0
+  policy: Continuous log-space sampling includes interpolation between and beyond
+    the original six canonical classes; canonical labels are not used.
+probe:
+  type: chirp
+  amplitude_n: 0.5
+  start_frequency_hz: 0.5
+  end_frequency_hz: 5.0
+  duration_s: 3.0
+  sample_period_s: 0.002
+  contact_mode: unilateral
+  adaptive: false
+sensing:
+  primary_pipeline: causal_low_pass
+  stiffness_diagnostic_pipeline: alpha_beta_gamma
+  sample_rate_hz: 200.0
+  analysis_trim_s: 0.15
+  synchronized: true
+  noise_regimes:
+  - name: low
+    multiplier: 0.5
+  - name: nominal
+    multiplier: 1.0
+  - name: high
+    multiplier: 2.0
+  base_noise:
+    displacement_std_m: 5.0e-05
+    velocity_std_m_per_s: 0.002
+    acceleration_std_m_per_s2: 0.1
+    force_std_n: 0.02
+  pipeline_settings:
+    low_pass_cutoff_hz: 10.0
+    polynomial_window_duration_s: 0.11
+    polynomial_order: 3
+    observer_alpha: 0.4
+    observer_beta: 0.08
+    observer_gamma: 0.008
+    observer_force_cutoff_hz: 10.0
+  no_noncausal_primary_result: true
+diagnostic_parameter_estimation:
+  stiffness: alpha_beta_gamma_tls
+  damping: causal_low_pass_ols
+  effective_mass: causal_low_pass_iv
+  iv_input_delays_s:
+  - 0.0
+  - 0.025
+  - 0.05
+  - 0.075
+  - 0.1
+  role: diagnostic_features_and_comparison_only
+future_contact_maneuver:
+  contact_force_n: 2.0
+  ramp_up_s: 0.5
+  hold_end_s: 3.5
+  ramp_down_end_s: 4.0
+  total_duration_s: 7.0
+  sample_period_s: 0.002
+  description: Raised-cosine load to 2 N, sustained hold, raised-cosine unload, and
+    free ringdown. The predictor never receives this response for validation cases.
+risk_envelope:
+  safe:
+    peak_displacement_m: 0.012
+    peak_velocity_m_per_s: 0.12
+    late_hold_oscillation_rms_m: 0.0015
+    hold_settling_time_s: 2.0
+  unsafe:
+    peak_displacement_m: 0.02
+    peak_velocity_m_per_s: 0.25
+    late_hold_oscillation_rms_m: 0.004
+    hold_settling_time_s: 2.8
+  contact_tracking_displacement_m: 0.02
+  settling_displacement_fraction: 0.05
+  settling_displacement_floor_m: 0.0002
+  settling_velocity_m_per_s: 0.01
+  class_rule: SAFE only if every response metric is inside the safe envelope; UNSAFE
+    if any metric exceeds the unsafe envelope or tracking travel; CAUTION otherwise.
+  labels_derive_from_future_response_only: true
+safe_force_definition:
+  maximum_considered_force_n: 3.0
+  constraints:
+  - safe_peak_displacement
+  - safe_peak_velocity
+  - safe_oscillation_amplitude
+  definition: Disturbance-limited force obtained by linear scaling of the hidden 2
+    N maneuver response to the safe displacement, velocity, and absolute oscillation
+    envelopes. It does not claim that reduced force fixes slow relative settling.
+feature_sets:
+  full_parameters:
+    description: estimated [k, c, m_eff] diagnostics
+  stiffness_only:
+    description: estimated stiffness only
+  frequency_response:
+    description: causal force-to-displacement spectral gain, peak, centroid, phase,
+      and band ratios
+  time_domain:
+    description: causal probe displacement/velocity/acceleration, persistence, gain,
+      and work features
+  combined_task:
+    description: stiffness plus frequency-response and time-domain features; excludes
+      estimated c and m_eff
+predictors:
+  threshold_rule:
+    enabled: true
+    future_to_probe_force_ratio: 4.0
+  outcome_bound_regression:
+    ridge_penalty: 0.001
+    upper_residual_quantile: 0.95
+    safe_force_lower_residual_quantile: 0.05
+    primary_feature_set: combined_task
+  multinomial_logistic:
+    iterations: 1200
+    learning_rate: 0.05
+    l2_penalty: 0.01
+    class_weighting: balanced
+    safe_probability_threshold: 0.8
+    unsafe_probability_threshold: 0.5
+  training_noise_augmentation:
+  - low
+  - nominal
+  - high
+  calibration_noise_augmentation:
+  - low
+  - nominal
+  - high
+quantitative_outcomes:
+- peak_displacement_m
+- peak_velocity_m_per_s
+- dominant_response_frequency_hz
+- late_hold_oscillation_rms_m
+- hold_settling_time_s
+- force_to_displacement_gain_m_per_n
+- disturbance_limited_safe_force_n
+decision_metrics:
+  false_safe_definition: predicted SAFE while actual class is CAUTION or UNSAFE
+  false_safe_rate_denominator: actual CAUTION plus actual UNSAFE
+  false_unsafe_definition: predicted UNSAFE while actual class is SAFE
+  primary_metric: false_safe_rate
+  report:
+  - accuracy
+  - false_safe_rate
+  - false_safe_fraction
+  - false_unsafe_rate
+  - precision_recall_per_class
+  - expected_calibration_error
+  - brier_score
+kill_criterion:
+  maximum_false_safe_rate_each_noise_regime: 0.05
+  minimum_accuracy_nominal: 0.85
+  minimum_accuracy_high_noise: 0.8
+  minimum_unsafe_recall_each_noise_regime: 0.85
+  minimum_displacement_upper_bound_coverage: 0.95
+  minimum_safe_force_lower_bound_coverage: 0.95
+  rule: Stop and reconsider the probing architecture if the primary combined-task
+    outcome-bound predictor violates any false-safe, accuracy, unsafe-recall, or conservative-bound
+    criterion on untouched validation cases.
+stage1_gate:
+  require_kill_criterion_pass: true
+  require_decision_accuracy_in_worst_mass_error_quartile: 0.8
+  require_no_probe_safety_events: true
+  rule: Independent MATLAB/Simulink validation is allowed only if the causal primary
+    predictor passes the decision-sufficiency kill criterion and retains at least
+    80 percent accuracy in the worst quartile of effective-mass diagnostic error.
+probe_safety_limits:
+  max_peak_force_n: 0.500000000001
+  max_peak_target_displacement_m: 0.025
+  max_peak_target_velocity_m_per_s: 0.5
+  max_peak_target_acceleration_m_per_s2: 15.0
+integrity_acceptance:
+  minimum_validation_seeds: 20
+  minimum_validation_cases: 240
+  minimum_fraction_per_risk_class: 0.1
+  forbidden_validation_seeds_before_final_run:
+  - 6101
+  - 6102
+  - 6103
+  - 6104
+  - 6105
+  - 6106
+  - 6107
+  - 6108
+  - 6109
+  - 6110
+  - 6111
+  - 6112
+  - 6113
+  - 6114
+  - 6115
+  - 6116
+  - 6117
+  - 6118
+  - 6119
+  - 6120
+representative_raw:
+  noise_regime: nominal
+scope_exclusions:
+- adaptive or sequential probing
+- rescue of full-vector identification
+- centered or noncausal filtering as a primary result
+- MATLAB
+- Simulink
+- EKF
+- UAV dynamics
+- Gazebo
+- PX4
+- ROS 2
+- MPC
+- Isaac Sim
+- neural networks

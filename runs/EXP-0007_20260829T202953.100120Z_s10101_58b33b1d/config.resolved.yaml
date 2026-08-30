@@ -1,0 +1,208 @@
+schema_version: 1
+experiment:
+  id: EXP-0007
+  title: Stage 1 locked passive-policy independent replication
+  stage: 1
+  scientific_question: Does the locked chirp plus 0.5 s passive ring-down policy retain
+    low false-safe performance on a completely independent target population and seed
+    set?
+frozen_references:
+  exp_0001:
+    expected_artifact_fingerprint: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+  exp_0002:
+    expected_artifact_fingerprint: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+  exp_0003:
+    expected_artifact_fingerprint: 067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8
+  exp_0004:
+    expected_artifact_fingerprint: d17c85e6e520d08ee4c59650675a3c0135d7371484c030ca2ce36b1952c45968
+  exp_0005:
+    expected_artifact_fingerprint: 19193f839a4b7939a24d90373af44c6a021614dacef805c7b2a2c33518a1774a
+  exp_0006:
+    run_id: EXP-0006_20260829T194621.991365Z_s8101_2966d3d2
+    expected_artifact_fingerprint: 81c05ece204531c27db87760bd90ef92fbde30572bdab9706a2ec2103083d497
+    expected_config_sha256: bbddbb77bf24a5aaab1b86d43bb6f7e1563c56fed6d86a4ca02f1d81a0eb36be
+    expected_policy_source_sha256: e063053296e2ca67419b50534feafb618d20b896b6df38271795cdff9abe97ac
+locked_policy:
+  policy_id: EXP-0006-primary-0p5s-chirp-ringdown
+  bundle_path: configs/policies/exp_0007_locked_exp_0006_policy.json
+  expected_bundle_sha256: 7cc1669f897ea1c917b5f3b289412bdbbc0187ac9a3979ca38240078f1d8c015
+  source_feature_set: chirp_ringdown
+  observation_duration_s: 0.5
+  primary_control_decision: SAFE_vs_NON_SAFE
+  secondary_diagnostic_labels:
+  - SAFE
+  - CAUTION
+  - UNSAFE
+  fitting_or_calibration_allowed_in_exp_0007: false
+  modification_after_replication_allowed: false
+replication_population:
+  broad_seed_range:
+    first: 10101
+    last: 10180
+  boundary_candidate_seed_range:
+    first: 10201
+    last: 10300
+  cases_per_seed: 12
+  broad_sampling: independent log-Latin-hypercube within every seed
+  target_bounds:
+    stiffness_n_per_m:
+    - 75.0
+    - 2500.0
+    damping_n_s_per_m:
+    - 0.3
+    - 60.0
+    effective_mass_kg:
+    - 0.1
+    - 6.0
+  boundary_enrichment:
+    safe_count: 200
+    non_safe_count: 200
+    selection_rule: From the independent candidate pool, separately select SAFE and
+      NON-SAFE targets with the smallest absolute log ratio between true hidden-maneuver
+      severity and the unchanged SAFE envelope. Selection uses physical truth only,
+      never a locked-policy prediction, and supplies no fitting data.
+  prohibited_seed_ranges:
+    development:
+    - 1000
+    - 1999
+    exp_0002:
+    - 2101
+    - 2120
+    exp_0003:
+    - 3101
+    - 3120
+    exp_0004:
+    - 4101
+    - 4120
+    exp_0005_training:
+    - 5101
+    - 5120
+    exp_0005_calibration:
+    - 5201
+    - 5210
+    exp_0005_validation:
+    - 6101
+    - 6120
+    exp_0006_training:
+    - 7101
+    - 7120
+    exp_0006_calibration:
+    - 7201
+    - 7210
+    exp_0006_validation:
+    - 8101
+    - 8120
+confidence_intervals:
+  method: Clopper-Pearson exact binomial
+  confidence_level: 0.95
+  stage_gate_uses: one_sided_upper
+  reporting_also_includes: two_sided_interval
+primary_metrics:
+  positive_event_for_sensitivity: NON_SAFE
+  false_negative_definition: actual NON_SAFE predicted SAFE
+  false_positive_definition: actual SAFE predicted NON_SAFE
+  false_safe_rate_denominator: actual NON_SAFE
+  safe_precision_definition: actual SAFE divided by all predicted SAFE
+secondary_metrics:
+- three_class_accuracy
+- unsafe_recall
+- peak_displacement_prediction
+- settling_prediction
+- response_bound_coverage
+- confidence_margin_behavior
+exp_0006_reference_metrics:
+  nominal:
+    binary_accuracy: 0.8875
+    false_safe_rate: 0.0
+    non_safe_recall: 1.0
+    safe_precision: 1.0
+  high:
+    binary_accuracy: 0.8958333333333334
+    false_safe_rate: 0.0
+    non_safe_recall: 1.0
+    safe_precision: 1.0
+stage1_replication_criterion:
+  maximum_nominal_false_safe_rate: 0.01
+  maximum_high_noise_false_safe_rate: 0.02
+  maximum_nominal_false_safe_one_sided_95_upper: 0.01
+  maximum_high_noise_false_safe_one_sided_95_upper: 0.02
+  minimum_nominal_binary_accuracy: 0.85
+  minimum_high_noise_binary_accuracy: 0.85
+  minimum_nominal_safe_precision: 0.99
+  minimum_high_noise_safe_precision: 0.99
+  minimum_nominal_non_safe_recall: 0.99
+  minimum_high_noise_non_safe_recall: 0.98
+  maximum_binary_accuracy_degradation_from_exp_0006: 0.05
+  maximum_boundary_false_safe_rate: 0.02
+  maximum_boundary_false_safe_one_sided_95_upper: 0.025
+  minimum_boundary_binary_accuracy: 0.75
+  require_nominal_and_high_boundary_pass: true
+  require_zero_probe_safety_events: true
+  rule: Stage 1 may proceed to independent MATLAB/Simulink validation only if the
+    immutable policy bundle passes all nominal/high overall and boundary false-safe
+    confidence limits, binary accuracy/precision/recall limits, population-degradation
+    checks, integrity checks, and probe safety checks. Secondary CAUTION/UNSAFE confusion
+    does not veto progression unless it creates a SAFE prediction for a truly NON-SAFE
+    target.
+integrity_acceptance:
+  minimum_total_replication_cases: 1300
+  minimum_broad_cases: 900
+  minimum_boundary_cases: 400
+  minimum_non_safe_cases: 300
+  require_predictions_before_outcome_join: true
+  require_no_exp_0007_fit_or_calibration: true
+  require_exact_locked_policy_hash: true
+  require_all_predecessor_fingerprints_unchanged: true
+future_contact_maneuver:
+  contact_force_n: 2.0
+  ramp_up_s: 0.5
+  hold_end_s: 3.5
+  ramp_down_end_s: 4.0
+  total_duration_s: 7.0
+  sample_period_s: 0.002
+  description: identical hidden sustained-contact maneuver to EXP-0005
+risk_envelope:
+  safe:
+    peak_displacement_m: 0.012
+    peak_velocity_m_per_s: 0.12
+    late_hold_oscillation_rms_m: 0.0015
+    hold_settling_time_s: 2.0
+  unsafe:
+    peak_displacement_m: 0.02
+    peak_velocity_m_per_s: 0.25
+    late_hold_oscillation_rms_m: 0.004
+    hold_settling_time_s: 2.8
+  contact_tracking_displacement_m: 0.02
+  settling_displacement_fraction: 0.05
+  settling_displacement_floor_m: 0.0002
+  settling_velocity_m_per_s: 0.01
+  class_rule: identical to EXP-0005
+  labels_derive_from_future_response_only: true
+safe_force_definition:
+  maximum_considered_force_n: 3.0
+  constraints:
+  - safe_peak_displacement
+  - safe_peak_velocity
+  - safe_oscillation_amplitude
+  definition: identical diagnostic definition to EXP-0005
+representative_raw:
+  noise_regime: high
+  maximum_false_safe_cases: 12
+  correctly_rejected_cases: 3
+scope_exclusions:
+- policy tuning or refitting
+- threshold changes
+- feature changes
+- safety-label changes
+- chirp or observation-duration changes
+- active or sequential follow-up excitation
+- MATLAB
+- Simulink
+- EKF
+- UAV dynamics
+- Gazebo
+- PX4
+- ROS 2
+- MPC
+- Isaac Sim
+- neural networks

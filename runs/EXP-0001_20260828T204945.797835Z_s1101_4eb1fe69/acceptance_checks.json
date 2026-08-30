@@ -1,0 +1,9 @@
+{
+  "all_perfect_cases_full_rank": true,
+  "near_ideal_batch_median_within_tolerance": true,
+  "near_ideal_rls_median_within_tolerance": true,
+  "normalized_condition_within_limit": true,
+  "perfect_batch_error_within_tolerance": true,
+  "perfect_rls_error_within_tolerance": true,
+  "safety_limits_respected": true
+}

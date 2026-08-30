@@ -1,0 +1,17 @@
+{
+  "passive_ringdown_safety_criterion_pass": false,
+  "qualifying_fixed_durations_s": [],
+  "selected_reporting_duration_s": 0.5,
+  "stage1_decision": "CONTINUE_STAGE_1",
+  "stage1_safety_criterion": {
+    "maximum_fixed_observation_s": 2.0,
+    "maximum_high_noise_false_safe_rate": 0.02,
+    "maximum_nominal_false_safe_rate": 0.01,
+    "maximum_relative_probe_energy_increase": 1e-12,
+    "minimum_high_noise_accuracy": 0.8,
+    "minimum_nominal_accuracy": 0.8,
+    "minimum_unsafe_recall": 0.9,
+    "require_all_exp_0005_nominal_false_safe_targets_detected": true,
+    "rule": "Stage 1 may proceed only if at least one fixed passive duration no longer than 2 s meets both false-safe limits, accuracy and unsafe-recall limits, adds no probing energy, and detects every nominal EXP-0005 false-safe case."
+  }
+}

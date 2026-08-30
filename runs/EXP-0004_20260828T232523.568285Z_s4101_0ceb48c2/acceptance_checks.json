@@ -1,0 +1,10 @@
+{
+  "adaptive_selection_does_not_receive_truth": true,
+  "all_requested_strategies_present": true,
+  "force_dose_budget_respected": true,
+  "maximum_probe_count_respected": true,
+  "minimum_monte_carlo_seeds": true,
+  "no_safety_events": true,
+  "representative_raw_present": true,
+  "unique_validation_seeds": true
+}

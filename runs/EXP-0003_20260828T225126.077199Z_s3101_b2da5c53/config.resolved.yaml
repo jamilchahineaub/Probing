@@ -1,0 +1,268 @@
+schema_version: 1
+experiment:
+  id: EXP-0003
+  title: Stage 1 causal timing and errors-in-variables identifiability study
+  stage: 1
+  scientific_question: Are the poor damping and effective-mass estimates caused primarily
+    by timing/filtering/errors-in-variables effects that can be corrected causally,
+    or are they fundamentally too weakly identifiable under safe bounded probing?
+  seed_set: validation
+validation_seeds:
+- 3101
+- 3102
+- 3103
+- 3104
+- 3105
+- 3106
+- 3107
+- 3108
+- 3109
+- 3110
+- 3111
+- 3112
+- 3113
+- 3114
+- 3115
+- 3116
+- 3117
+- 3118
+- 3119
+- 3120
+frozen_references:
+  exp_0001:
+    expected_artifact_fingerprint: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+  exp_0002:
+    run_id: EXP-0002_20260828T212540.955871Z_s2101_e8713743
+    expected_artifact_fingerprint: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+simulation:
+  model: one_dimensional_mass_spring_damper
+  equation: F_contact = m_eff*x_ddot + c*x_dot + k*x
+  integrator: rk4
+  sample_period_s: 0.002
+  duration_s: 3.0
+  contact_mode: unilateral
+targets:
+- name: rigid_high_stiffness
+  stiffness_n_per_m: 2000.0
+  damping_n_s_per_m: 20.0
+  effective_mass_kg: 1.0
+- name: compliant
+  stiffness_n_per_m: 100.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 1.0
+- name: lightly_damped_flexible
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 0.5
+  effective_mass_kg: 1.0
+- name: high_damping
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 50.0
+  effective_mass_kg: 1.0
+- name: low_effective_mass
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 0.1
+- name: high_effective_mass
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 5.0
+chirp_frequency_bands:
+- name: low_0p25_2_hz
+  start_frequency_hz: 0.25
+  end_frequency_hz: 2.0
+- name: low_mid_0p5_5_hz
+  start_frequency_hz: 0.5
+  end_frequency_hz: 5.0
+- name: baseline_0p5_10_hz
+  start_frequency_hz: 0.5
+  end_frequency_hz: 10.0
+- name: mid_2_10_hz
+  start_frequency_hz: 2.0
+  end_frequency_hz: 10.0
+- name: high_5_15_hz
+  start_frequency_hz: 5.0
+  end_frequency_hz: 15.0
+- name: wide_0p5_20_hz
+  start_frequency_hz: 0.5
+  end_frequency_hz: 20.0
+probe:
+  type: chirp
+  amplitude_n: 1.0
+  baseline_band: baseline_0p5_10_hz
+  amplitude_policy: Fixed across every band; no force scaling is used to improve estimates.
+sensing:
+  sample_rate_hz: 200.0
+  analysis_trim_s: 0.15
+  noise:
+    displacement_std_m: 5.0e-05
+    velocity_std_m_per_s: 0.002
+    acceleration_std_m_per_s2: 0.1
+    force_std_n: 0.02
+  synchronized_by_default: true
+  direct_acceleration_used_for_timing_sweep_only: true
+timing_study:
+  offset_values_ms:
+  - -20.0
+  - -10.0
+  - -5.0
+  - -2.5
+  - -1.0
+  - 0.0
+  - 1.0
+  - 2.5
+  - 5.0
+  - 10.0
+  - 20.0
+  displacement_offset_also_applies_to_direct_velocity: true
+  group_delay_values_ms:
+  - 0.0
+  - 2.5
+  - 5.0
+  - 10.0
+  - 20.0
+  - 40.0
+  one_factor_at_a_time: true
+  profiles:
+  - name: synchronized
+    displacement_offset_s: 0.0
+    velocity_offset_s: 0.0
+    acceleration_offset_s: 0.0
+    force_offset_s: 0.0
+    mismatch_std_s: 0.0
+  - name: exp_0002_nominal_timing
+    displacement_offset_s: 0.01
+    velocity_offset_s: 0.01
+    acceleration_offset_s: 0.005
+    force_offset_s: 0.012
+    mismatch_std_s: 0.0
+  - name: exp_0002_nominal_plus_mismatch
+    displacement_offset_s: 0.01
+    velocity_offset_s: 0.01
+    acceleration_offset_s: 0.005
+    force_offset_s: 0.012
+    mismatch_std_s: 0.002
+  - name: corrected_common_delay
+    displacement_offset_s: 0.012
+    velocity_offset_s: 0.012
+    acceleration_offset_s: 0.012
+    force_offset_s: 0.012
+    mismatch_std_s: 0.0
+pipelines:
+- name: backward_difference
+  causal: true
+- name: causal_low_pass
+  causal: true
+- name: causal_polynomial
+  causal: true
+- name: alpha_beta_gamma
+  causal: true
+- name: centered_savitzky_golay
+  causal: false
+  role: offline_reference_only
+pipeline_settings:
+  low_pass_cutoff_hz: 10.0
+  polynomial_window_duration_s: 0.11
+  polynomial_order: 3
+  observer_alpha: 0.4
+  observer_beta: 0.08
+  observer_gamma: 0.008
+  observer_force_cutoff_hz: 10.0
+  common_settings_policy: One setting per pipeline for all targets, bands, and seeds.
+estimators:
+  names:
+  - ols
+  - tls
+  - iv
+  iv_input_delays_s:
+  - 0.0
+  - 0.025
+  - 0.05
+  - 0.075
+  - 0.1
+  weighted_tls:
+    enabled: false
+    reason: Derived velocity and acceleration errors are correlated, colored, and
+      target-dependent; a defensible full covariance model is not available. Diagonal
+      ad-hoc weights would create false confidence.
+  alternate_parameterization:
+    ratios:
+    - omega_n_squared
+    - two_zeta_omega_n
+    - inverse_mass
+    reported:
+    - omega_n
+    - zeta
+    - inverse_mass
+safety_limits:
+  max_peak_force_n: 1.000000000001
+  max_peak_target_displacement_m: 0.025
+  max_peak_target_velocity_m_per_s: 0.5
+  max_peak_target_acceleration_m_per_s2: 15.0
+classification:
+  max_p95_abs_relative_error:
+    stiffness: 0.2
+    damping: 0.3
+    effective_mass: 0.3
+    natural_frequency: 0.2
+    damping_ratio: 0.3
+    inverse_mass: 0.3
+  max_abs_relative_bias:
+    stiffness: 0.1
+    damping: 0.15
+    effective_mass: 0.15
+    natural_frequency: 0.1
+    damping_ratio: 0.15
+    inverse_mass: 0.15
+  max_failure_fraction: 0.05
+  restricted_min_target_count: 4
+  category_A: One safe fixed causal pipeline/band/estimator passes every target.
+  category_B: No universal candidate passes, but one safe fixed causal candidate passes
+    at least four of six predefined target classes.
+  category_C: No fixed causal candidate satisfies the restricted-condition rule.
+  practically_significant_timing_bias:
+    stiffness: 0.1
+    damping: 0.15
+    effective_mass: 0.15
+stage1_gate:
+  rule: Ready for independent MATLAB/Simulink validation only if one safe fixed causal
+    candidate makes stiffness and damping category A and makes either effective mass
+    category A or both natural frequency and damping behavior category A. Offline
+    centered filtering cannot trigger readiness.
+integrity_acceptance:
+  minimum_monte_carlo_seeds: 20
+  forbidden_validation_seeds_before_final_run:
+  - 3101
+  - 3102
+  - 3103
+  - 3104
+  - 3105
+  - 3106
+  - 3107
+  - 3108
+  - 3109
+  - 3110
+  - 3111
+  - 3112
+  - 3113
+  - 3114
+  - 3115
+  - 3116
+  - 3117
+  - 3118
+  - 3119
+  - 3120
+representative_raw:
+  target: low_effective_mass
+  band: baseline_0p5_10_hz
+  seed: 3101
+scope_exclusions:
+- MATLAB
+- Simulink
+- EKF
+- UAV dynamics
+- Gazebo
+- PX4
+- ROS 2
+- MPC
+- Isaac Sim
+- sensorless force estimation

@@ -1,0 +1,13 @@
+{
+  "all_estimators_present": true,
+  "all_frequency_bands_respect_safety_limits": true,
+  "all_pipelines_present": true,
+  "chirp_only": true,
+  "complete_identification_matrix": true,
+  "complete_timing_matrix": true,
+  "complete_timing_profile_matrix": true,
+  "monte_carlo_seed_count_sufficient": true,
+  "new_untouched_validation_seed_partition": true,
+  "representative_raw_saved": true,
+  "sensorless_force_excluded": true
+}

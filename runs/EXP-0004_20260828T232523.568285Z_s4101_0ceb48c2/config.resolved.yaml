@@ -1,0 +1,304 @@
+schema_version: 1
+experiment:
+  id: EXP-0004
+  title: Stage 1 sequential uncertainty-driven probing
+  stage: 1
+  scientific_question: Can sequential, uncertainty-driven probing identify the complete
+    target dynamics more reliably than a single fixed probe while respecting the same
+    physical disturbance limits?
+  seed_set: validation
+validation_seeds:
+- 4101
+- 4102
+- 4103
+- 4104
+- 4105
+- 4106
+- 4107
+- 4108
+- 4109
+- 4110
+- 4111
+- 4112
+- 4113
+- 4114
+- 4115
+- 4116
+- 4117
+- 4118
+- 4119
+- 4120
+frozen_references:
+  exp_0001:
+    expected_artifact_fingerprint: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+  exp_0002:
+    run_id: EXP-0002_20260828T212540.955871Z_s2101_e8713743
+    expected_artifact_fingerprint: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+  exp_0003:
+    run_id: EXP-0003_20260828T225126.077199Z_s3101_b2da5c53
+    expected_artifact_fingerprint: 067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8
+simulation:
+  model: one_dimensional_mass_spring_damper
+  equation: F_contact = m_eff*x_ddot + c*x_dot + k*x
+  integrator: rk4
+  sample_period_s: 0.002
+  probe_duration_s: 3.0
+  contact_mode: unilateral
+  carry_state_between_probes: true
+targets:
+- name: rigid_high_stiffness
+  stiffness_n_per_m: 2000.0
+  damping_n_s_per_m: 20.0
+  effective_mass_kg: 1.0
+- name: compliant
+  stiffness_n_per_m: 100.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 1.0
+- name: lightly_damped_flexible
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 0.5
+  effective_mass_kg: 1.0
+- name: high_damping
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 50.0
+  effective_mass_kg: 1.0
+- name: low_effective_mass
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 0.1
+- name: high_effective_mass
+  stiffness_n_per_m: 300.0
+  damping_n_s_per_m: 5.0
+  effective_mass_kg: 5.0
+probe_library:
+  amplitude_n: 1.0
+  candidates:
+  - name: low_chirp
+    type: chirp
+    start_frequency_hz: 0.25
+    end_frequency_hz: 2.0
+  - name: low_mid_chirp
+    type: chirp
+    start_frequency_hz: 0.5
+    end_frequency_hz: 5.0
+  - name: high_chirp
+    type: chirp
+    start_frequency_hz: 5.0
+    end_frequency_hz: 15.0
+  - name: wide_chirp
+    type: chirp
+    start_frequency_hz: 0.5
+    end_frequency_hz: 15.0
+  - name: low_multisine
+    type: multisine
+    frequencies_hz:
+    - 0.25
+    - 0.75
+    - 1.5
+    - 2.0
+    phases_rad:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  - name: broad_multisine
+    type: multisine
+    frequencies_hz:
+    - 0.5
+    - 2.0
+    - 5.0
+    - 10.0
+    phases_rad:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  - name: high_multisine
+    type: multisine
+    frequencies_hz:
+    - 4.0
+    - 7.0
+    - 10.0
+    - 14.0
+    phases_rad:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  amplitude_policy: Fixed at 1 N for every candidate and every target.
+strategies:
+- name: single_fixed_chirp
+  mode: fixed
+  sequence:
+  - low_mid_chirp
+- name: single_multisine
+  mode: fixed
+  sequence:
+  - broad_multisine
+- name: repeated_identical_chirp
+  mode: fixed
+  sequence:
+  - low_mid_chirp
+  - low_mid_chirp
+  - low_mid_chirp
+- name: predefined_multistage
+  mode: fixed
+  sequence:
+  - low_chirp
+  - low_mid_chirp
+  - high_chirp
+- name: uncertainty_driven
+  mode: adaptive
+  initial_probe: low_mid_chirp
+  candidate_names:
+  - low_chirp
+  - low_mid_chirp
+  - high_chirp
+  - wide_chirp
+  - low_multisine
+  - broad_multisine
+  - high_multisine
+sensing:
+  pipeline: causal_low_pass
+  parameter_pipelines:
+    stiffness: alpha_beta_gamma
+    damping: causal_low_pass
+    effective_mass: causal_low_pass
+  sample_rate_hz: 200.0
+  analysis_trim_s: 0.15
+  noise:
+    displacement_std_m: 5.0e-05
+    velocity_std_m_per_s: 0.002
+    acceleration_std_m_per_s2: 0.1
+    force_std_n: 0.02
+  timestamp_offsets_s:
+    displacement: 0.0
+    velocity: 0.0
+    acceleration: 0.0
+    force: 0.0
+  pipeline_settings:
+    low_pass_cutoff_hz: 10.0
+    polynomial_window_duration_s: 0.11
+    polynomial_order: 3
+    observer_alpha: 0.4
+    observer_beta: 0.08
+    observer_gamma: 0.008
+    observer_force_cutoff_hz: 10.0
+  policy: One predeclared synchronized causal pipeline per parameter, with common
+    settings for every target and probe. The parameter-specific choices come from
+    EXP-0003 and are not target-tuned.
+estimation:
+  primary: parameter_specific_tls_k_ols_c_iv_mass
+  selection_covariance: block_jackknife_plus_analytic_ols
+  iv_input_delays_s:
+  - 0.0
+  - 0.025
+  - 0.05
+  - 0.075
+  - 0.1
+  jackknife_blocks: 6
+  predictive_parameter_bounds:
+    stiffness_n_per_m:
+    - 25.0
+    - 4000.0
+    damping_n_s_per_m:
+    - 0.1
+    - 100.0
+    effective_mass_kg:
+    - 0.05
+    - 10.0
+  uncertainty_scale_floors:
+  - 25.0
+  - 0.25
+  - 0.05
+  note: TLS on alpha-beta-gamma kinematics supplies k, OLS on causal-low-pass kinematics
+    supplies c, and IV on causal-low-pass kinematics supplies m_eff. This transparent
+    parameter-specific EIV baseline follows EXP-0003's estimator evidence and was
+    fixed before validation; no internally consistent joint-estimator claim is made.
+selection:
+  relative_standard_error_thresholds:
+  - 0.15
+  - 0.25
+  - 0.25
+  minimum_expected_weak_parameter_variance_reduction: 0.02
+  score: Predicted weak-parameter variance reduction, with normalized disturbance
+    as a tie-break and an explicit hard constraint.
+  candidate_prediction: Simulate each discrete candidate with the current clipped
+    parameter estimate; ground truth is never supplied to selection.
+  stopping_conditions:
+  - all relative standard errors meet thresholds
+  - best expected weak-parameter variance reduction is below 0.02
+  - cumulative disturbance budget would be exceeded
+  - maximum probe count is reached
+disturbance_budget:
+  maximum_probe_count: 3
+  maximum_duration_s: 9.0
+  maximum_command_force_squared_dose_n2_s: 4.55
+  maximum_absolute_input_energy_j: 0.25
+  maximum_absolute_impulse_n_s: 5.0
+  prediction_normalizers:
+    force_squared_dose_n2_s: 1.5
+    absolute_input_energy_j: 0.05
+    peak_target_displacement_m: 0.025
+    peak_target_acceleration_m_per_s2: 15.0
+safety_limits:
+  max_peak_force_n: 1.000000000001
+  max_peak_target_displacement_m: 0.025
+  max_peak_target_velocity_m_per_s: 0.5
+  max_peak_target_acceleration_m_per_s2: 15.0
+accuracy_thresholds:
+  stiffness: 0.2
+  damping: 0.3
+  effective_mass: 0.3
+kill_criterion:
+  matched_force_dose_relative_tolerance: 0.2
+  minimum_full_vector_success_improvement: 0.1
+  require_non_worse_worst_target_p95: true
+  rule: Stop pursuing active identification of all three physical parameters if the
+    adaptive strategy does not improve full-vector success by at least ten percentage
+    points over the best matched-dose fixed multi-probe strategy without worsening
+    worst-target p95 error.
+stage1_gate:
+  minimum_full_vector_success_probability: 0.8
+  require_each_target_p95_below_parameter_threshold: true
+  require_no_safety_events: true
+  rule: MATLAB/Simulink validation is allowed only if one causal bounded sequential
+    strategy meets all parameter tail limits for all targets and succeeds on at least
+    80% of held-out trials without a safety violation.
+integrity_acceptance:
+  minimum_monte_carlo_seeds: 20
+  forbidden_validation_seeds_before_final_run:
+  - 4101
+  - 4102
+  - 4103
+  - 4104
+  - 4105
+  - 4106
+  - 4107
+  - 4108
+  - 4109
+  - 4110
+  - 4111
+  - 4112
+  - 4113
+  - 4114
+  - 4115
+  - 4116
+  - 4117
+  - 4118
+  - 4119
+  - 4120
+representative_raw:
+  target: high_effective_mass
+  seed: 4101
+  strategy: uncertainty_driven
+scope_exclusions:
+- MATLAB
+- Simulink
+- EKF
+- UAV dynamics
+- Gazebo
+- PX4
+- ROS 2
+- MPC
+- Isaac Sim

@@ -1,0 +1,244 @@
+schema_version: 1
+
+experiment:
+  id: EXP-0006
+  title: Stage 1 passive ring-down safety observation
+  stage: 1
+  scientific_question: >-
+    Does a zero-force causal observation period after the chirp provide enough
+    ring-down information to eliminate or substantially reduce false-safe
+    decisions without applying additional probing energy?
+
+frozen_references:
+  exp_0001:
+    expected_artifact_fingerprint: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+  exp_0002:
+    expected_artifact_fingerprint: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+  exp_0003:
+    expected_artifact_fingerprint: 067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8
+  exp_0004:
+    expected_artifact_fingerprint: d17c85e6e520d08ee4c59650675a3c0135d7371484c030ca2ce36b1952c45968
+  exp_0005:
+    run_id: EXP-0005_20260829T191551.247939Z_s6101_8de417c0
+    expected_artifact_fingerprint: 19193f839a4b7939a24d90373af44c6a021614dacef805c7b2a2c33518a1774a
+
+seed_partitions:
+  training: [7101, 7102, 7103, 7104, 7105, 7106, 7107, 7108, 7109, 7110,
+             7111, 7112, 7113, 7114, 7115, 7116, 7117, 7118, 7119, 7120]
+  calibration: [7201, 7202, 7203, 7204, 7205, 7206, 7207, 7208, 7209, 7210]
+  validation: [8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109, 8110,
+               8111, 8112, 8113, 8114, 8115, 8116, 8117, 8118, 8119, 8120]
+  cases_per_seed: 12
+  generation: independent log-Latin-hypercube within every seed
+
+target_population:
+  stiffness_n_per_m: [75.0, 2500.0]
+  damping_n_s_per_m: [0.3, 60.0]
+  effective_mass_kg: [0.10, 6.0]
+  policy: identical continuous log-space population definition to EXP-0005
+
+probe:
+  type: chirp
+  amplitude_n: 0.5
+  start_frequency_hz: 0.5
+  end_frequency_hz: 5.0
+  duration_s: 3.0
+  sample_period_s: 0.002
+  contact_mode: unilateral
+  adaptive: false
+
+passive_observation:
+  force_n: 0.0
+  windows_s: [0.0, 0.25, 0.5, 1.0, 1.5, 2.0, 3.0]
+  maximum_duration_s: 3.0
+  primary_practical_limit_s: 2.0
+  additional_excitation_allowed: false
+
+sensing:
+  primary_pipeline: causal_low_pass
+  sample_rate_hz: 200.0
+  chirp_analysis_trim_s: 0.15
+  synchronized: true
+  noise_regimes:
+    - name: low
+      multiplier: 0.5
+    - name: nominal
+      multiplier: 1.0
+    - name: high
+      multiplier: 2.0
+  base_noise:
+    displacement_std_m: 5.0e-5
+    velocity_std_m_per_s: 0.002
+    acceleration_std_m_per_s2: 0.1
+    force_std_n: 0.02
+  pipeline_settings:
+    low_pass_cutoff_hz: 10.0
+    polynomial_window_duration_s: 0.11
+    polynomial_order: 3
+    observer_alpha: 0.40
+    observer_beta: 0.08
+    observer_gamma: 0.008
+    observer_force_cutoff_hz: 10.0
+  no_noncausal_primary_result: true
+
+ringdown_features:
+  envelope_block_duration_s: 0.10
+  trailing_amplitude_window_s: 0.10
+  displacement_threshold_m: 0.0005
+  velocity_threshold_m_per_s: 0.01
+  minimum_peak_prominence_noise_multiplier: 3.0
+  minimum_envelope_points_for_decay_fit: 3
+  definitions: >-
+    All features use only samples from probe end through the current decision
+    time: exponential envelope decay/r2, dominant frequency, peak-to-peak
+    logarithmic decrement and damping-ratio diagnostic, residual peak/rms,
+    observed time below thresholds, zero-crossing rate, and kinematic-energy
+    proxy decay.
+
+feature_sets:
+  chirp_only:
+    description: EXP-0005 combined chirp set; stiffness diagnostic plus causal spectral/time features
+  ringdown_only:
+    description: causal passive-response features available by the decision time
+  chirp_ringdown:
+    description: chirp plus passive ring-down features; primary set
+  physical_chirp_ringdown:
+    description: diagnostic estimated k/c/m_eff plus chirp and ring-down features
+
+predictor:
+  type: ridge_future_response_with_calibrated_one_sided_bounds
+  ridge_penalty: 0.001
+  upper_residual_quantile: 0.95
+  primary_feature_set: chirp_ringdown
+  predicted_outcomes:
+    - peak_displacement_m
+    - peak_velocity_m_per_s
+    - late_hold_oscillation_rms_m
+    - hold_settling_time_s
+  class_rule: >-
+    SAFE only when every calibrated upper response bound is inside the SAFE
+    envelope and the contact-travel bound is clear; UNSAFE when any upper bound
+    exceeds the UNSAFE envelope or contact travel; CAUTION otherwise.
+  passive_persistence_veto:
+    enabled: true
+    minimum_observation_s: 0.5
+    maximum_safe_decay_rate_per_s: 0.5
+    maximum_threshold_dwell_fraction: 0.10
+    minimum_residual_displacement_snr: 3.0
+    action: change SAFE to CAUTION
+    justification: >-
+      A measured amplitude time constant above the 2 s SAFE settling limit is
+      not sufficient evidence for SAFE while a residual response at least
+      three displacement-noise standard deviations remains and the response
+      has spent less than 10 percent of the observed window below the
+      displacement/velocity thresholds. This physics-based veto is common to
+      every target and noise regime and never promotes a target to SAFE.
+
+early_stopping:
+  enabled: true
+  minimum_safe_observation_s: 1.5
+  minimum_caution_observation_s: 1.0
+  minimum_unsafe_observation_s: 0.5
+  required_consecutive_identical_decisions: 2
+  minimum_decision_margin: 0.10
+  minimum_decay_fit_r2: 0.70
+  maximum_relative_settling_bound_change: 0.10
+  maximum_observation_s: 3.0
+  rule: >-
+    Stop only from measured prediction stability, response-bound margin, decay
+    fit quality, or negligible settling-bound change. Ground truth is never an
+    input to the stopping decision.
+
+future_contact_maneuver:
+  contact_force_n: 2.0
+  ramp_up_s: 0.5
+  hold_end_s: 3.5
+  ramp_down_end_s: 4.0
+  total_duration_s: 7.0
+  sample_period_s: 0.002
+  description: identical hidden sustained-contact maneuver to EXP-0005
+
+risk_envelope:
+  safe:
+    peak_displacement_m: 0.012
+    peak_velocity_m_per_s: 0.12
+    late_hold_oscillation_rms_m: 0.0015
+    hold_settling_time_s: 2.0
+  unsafe:
+    peak_displacement_m: 0.020
+    peak_velocity_m_per_s: 0.25
+    late_hold_oscillation_rms_m: 0.004
+    hold_settling_time_s: 2.8
+  contact_tracking_displacement_m: 0.020
+  settling_displacement_fraction: 0.05
+  settling_displacement_floor_m: 0.0002
+  settling_velocity_m_per_s: 0.01
+  class_rule: identical to EXP-0005
+  labels_derive_from_future_response_only: true
+
+safe_force_definition:
+  maximum_considered_force_n: 3.0
+  constraints: [safe_peak_displacement, safe_peak_velocity, safe_oscillation_amplitude]
+  definition: identical diagnostic definition to EXP-0005; not a Stage 1 gate in EXP-0006
+
+legacy_exp_0005_false_safe_audit:
+  evaluation_only: true
+  target_ids:
+    - validation_s6102_c11
+    - validation_s6104_c05
+    - validation_s6105_c09
+    - validation_s6109_c06
+    - validation_s6110_c02
+  nominal_false_safe_target_ids:
+    - validation_s6102_c11
+    - validation_s6104_c05
+    - validation_s6110_c02
+  policy: >-
+    Reproduce after the EXP-0006 models and stopping rule are frozen. These
+    known targets are a locked failure audit and are not EXP-0006 validation.
+
+stage1_safety_criterion:
+  maximum_nominal_false_safe_rate: 0.01
+  maximum_high_noise_false_safe_rate: 0.02
+  minimum_nominal_accuracy: 0.80
+  minimum_high_noise_accuracy: 0.80
+  minimum_unsafe_recall: 0.90
+  maximum_fixed_observation_s: 2.0
+  maximum_relative_probe_energy_increase: 1.0e-12
+  require_all_exp_0005_nominal_false_safe_targets_detected: true
+  rule: >-
+    Stage 1 may proceed only if at least one fixed passive duration no longer
+    than 2 s meets both false-safe limits, accuracy and unsafe-recall limits,
+    adds no probing energy, and detects every nominal EXP-0005 false-safe case.
+
+probe_safety_limits:
+  max_peak_force_n: 0.500000000001
+  max_peak_target_displacement_m: 0.025
+  max_peak_target_velocity_m_per_s: 0.5
+  max_peak_target_acceleration_m_per_s2: 15.0
+
+integrity_acceptance:
+  minimum_validation_seeds: 20
+  minimum_validation_cases: 240
+  minimum_fraction_per_risk_class: 0.10
+  forbidden_validation_seeds_before_final_run:
+    [8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109, 8110,
+     8111, 8112, 8113, 8114, 8115, 8116, 8117, 8118, 8119, 8120]
+
+representative_raw:
+  noise_regime: nominal
+
+scope_exclusions:
+  - active or sequential follow-up excitation
+  - rescue of full-vector identification
+  - centered or noncausal filtering as a primary result
+  - MATLAB
+  - Simulink
+  - EKF
+  - UAV dynamics
+  - Gazebo
+  - PX4
+  - ROS 2
+  - MPC
+  - Isaac Sim
+  - neural networks

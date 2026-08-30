@@ -1,0 +1,9 @@
+[
+  {
+    "limit": 0.5,
+    "metric": "peak_target_velocity_m_per_s",
+    "partition": "training",
+    "target_id": "training_s5108_c07",
+    "value": 0.500194167529074
+  }
+]

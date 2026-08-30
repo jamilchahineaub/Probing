@@ -1,0 +1,15 @@
+{
+  "boundary_high_false_safe_rate": 0.005,
+  "boundary_nominal_false_safe_rate": 0.0,
+  "false_safe_case_count": 3,
+  "overall_high_binary_accuracy": 0.8904411764705882,
+  "overall_high_false_safe_one_sided95_upper": 0.012034334981246559,
+  "overall_high_false_safe_rate": 0.003838771593090211,
+  "overall_nominal_binary_accuracy": 0.8875,
+  "overall_nominal_false_safe_one_sided95_upper": 0.009072656536444236,
+  "overall_nominal_false_safe_rate": 0.0019193857965451055,
+  "prediction_count": 4080,
+  "safety_event_count": 0,
+  "stage1_gate_pass": true,
+  "validation_case_count": 1360
+}

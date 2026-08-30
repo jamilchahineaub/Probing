@@ -1,0 +1,18 @@
+{
+  "adaptive_full_vector_success_probability": 0.65,
+  "adaptive_median_absolute_input_energy_j": 0.032363389083414594,
+  "adaptive_median_duration_s": 7.5,
+  "adaptive_median_force_squared_dose_n2_s": 3.1491697671987864,
+  "adaptive_median_probe_count": 2.5,
+  "full_vector_success_improvement": -0.15833333333333333,
+  "matched_fixed_full_vector_success_probability": 0.8083333333333333,
+  "matched_force_dose_relative_difference": 0.05982560165433148,
+  "probe_execution_count": 1219,
+  "safety_event_count": 0,
+  "selection_candidate_evaluation_count": 973,
+  "sequential_improvement_is_significant": false,
+  "stage1_gate_pass": false,
+  "trial_sequence_count": 600,
+  "utility_spearman": -0.47831002278922197,
+  "validation_seed_count": 20
+}

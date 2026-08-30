@@ -1,0 +1,121 @@
+{
+  "adaptive_non_worse_worst_target_p95": false,
+  "adaptive_strategy": {
+    "damping_p95_abs_relative_error": 0.510516782295226,
+    "damping_relative_bias": -0.18568248086232378,
+    "damping_relative_rmse": 0.2837952051789508,
+    "damping_threshold_success_probability": 0.6666666666666666,
+    "damping_worst_target_p95_abs_relative_error": 0.5682849360700412,
+    "effective_mass_p95_abs_relative_error": 0.22037890124535955,
+    "effective_mass_relative_bias": 0.08689265950566624,
+    "effective_mass_relative_rmse": 0.13542707580282215,
+    "effective_mass_threshold_success_probability": 0.9833333333333333,
+    "effective_mass_worst_target_p95_abs_relative_error": 0.30353142613196105,
+    "full_vector_success_probability": 0.65,
+    "maximum_peak_force_n": 1.0,
+    "maximum_peak_target_acceleration_m_per_s2": 5.322724284692054,
+    "maximum_peak_target_displacement_m": 0.01567936727940557,
+    "maximum_peak_target_velocity_m_per_s": 0.2706930536403658,
+    "median_absolute_impulse_n_s": 2.367174914979904,
+    "median_absolute_input_energy_j": 0.032363389083414594,
+    "median_duration_s": 7.5,
+    "median_force_squared_dose_n2_s": 3.1491697671987864,
+    "median_information_per_force_dose": 5.480127017445153,
+    "median_probe_count": 2.5,
+    "p95_probe_count": 3.0,
+    "parameter_error_p95": 0.30399488821382614,
+    "parameter_error_rmse": 0.18927850420500464,
+    "stiffness_p95_abs_relative_error": 0.21694811177735418,
+    "stiffness_relative_bias": 0.016219106167293686,
+    "stiffness_relative_rmse": 0.09272995804585348,
+    "stiffness_threshold_success_probability": 0.8333333333333334,
+    "stiffness_worst_target_p95_abs_relative_error": 0.22420876617206706,
+    "strategy": "uncertainty_driven",
+    "trial_count": 120,
+    "worst_target_parameter_error_p95": 0.3369644285914062
+  },
+  "adaptive_target_p95": {
+    "compliant": {
+      "damping": 0.07690055541774572,
+      "effective_mass": 0.12872931033348903,
+      "stiffness": 0.035649838140724026
+    },
+    "high_damping": {
+      "damping": 0.09721383429136839,
+      "effective_mass": 0.30353142613196105,
+      "stiffness": 0.01989419903486547
+    },
+    "high_effective_mass": {
+      "damping": 0.19847639764499536,
+      "effective_mass": 0.27582449025821737,
+      "stiffness": 0.06538508265357128
+    },
+    "lightly_damped_flexible": {
+      "damping": 0.5682849360700412,
+      "effective_mass": 0.19736286929834945,
+      "stiffness": 0.04084125347689546
+    },
+    "low_effective_mass": {
+      "damping": 0.10551585898257,
+      "effective_mass": 0.15392097388032905,
+      "stiffness": 0.018600461820571648
+    },
+    "rigid_high_stiffness": {
+      "damping": 0.4644102705983509,
+      "effective_mass": 0.08912196485772915,
+      "stiffness": 0.22420876617206706
+    }
+  },
+  "frequency_information_winners": {
+    "damping": "broad_multisine",
+    "effective_mass": "broad_multisine",
+    "stiffness": "low_multisine"
+  },
+  "full_vector_success_improvement": -0.15833333333333333,
+  "kill_criterion_decision": "STOP_ACTIVE_FULL_VECTOR_IDENTIFICATION",
+  "matched_fixed_comparator": {
+    "base_strategy": "predefined_multistage",
+    "comparison_probe_index": 2,
+    "damping_p95_abs_relative_error": 0.4038582566284339,
+    "damping_relative_bias": -0.12048396779786907,
+    "damping_relative_rmse": 0.19543767414838067,
+    "damping_threshold_success_probability": 0.8333333333333334,
+    "damping_worst_target_p95_abs_relative_error": 0.42612083291026176,
+    "effective_mass_p95_abs_relative_error": 0.2693545136900813,
+    "effective_mass_relative_bias": 0.0732044999709779,
+    "effective_mass_relative_rmse": 0.14554888910463276,
+    "effective_mass_threshold_success_probability": 0.975,
+    "effective_mass_worst_target_p95_abs_relative_error": 0.33338828528955466,
+    "full_vector_success_probability": 0.8083333333333333,
+    "maximum_peak_force_n": 1.0,
+    "maximum_peak_target_acceleration_m_per_s2": 7.528880295733976,
+    "maximum_peak_target_displacement_m": 0.013835454654178478,
+    "maximum_peak_target_velocity_m_per_s": 0.2391853066277591,
+    "median_absolute_impulse_n_s": 2.2162490646739315,
+    "median_absolute_input_energy_j": 0.04338524328623386,
+    "median_duration_s": 6.0,
+    "median_force_squared_dose_n2_s": 2.960768791164488,
+    "median_information_per_force_dose": 5.404283675425171,
+    "median_probe_count": 2.0,
+    "p95_probe_count": 2.0,
+    "parameter_error_p95": 0.240878771007652,
+    "parameter_error_rmse": 0.14215150774206434,
+    "stiffness_p95_abs_relative_error": 0.06289797808473552,
+    "stiffness_relative_bias": -0.029279657236154742,
+    "stiffness_relative_rmse": 0.035224847251694794,
+    "stiffness_threshold_success_probability": 1.0,
+    "stiffness_worst_target_p95_abs_relative_error": 0.07192513754034831,
+    "strategy": "predefined_multistage_after_2",
+    "trial_count": 120,
+    "worst_target_parameter_error_p95": 0.2566506067821372
+  },
+  "matched_force_dose_relative_difference": 0.05982560165433148,
+  "median_adaptive_probe_count": 2.5,
+  "scope": "Stage 1 one-dimensional model only",
+  "selected_next_probe_useful_fraction": 0.41007194244604317,
+  "selected_probe_utility_spearman": -0.47831002278922197,
+  "sequential_improvement_is_significant": false,
+  "stage1_decision": "CONTINUE_STAGE_1",
+  "stage1_gate_pass": false,
+  "uncertainty_predicts_usefulness": false
+}

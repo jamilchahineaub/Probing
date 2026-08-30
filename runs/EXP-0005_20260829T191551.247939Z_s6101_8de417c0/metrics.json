@@ -1,0 +1,15 @@
+{
+  "all_partition_probe_safety_event_count": 1,
+  "decision_sufficiency_supported": false,
+  "high_noise_accuracy": 0.8708333333333333,
+  "high_noise_false_safe_rate": 0.06493506493506493,
+  "mass_bad_nominal_accuracy": 0.8,
+  "nominal_accuracy": 0.8625,
+  "nominal_displacement_bound_coverage": 0.9625,
+  "nominal_false_safe_rate": 0.03896103896103896,
+  "nominal_safe_force_bound_coverage": 0.9375,
+  "probe_safety_event_count": 0,
+  "stage1_gate_pass": false,
+  "validation_case_count": 240,
+  "validation_prediction_count": 7920
+}

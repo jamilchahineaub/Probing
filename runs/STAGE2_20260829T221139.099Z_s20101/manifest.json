@@ -1,0 +1,290 @@
+{
+  "run_id": "STAGE2_20260829T221139.099Z_s20101",
+  "stage2_pass": true,
+  "stage2_decision": "PASS",
+  "target_count": 1360,
+  "prediction_count": 4080,
+  "safety_event_count": 0,
+  "predictions_before_outcomes": true,
+  "matlab_simulink_agree": true,
+  "git_sha": "6b95560de738f74356576e4496ba794604009c4b",
+  "matlab_version": "26.1.0.3346908 (R2026a) Update 5",
+  "policy_id": "EXP-0006-primary-0p5s-chirp-ringdown",
+  "policy_sha256": "7cc1669f897ea1c917b5f3b289412bdbbc0187ac9a3979ca38240078f1d8c015",
+  "metrics": [
+    {
+      "noise_regime": "low",
+      "stratum": "overall",
+      "trial_count": 1360,
+      "safe_count": 850,
+      "non_safe_count": 510,
+      "false_safe_count": 0,
+      "false_positive_count": 164,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0058567667305833033,
+      "binary_accuracy": 0.87941176470588234,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.80705882352941172
+    },
+    {
+      "noise_regime": "low",
+      "stratum": "broad",
+      "trial_count": 960,
+      "safe_count": 650,
+      "non_safe_count": 310,
+      "false_safe_count": 0,
+      "false_positive_count": 102,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0096171094514850633,
+      "binary_accuracy": 0.89375,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.84307692307692306
+    },
+    {
+      "noise_regime": "low",
+      "stratum": "boundary",
+      "trial_count": 400,
+      "safe_count": 200,
+      "non_safe_count": 200,
+      "false_safe_count": 0,
+      "false_positive_count": 62,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.014867039231272057,
+      "binary_accuracy": 0.845,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.69
+    },
+    {
+      "noise_regime": "nominal",
+      "stratum": "overall",
+      "trial_count": 1360,
+      "safe_count": 850,
+      "non_safe_count": 510,
+      "false_safe_count": 0,
+      "false_positive_count": 158,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0058567667305833033,
+      "binary_accuracy": 0.88382352941176467,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.8141176470588235
+    },
+    {
+      "noise_regime": "nominal",
+      "stratum": "broad",
+      "trial_count": 960,
+      "safe_count": 650,
+      "non_safe_count": 310,
+      "false_safe_count": 0,
+      "false_positive_count": 100,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0096171094514850633,
+      "binary_accuracy": 0.89583333333333337,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.84615384615384615
+    },
+    {
+      "noise_regime": "nominal",
+      "stratum": "boundary",
+      "trial_count": 400,
+      "safe_count": 200,
+      "non_safe_count": 200,
+      "false_safe_count": 0,
+      "false_positive_count": 58,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.014867039231272057,
+      "binary_accuracy": 0.855,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.71
+    },
+    {
+      "noise_regime": "high",
+      "stratum": "overall",
+      "trial_count": 1360,
+      "safe_count": 850,
+      "non_safe_count": 510,
+      "false_safe_count": 0,
+      "false_positive_count": 168,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0058567667305833033,
+      "binary_accuracy": 0.87647058823529411,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.8023529411764706
+    },
+    {
+      "noise_regime": "high",
+      "stratum": "broad",
+      "trial_count": 960,
+      "safe_count": 650,
+      "non_safe_count": 310,
+      "false_safe_count": 0,
+      "false_positive_count": 108,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.0096171094514850633,
+      "binary_accuracy": 0.8875,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.83384615384615379
+    },
+    {
+      "noise_regime": "high",
+      "stratum": "boundary",
+      "trial_count": 400,
+      "safe_count": 200,
+      "non_safe_count": 200,
+      "false_safe_count": 0,
+      "false_positive_count": 60,
+      "false_safe_rate": 0,
+      "false_safe_upper95": 0.014867039231272057,
+      "binary_accuracy": 0.85,
+      "safe_precision": 1,
+      "non_safe_recall": 1,
+      "sensitivity": 1,
+      "specificity": 0.7
+    }
+  ],
+  "environment": {
+    "matlab_version": "26.1.0.3346908 (R2026a) Update 5",
+    "simulink": true,
+    "products": {
+      "SystemIdentificationToolbox": false,
+      "ControlSystemToolbox": true,
+      "SignalProcessingToolbox": false,
+      "StatisticsAndMachineLearningToolbox": false,
+      "Simscape": true,
+      "SimscapeMultibody": true,
+      "OptimizationToolbox": true,
+      "ModelPredictiveControlToolbox": true,
+      "UAVToolbox": true,
+      "ROSToolbox": false,
+      "RoboticsSystemToolbox": false
+    }
+  },
+  "config": {
+    "id": "STAGE2-MATLAB-VALIDATION-0001",
+    "dt": 0.002,
+    "sensor_fs": 200,
+    "probe": {
+      "amplitude": 0.5,
+      "f0": 0.5,
+      "f1": 5,
+      "duration": 3,
+      "observation": 0.5,
+      "contact": "unilateral"
+    },
+    "bounds": {
+      "k": [
+        75,
+        2500
+      ],
+      "c": [
+        0.3,
+        60
+      ],
+      "m": [
+        0.1,
+        6
+      ]
+    },
+    "population": {
+      "broad_seeds": [
+        20101,
+        20180
+      ],
+      "boundary_seeds": [
+        20201,
+        20300
+      ],
+      "cases_per_seed": 12,
+      "boundary_safe": 200,
+      "boundary_nonsafe": 200
+    },
+    "noise_names": [
+      "low",
+      "nominal",
+      "high"
+    ],
+    "noise_multiplier": [
+      0.5,
+      1,
+      2
+    ],
+    "base_noise": {
+      "displacement": 5E-5,
+      "velocity": 0.002,
+      "acceleration": 0.1,
+      "force": 0.02
+    },
+    "filter": {
+      "cutoff_hz": 10,
+      "nominal_group_delay_s": 0.020915494309189535
+    },
+    "ring": {
+      "block_s": 0.1,
+      "tail_s": 0.1,
+      "x_threshold": 0.0005,
+      "v_threshold": 0.01,
+      "min_points": 3,
+      "peak_noise_multiplier": 3
+    },
+    "maneuver": {
+      "force": 2,
+      "ramp_up": 0.5,
+      "hold_end": 3.5,
+      "ramp_down_end": 4,
+      "duration": 7
+    },
+    "safe": {
+      "peak_displacement": 0.012,
+      "peak_velocity": 0.12,
+      "oscillation": 0.0015,
+      "settling": 2
+    },
+    "unsafe": {
+      "peak_displacement": 0.02,
+      "peak_velocity": 0.25,
+      "oscillation": 0.004,
+      "settling": 2.8
+    },
+    "contact_tracking_displacement": 0.02,
+    "settling_fraction": 0.05,
+    "settling_floor": 0.0002,
+    "settling_velocity": 0.01,
+    "probe_limits": {
+      "force": 0.500000000001,
+      "displacement": 0.025,
+      "velocity": 0.5,
+      "acceleration": 15
+    },
+    "policy_file": "/home/jimmy/Desktop/Drones/Probeing/configs/policies/exp_0007_locked_exp_0006_policy.json",
+    "gate": {
+      "nominal_false_safe": 0.01,
+      "high_false_safe": 0.02,
+      "nominal_upper": 0.01,
+      "high_upper": 0.02,
+      "nominal_accuracy": 0.85,
+      "high_accuracy": 0.85,
+      "nominal_precision": 0.99,
+      "high_precision": 0.99,
+      "nominal_recall": 0.99,
+      "high_recall": 0.98,
+      "boundary_false_safe": 0.02,
+      "boundary_upper": 0.025,
+      "boundary_accuracy": 0.75
+    }
+  }
+}

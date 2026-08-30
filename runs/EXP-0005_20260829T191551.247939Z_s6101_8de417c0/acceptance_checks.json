@@ -1,0 +1,12 @@
+{
+  "combined_task_excludes_damping_and_mass_estimates": true,
+  "minimum_validation_cases": true,
+  "minimum_validation_seeds": true,
+  "no_noncausal_primary_result": true,
+  "no_validation_probe_safety_events": true,
+  "primary_pipeline_is_causal": true,
+  "representative_all_classes_present": true,
+  "risk_class_balance": true,
+  "unique_disjoint_seed_partitions": true,
+  "validation_predictions_precede_future_maneuver": true
+}

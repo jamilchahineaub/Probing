@@ -1,0 +1,7 @@
+{
+  "run_id": "STAGE2_20260829T221102.436Z_s20101",
+  "status": "execution_error",
+  "scientific_result": false,
+  "error": "MATLAB table serialization received a character noise label instead of a scalar string after feature computation.",
+  "resolution": "Only the table-label type conversion was corrected. The same locked seeds, policy, and experiment were rerun as STAGE2_20260829T221139.099Z_s20101. No scientific setting changed."
+}

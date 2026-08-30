@@ -1,0 +1,13 @@
+sweep_channel,parameter,significant_bias_threshold,minimum_significant_offset_ms,worst_incremental_bias_at_crossing
+displacement,stiffness,0.1,20.0,0.19381679674667887
+displacement,damping,0.15,1.0,0.5756689837420761
+displacement,effective_mass,0.15,5.0,0.28781450391537877
+acceleration,stiffness,0.1,20.0,0.2687766625064242
+acceleration,damping,0.15,1.0,0.6292106189227696
+acceleration,effective_mass,0.15,20.0,0.4537440859900946
+force,stiffness,0.1,20.0,0.16803485461129353
+force,damping,0.15,5.0,0.2776342336711055
+force,effective_mass,0.15,5.0,0.27305282341284753
+filter_group_delay,stiffness,0.1,20.0,0.1591855791778218
+filter_group_delay,damping,0.15,5.0,0.2713258370462754
+filter_group_delay,effective_mass,0.15,5.0,0.22322783087275644
