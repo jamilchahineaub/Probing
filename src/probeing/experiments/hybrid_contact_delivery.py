@@ -431,7 +431,7 @@ def hybrid_future_outcome(
         probe_duration_s=probe_end, post_decision_duration_s=2.5,
     )
     probe_transition = next((item for item in trajectory.transitions if item.to_phase == ContactPhase.PROBE.value), None)
-    if probe_transition is None:
+    if probe_transition is None or trajectory.aborted:
         metrics = {
             "peak_displacement_m": np.inf, "peak_velocity_m_per_s": np.inf,
             "late_hold_oscillation_rms_m": np.inf, "hold_settling_time_s": np.inf,

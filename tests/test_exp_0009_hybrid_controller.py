@@ -12,6 +12,7 @@ from probeing.controllers import ContactObservation, ContactPhase, HybridContact
 from probeing.experiments.coupled_uav_contact import locked_probe_force
 from probeing.experiments.hybrid_contact_delivery import (
     hybrid_delivery_metrics,
+    hybrid_future_outcome,
     simulate_hybrid_contact,
 )
 
@@ -157,3 +158,15 @@ def test_frozen_chirp_observation_policy_and_stage_artifacts_are_unchanged() -> 
     exp8_run = ROOT / CONFIG["frozen_references"]["exp_0008_run"]
     assert exp8_run.is_dir()
     assert (ROOT / "lab/experiments/EXP-0008.md").is_file()
+
+
+def test_aborted_sustained_contact_is_conservatively_unsafe() -> None:
+    locked = yaml.safe_load(
+        (ROOT / "configs/experiments/exp_0006_passive_ringdown.yaml").read_text(encoding="utf-8")
+    )
+    target = TargetParameters(1419.3558575701143, 1.864692315277412, 1.26200851333251)
+    outcome, trajectory = hybrid_future_outcome(CONFIG, target, locked)
+    assert trajectory.aborted
+    assert outcome["risk_class"] == "UNSAFE"
+    assert outcome["contact_loss_proxy"]
+    assert np.isinf(outcome["hold_settling_time_s"])
