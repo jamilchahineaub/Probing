@@ -10,3 +10,6 @@ dist/
 .mypy_cache/
 .ruff_cache/
 
+# MATLAB/Simulink generated caches (source .slx models remain tracked)
+slprj/
+*.slxc

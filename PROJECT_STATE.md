@@ -2,21 +2,20 @@
 
 ## Current hypothesis
 
-A fixed low–mid chirp followed by 0.5 s of zero-force causal observation
-contains enough information for a conservative SAFE/NON-SAFE decision under
-the tested one-dimensional sensing envelope. EXP-0007 independently replicated
-the Python result, and Stage 2 independently reproduced it in MATLAB/Simulink.
-Separate damping and effective-mass estimates remain diagnostic rather than a
-prerequisite for this binary safety decision.
+The fixed chirp plus passive ring-down signal is valid for the frozen reduced-
+order target experiment, but EXP-0008 shows that it does not transfer as a
+safe decision policy when a controlled 6-DoF vehicle, offset probe, unilateral
+separation/re-contact, and imperfect force delivery are included. Target-only
+ring-down remains measurable; it does not predict settling failures created by
+the later coupled contact controller.
 
 ## Current milestone
 
-Stage 2 independent MATLAB/Simulink validation has **passed** and is frozen at
-Git commit `95fcdbb5d08f2ffa46077aced7f5c882fb2627f8`, annotated tag
-`stage2-complete-20260830`. Stage 3A (EXP-0008) is authorized to start with a
-6-DoF quadrotor, rigid offset probe, and dynamically coupled one-dimensional
-target. Gazebo, PX4, ROS 2, MPC, RL, Isaac Sim, perception, hardware, and any
-Stage 3B work remain out of scope.
+EXP-0008 completed the first Stage 3A coupled baseline. The 6-DoF vehicle,
+conventional controller, unilateral contact, and offset wrench are validated,
+but the frozen safety policy failed its transfer test. Stage 3A therefore
+remains **CONTINUE_STAGE_3A**. Stage 3B, Gazebo, PX4, ROS 2, MPC, RL, Isaac
+Sim, perception, and hardware remain unauthorized.
 
 ## Completed evidence
 
@@ -102,6 +101,34 @@ Stage 3B work remain out of scope.
 - All 12 integrity checks passed, zero safety events occurred, and EXP-0001
   through EXP-0005 fingerprints remained unchanged. The strict Stage gate
   failed by one high-noise UNSAFE-recall case; Stage 1 continues.
+
+### EXP-0008
+
+- Reference run: `EXP-0008_20260830T123909.142216Z_s13101_f41ef89f`.
+- Thirteen no-contact and nine contact-mechanics checks passed; the 1 ms RK4
+  result agreed with 0.5 ms integration to 0.02% in RMS/peak probe force for
+  the convergence case.
+- 107 coupled configurations covered seven representative targets, a 27-case
+  structured grid, 60 untouched Monte Carlo targets, and 13 one-factor
+  vehicle/contact/actuator perturbations. The frozen policy was evaluated at
+  three noise levels without refitting.
+- The 94-target physical population achieved `82.98%` nominal and `81.91%`
+  high-noise binary accuracy, but false-safe rates were `11.76%` and `15.69%`
+  (one-sided 95% upper bounds `21.91%` and `26.53%`). Boundary nominal/high
+  false-safe rates were `53.33%/60.00%`.
+- Median desired-versus-realized force RMS error was `0.399 N` (`152.23%`
+  relative); median correlation delay was `224 ms`; 44.86% of trials had no
+  frequency bin satisfying the declared ±3 dB/45° delivery criterion.
+- Re-contact occurred in every trial. Realized peak force exceeded the
+  prospective `1.25 N` probe limit in 101/107 cases; median peak was `2.52 N`
+  despite a fixed `0.5 N` reference. No rotor saturation occurred and maximum
+  attitude disturbance was `2.89°`.
+- Coupling changed the reduced versus coupled binary ground-truth label in
+  33/107 configurations (20/94 target-population cases). All 19 nominal false-
+  safe cases failed only the coupled settling criterion, and all 19 had a
+  coupling-induced ground-truth label change.
+- Independent MATLAB equations matched the representative Python force trace
+  within `1.13e-11 N`; the subsystem Simulink checks executed successfully.
 
 ## Current parameter classification
 
@@ -190,6 +217,17 @@ approaches it jointly across `k`, `c`, and `m_eff`.
 
 ## Current blockers
 
+- The force-domain chirp is not physically delivered within its disturbance
+  bound. Separation followed by target rebound produces re-contact impulses,
+  and the vehicle/controller bandwidth does not reproduce the positive half-
+  chirp above roughly the low-frequency portion of the sweep.
+- The hidden sustained-contact maneuver itself is no longer the reduced-order
+  2 N input: vehicle/contact control error continuously excites the target and
+  increases median settling time from `0.0 s` reduced-order to `2.822 s`
+  coupled. The frozen probe policy cannot foresee controller-induced settling.
+- The current Stage 3A baseline violates the Stage 1/2 false-safe requirement;
+  neither Stage 3B nor higher-fidelity simulation is authorized.
+
 - The 0.5 s passive policy removed false-safe decisions, but high-noise UNSAFE
   recall was `89.58%`, one target below the predeclared 90% three-class gate.
   The miss was conservative UNSAFE-to-CAUTION rather than UNSAFE-to-SAFE.
@@ -209,24 +247,26 @@ approaches it jointly across `k`, `c`, and `m_eff`.
 - Reference runs record a dirty worktree and need a repository commit for
   commit-level provenance.
 
-## Next Stage 1 question
+## Next Stage 3A question
 
-The locked EXP-0006 policy has completed its independent EXP-0007 replication
-and passed the predeclared binary safety gate. Proceed only to independent
-MATLAB/Simulink validation; do not retune the policy or start vehicle-stack
-work.
+Can a prevalidated hybrid normal-force/contact-state controller enforce bounded
+realized probe force, deliberate unloading, and stable sustained-contact
+settling before any safety-policy redesign? The next experiment must separate
+probe-delivery failure from future-maneuver control failure and first replay
+the frozen policy unchanged.
 
 ## Scope exclusions
 
-No vehicle-stack, optimized-probe, or hardware result has been started or
-claimed. MATLAB/Simulink validation is authorized as the next step.
+No Gazebo, PX4, ROS 2, MPC, RL, Isaac Sim, perception, hardware, flexible probe,
+or nonlinear/multimode target result has been started or claimed.
 
-Stage 2 run `STAGE2_20260829T221139.099Z_s20101` independently validated the
-locked policy on 1,360 targets. Nominal/high false-safe rates were both zero
-with a 0.586% one-sided 95% upper bound, and MATLAB/Simulink trajectories
-agreed to numerical precision. Stage 3 is authorized but not started.
+Stage 1/2 remain frozen at `95fcdbb5d08f2ffa46077aced7f5c882fb2627f8`
+(`stage2-complete-20260830`). EXP-0008 is new Stage 3A evidence and does not
+rewrite that reduced-order result.
 
 ## Last updated
 
-2026-08-29T22:49:57+03:00
-EXP-0007 locked-policy replication passed its predeclared Stage 1 gate. MATLAB/Simulink validation is authorized; no UAV/ROS/Gazebo work is authorized yet.
+2026-08-30T16:05:00+03:00
+EXP-0008 completed the first coupled 6-DoF baseline and identified a failed
+policy transfer caused by force-delivery/re-contact and controller-induced
+sustained settling. Continue Stage 3A; do not begin Stage 3B.

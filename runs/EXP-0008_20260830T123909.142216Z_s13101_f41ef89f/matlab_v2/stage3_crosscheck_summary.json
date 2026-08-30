@@ -1,0 +1,18 @@
+{
+  "matlab_checks_passed": true,
+  "simulink_executed": true,
+  "simulink_checks_passed": true,
+  "peak_contact_force_n": 2.6135186184450814,
+  "max_penetration_m": 0.000515317628863351,
+  "max_attitude_deg": 1.7303312553182266,
+  "motor_saturation_fraction": 0,
+  "python_matlab": [
+    {
+      "max_force_error_n": 1.1267986543828101E-11,
+      "rms_force_error_n": 9.08928818328889E-13,
+      "max_target_x_error_m": 1.397699230659688E-15,
+      "max_uav_x_error_m": 3.5527136788005009E-15,
+      "max_pitch_error_rad": 5.0306980803327406E-15
+    }
+  ]
+}

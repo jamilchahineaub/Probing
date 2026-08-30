@@ -8,6 +8,7 @@ from .sequential_identification import plot_sequential_identification
 from .decision_sufficiency import plot_decision_sufficiency
 from .passive_ringdown import plot_passive_ringdown
 from .locked_policy_replication import plot_locked_policy_replication
+from .stage3_contact import generate_stage3_figures
 
 __all__ = [
     "plot_interaction_identification",
@@ -18,4 +19,5 @@ __all__ = [
     "plot_decision_sufficiency",
     "plot_passive_ringdown",
     "plot_locked_policy_replication",
+    "generate_stage3_figures",
 ]

@@ -1,0 +1,22 @@
+{
+  "target_trial_count": 107,
+  "independent_monte_carlo_target_count": 60,
+  "nominal_false_safe_count_all": 19,
+  "nominal_false_safe_causes": {
+    "settling": 19,
+    "peak_displacement": 0,
+    "peak_velocity": 0,
+    "oscillation": 0,
+    "contact_loss": 0
+  },
+  "binary_label_changed_by_coupling_count": 33,
+  "binary_label_changed_target_population_count": 20,
+  "nominal_false_safe_with_changed_ground_truth_count": 19,
+  "median_direct_settling_time_s": 0.0,
+  "median_coupled_settling_time_s": 2.822,
+  "recontact_trial_fraction": 1.0,
+  "probe_force_limit_violation_trial_fraction": 0.9439252336448598,
+  "persistence_veto_fraction_nominal": 0.21495327102803738,
+  "stage3a_gate": "CONTINUE_STAGE_3A",
+  "scientific_interpretation": "Frozen target-only policy does not transfer safely: coupled sustained-force tracking creates slow-settling outcomes not predicted by passive target ring-down."
+}

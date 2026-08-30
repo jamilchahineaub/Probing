@@ -2,6 +2,41 @@
 
 Only evidence-backed results belong in this ledger.
 
+## 2026-08-30 — EXP-0008 validated coupled UAV contact and exposed a transfer failure
+
+- Scope: an explicit 6-DoF quadrotor with four lagged, saturated rotors; a
+  rigid offset probe; unilateral contact; and the frozen one-dimensional target
+  were exercised in 107 physical configurations and 321 low/nominal/high-noise
+  policy evaluations. No Gazebo, PX4, ROS 2, MPC, RL, estimator redesign, or
+  policy tuning was used.
+- Verified mechanics: all 13 no-contact and nine contact validation checks
+  passed, including hover, rigid-body signs, quaternion preservation, unilateral
+  separation, the exact `r_probe x F_contact` moment, and energy/ring-down
+  checks. The difficult impact case was timestep-converged. An independently
+  written MATLAB model and a subsystem-based Simulink model agreed with the
+  representative Python coupled trajectory to numerical precision.
+- Verified negative transfer result: a `0.5 N` reference produced median
+  realized-force RMS error `0.399 N`, median lag `224 ms`, and separation/
+  recontact in every physical configuration. On the 94-target primary
+  population, frozen nominal/high-noise false-safe rates rose to
+  `11.76%/15.69%`; all full-sweep nominal false-safe cases were slow-settling
+  failures created by the coupled sustained-contact behavior.
+- Verified partial result: nominal/high-noise binary accuracy remained
+  `82.98%/81.91%`, passive target ring-down stayed observable, maximum attitude
+  excursion was only `2.893 deg`, and no rotor saturated. Thus the Stage 1/2
+  signal remains visible but is not safe to transfer unchanged through this
+  contact-delivery architecture.
+- Reproducibility: 98 Python tests passed; Stage 1 fingerprints remained
+  unchanged; the frozen Stage 2 checkpoint is
+  `95fcdbb5d08f2ffa46077aced7f5c882fb2627f8` with tag
+  `stage2-complete-20260830`.
+- Evidence: [experiment record](lab/experiments/EXP-0008.md),
+  [run summary](runs/EXP-0008_20260830T123909.142216Z_s13101_f41ef89f/summary.json),
+  and [transfer audit](runs/EXP-0008_20260830T123909.142216Z_s13101_f41ef89f/postrun_analysis.json).
+- Interpretation boundary: this validates the simulator and a scientifically
+  important failure mechanism; it does not validate safe coupled probing or
+  authorize Stage 3B.
+
 ## 2026-08-29 — EXP-0006 verified a zero-energy passive false-safe reduction
 
 - Scope: one 0.5 N, 0.5–5 Hz chirp followed by exactly zero force; 240

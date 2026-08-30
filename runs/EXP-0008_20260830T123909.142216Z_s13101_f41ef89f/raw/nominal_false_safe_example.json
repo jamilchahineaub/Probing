@@ -1,0 +1,8 @@
+{
+  "trial_id": "grid_012",
+  "target": {
+    "stiffness_n_per_m": 433.0127018922193,
+    "damping_n_s_per_m": 4.242640687119285,
+    "effective_mass_kg": 0.1
+  }
+}

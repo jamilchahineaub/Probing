@@ -19,6 +19,35 @@
 - Revisitable: no. Corrections, if ever required, must be new, explicitly
   versioned experiments and may not rewrite the frozen artifacts.
 
+## DEC-0024 — Preserve the EXP-0008 coupled-transfer failure
+
+- Date: 2026-08-30.
+- Options: tune the frozen safety policy or probe until the coupled results
+  recover Stage 2 performance, advance to Stage 3B, or preserve the untuned
+  transfer result and continue Stage 3A with the delivery mechanism as the
+  next research problem.
+- Evidence: the validated 6-DoF/contact implementation produced a median
+  `0.399 N` realized-force RMS tracking error (`152.23%` relative), a bounded
+  cross-correlation delay of `224 ms`, separation/recontact in all 107 physical
+  configurations, and force peaks up to `4.994 N` for a `0.5 N` reference.
+  On the 94-target primary population the frozen nominal/high-noise false-safe
+  rates were `11.76%/15.69%`, with one-sided 95% upper bounds of
+  `21.91%/26.53%`. All 19 nominal false-safe configurations in the full sweep
+  failed only the sustained-contact settling criterion; their ground-truth
+  outcome changed between the reduced and coupled experiments.
+- Decision: classify EXP-0008 as a completed, reproducible Stage 3A scientific
+  milestone with gate `CONTINUE_STAGE_3A`. Do not tune the Stage 1/2 policy,
+  reinterpret the failures as classifier errors alone, or authorize Stage 3B.
+  The next experiment should isolate a contact-delivery controller that can
+  track force while maintaining contact and reducing recontact impacts, then
+  retest the still-frozen policy as a new experiment.
+- Why: the reduced-order signal remains informative, but the vehicle/controller
+  changes both the delivered spectrum and the sustained-contact physics. The
+  primary transfer limitation is therefore coupled contact delivery, not an
+  unvalidated rigid-body equation or MATLAB/Python discrepancy.
+- Revisitable: the scientific observation is permanent for EXP-0008. A new,
+  prospectively specified Stage 3A experiment may test a different controller.
+
 ## DEC-0001 — Milestones govern progression
 
 - Date: 2026-08-28.

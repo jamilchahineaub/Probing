@@ -1,0 +1,14 @@
+limit,metric,passed,test,value
+1e-08,max_position_error_m,True,gravity_free_fall,5.861977570020827e-14
+1e-06,max_position_error_m,True,static_hover,0.0
+10.0,duration_s,True,hover_duration,10.0
+0.01,final_position_error_m,True,translation_step,0.00037734961542677044
+0.008726646259971648,final_roll_error_rad,True,attitude_step,2.2743043559536602e-11
+0.017453292519943295,final_yaw_error_rad,True,yaw_step,7.391251616306604e-08
+1.0,sign_check,True,rotor_mixing_signs,1.0
+0.03,time_constant_s,True,motor_lag,0.03
+1.0,detected,True,thrust_saturation,1.0
+-1.0,front_rotor_pitch_sign,True,rotational_sign,-1.0
+1e-10,max_norm_error,True,quaternion_norm,1.1102230246251565e-16
+0.0,max_force_n,True,zero_contact_wrench,0.0
+0.01,saturation_fraction,True,motor_saturation,0.0
