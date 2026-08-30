@@ -1,5 +1,24 @@
 # Decision ledger
 
+## DEC-0023 — Freeze the passed Stage 1/2 reduced-order baseline
+
+- Date: 2026-08-30.
+- Options: begin vehicle dynamics in the uncommitted working tree, or first
+  establish an immutable version-control checkpoint for all completed Stage 1
+  and Stage 2 evidence.
+- Evidence: all seven Stage 1 artifact fingerprints matched their recorded
+  values, the Python regression suite passed `81/81`, and the passing Stage 2
+  run `STAGE2_20260829T221139.099Z_s20101` retained its MATLAB/Simulink
+  agreement and zero probe-safety violations.
+- Decision: freeze the completed baseline at Git commit
+  `95fcdbb5d08f2ffa46077aced7f5c882fb2627f8` and annotated tag
+  `stage2-complete-20260830`. EXP-0001 through EXP-0007 and the completed Stage
+  2 run are read-only scientific references for Stage 3A.
+- Why: coupled-vehicle results must be attributable to the new dynamics rather
+  than silent changes in the validated reduced-order implementation.
+- Revisitable: no. Corrections, if ever required, must be new, explicitly
+  versioned experiments and may not rewrite the frozen artifacts.
+
 ## DEC-0001 — Milestones govern progression
 
 - Date: 2026-08-28.

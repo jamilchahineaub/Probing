@@ -11,9 +11,12 @@ prerequisite for this binary safety decision.
 
 ## Current milestone
 
-Stage 2 independent MATLAB/Simulink validation has **passed**. The next roadmap
-stage is authorized but has not started; all vehicle and integrated-simulation
-work remains outside the completed evidence.
+Stage 2 independent MATLAB/Simulink validation has **passed** and is frozen at
+Git commit `95fcdbb5d08f2ffa46077aced7f5c882fb2627f8`, annotated tag
+`stage2-complete-20260830`. Stage 3A (EXP-0008) is authorized to start with a
+6-DoF quadrotor, rigid offset probe, and dynamically coupled one-dimensional
+target. Gazebo, PX4, ROS 2, MPC, RL, Isaac Sim, perception, hardware, and any
+Stage 3B work remain out of scope.
 
 ## Completed evidence
 
