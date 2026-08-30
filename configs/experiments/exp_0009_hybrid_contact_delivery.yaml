@@ -185,6 +185,7 @@ held_out_population:
   broad_cases_per_seed: 25
   boundary_seeds: [14201, 14202, 14203]
   boundary_cases_per_seed: 30
+  boundary_candidate_multiplier: 8
   target_count: 240
   stiffness_n_per_m: [75.0, 2500.0]
   damping_n_s_per_m: [0.3, 60.0]
@@ -192,6 +193,7 @@ held_out_population:
   boundary_generation: prospective candidates selected by frozen reduced-order severity ratio, without coupled-controller outcomes
   noise_regimes: [low, nominal, high]
   measurement_seed_offset: 15000000
+  execution_workers: 6
 
 sensing:
   source: frozen EXP-0006 causal_low_pass assumptions

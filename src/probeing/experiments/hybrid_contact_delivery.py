@@ -255,8 +255,59 @@ def hybrid_delivery_metrics(trajectory: HybridTrajectory, config: Mapping[str, A
     unload = trajectory.phase == ContactPhase.CONTROLLED_UNLOAD.value
     passive = trajectory.phase == ContactPhase.PASSIVE_OBSERVE.value
     step = float(np.median(np.diff(trajectory.time_s)))
+    first_contact_indices = np.flatnonzero(trajectory.contact_active)
+    first_index = int(first_contact_indices[0]) if first_contact_indices.size else 0
+    impact_end = min(first_index + int(round(0.10 / step)) + 1, trajectory.time_s.size)
+    first_peak = float(np.max(trajectory.realized_contact_force_n[first_index:impact_end])) if first_contact_indices.size else 0.0
+    first_impulse = float(np.trapz(trajectory.realized_contact_force_n[first_index:impact_end], dx=step)) if first_contact_indices.size else 0.0
+    _, all_gains = _transition_indices(trajectory.contact_active)
+    recontact_gains = all_gains[all_gains > first_index + 1]
+    recontact_peaks = []
+    for gain_index in recontact_gains:
+        stop = min(int(gain_index) + int(round(0.05 / step)) + 1, trajectory.time_s.size)
+        recontact_peaks.append(float(np.max(trajectory.realized_contact_force_n[gain_index:stop])))
+    passive_force = trajectory.realized_contact_force_n[passive]
+    unload_force = trajectory.realized_contact_force_n[unload]
+    attitude = np.rad2deg(trajectory.vehicle.euler_xyz_rad)
+    initial_position = trajectory.vehicle.position_world_m[0]
+    common: dict[str, float | bool] = {
+        "completed": trajectory.completed,
+        "aborted": trajectory.aborted,
+        "first_contact_peak_force_n": first_peak,
+        "first_contact_impulse_n_s": first_impulse,
+        "recontact_peak_force_n": float(max(recontact_peaks, default=0.0)),
+        "total_recontact_count": float(recontact_gains.size),
+        "unload_impulse_n_s": float(np.trapz(unload_force, dx=step)) if unload_force.size else np.inf,
+        "passive_residual_force_rms_n": float(np.sqrt(np.mean(passive_force**2))) if passive_force.size else np.inf,
+        "passive_force_squared_energy_n2_s": float(np.trapz(passive_force**2, dx=step)) if passive_force.size else np.inf,
+        "passive_recontact": bool(np.any(passive_force > float(config["hybrid_controller"]["contact_detection_force_n"]))) if passive_force.size else True,
+        "passive_max_commanded_probe_force_n": float(np.max(np.abs(trajectory.commanded_normal_force_n[passive]))) if passive_force.size else np.inf,
+        "peak_contact_force_n": float(np.max(trajectory.realized_contact_force_n)),
+        "peak_target_displacement_m": float(np.max(np.abs(trajectory.target_displacement_m))),
+        "peak_target_velocity_m_per_s": float(np.max(np.abs(trajectory.target_velocity_m_per_s))),
+        "peak_target_acceleration_m_per_s2": float(np.max(np.abs(trajectory.target_acceleration_m_per_s2))),
+        "peak_attitude_deg": float(np.max(np.abs(attitude))),
+        "peak_angular_rate_rad_s": float(np.max(np.abs(trajectory.vehicle.angular_velocity_body_rad_s))),
+        "peak_vehicle_position_disturbance_m": float(np.max(np.linalg.norm(trajectory.vehicle.position_world_m - initial_position, axis=1))),
+        "motor_saturation_fraction": float(np.mean(trajectory.vehicle.motor_saturated)),
+        "minimum_actuator_reserve": float(np.min(trajectory.vehicle.actuator_reserve)),
+    }
     if np.count_nonzero(probe) < 10:
-        return {"completed": False, "aborted": trajectory.aborted, "peak_contact_force_n": float(np.max(trajectory.realized_contact_force_n))}
+        return {
+            **common,
+            "probe_rms_tracking_error_n": np.inf,
+            "probe_normalized_rms_tracking_error": np.inf,
+            "probe_peak_tracking_error_n": np.inf,
+            "probe_cross_correlation_lag_s": np.inf,
+            "probe_weighted_phase_lag_rad": np.inf,
+            "probe_delivery_bandwidth_hz": 0.0,
+            "probe_correlation": 0.0,
+            "zero_separation_during_probe": False,
+            "probe_contact_fraction": 0.0,
+            "probe_separation_count": np.inf,
+            "probe_recontact_count": np.inf,
+            "near_loss_count": 0.0,
+        }
     reference = trajectory.total_contact_reference_n[probe]
     variation = trajectory.probe_variation_reference_n[probe]
     actual = trajectory.realized_contact_force_n[probe]
@@ -272,24 +323,8 @@ def hybrid_delivery_metrics(trajectory: HybridTrajectory, config: Mapping[str, A
     faithful_bandwidth = float(np.max(frequency[valid][faithful_values])) if np.any(faithful_values) else 0.0
     probe_contact = trajectory.contact_active[probe]
     losses, gains = _transition_indices(probe_contact)
-    first_contact_indices = np.flatnonzero(trajectory.contact_active)
-    first_index = int(first_contact_indices[0]) if first_contact_indices.size else 0
-    impact_end = min(first_index + int(round(0.10 / step)) + 1, trajectory.time_s.size)
-    first_peak = float(np.max(trajectory.realized_contact_force_n[first_index:impact_end])) if first_contact_indices.size else 0.0
-    first_impulse = float(np.trapz(trajectory.realized_contact_force_n[first_index:impact_end], dx=step)) if first_contact_indices.size else 0.0
-    all_losses, all_gains = _transition_indices(trajectory.contact_active)
-    recontact_gains = all_gains[all_gains > first_index + 1]
-    recontact_peaks = []
-    for gain_index in recontact_gains:
-        stop = min(int(gain_index) + int(round(0.05 / step)) + 1, trajectory.time_s.size)
-        recontact_peaks.append(float(np.max(trajectory.realized_contact_force_n[gain_index:stop])))
-    passive_force = trajectory.realized_contact_force_n[passive]
-    unload_force = trajectory.realized_contact_force_n[unload]
-    attitude = np.rad2deg(trajectory.vehicle.euler_xyz_rad)
-    initial_position = trajectory.vehicle.position_world_m[0]
     return {
-        "completed": trajectory.completed,
-        "aborted": trajectory.aborted,
+        **common,
         "probe_rms_tracking_error_n": float(np.sqrt(np.mean(error**2))),
         "probe_normalized_rms_tracking_error": float(np.sqrt(np.mean(error**2)) / max(np.sqrt(np.mean(variation**2)), np.finfo(float).eps)),
         "probe_peak_tracking_error_n": float(np.max(np.abs(error))),
@@ -302,24 +337,6 @@ def hybrid_delivery_metrics(trajectory: HybridTrajectory, config: Mapping[str, A
         "probe_separation_count": float(losses.size),
         "probe_recontact_count": float(gains.size),
         "near_loss_count": float(np.count_nonzero(trajectory.near_loss_active[probe])),
-        "first_contact_peak_force_n": first_peak,
-        "first_contact_impulse_n_s": first_impulse,
-        "recontact_peak_force_n": float(max(recontact_peaks, default=0.0)),
-        "total_recontact_count": float(recontact_gains.size),
-        "unload_impulse_n_s": float(np.trapz(unload_force, dx=step)) if unload_force.size else 0.0,
-        "passive_residual_force_rms_n": float(np.sqrt(np.mean(passive_force**2))) if passive_force.size else np.inf,
-        "passive_force_squared_energy_n2_s": float(np.trapz(passive_force**2, dx=step)) if passive_force.size else np.inf,
-        "passive_recontact": bool(np.any(passive_force > float(config["hybrid_controller"]["contact_detection_force_n"]))) if passive_force.size else True,
-        "passive_max_commanded_probe_force_n": float(np.max(np.abs(trajectory.commanded_normal_force_n[passive]))) if passive_force.size else np.inf,
-        "peak_contact_force_n": float(np.max(trajectory.realized_contact_force_n)),
-        "peak_target_displacement_m": float(np.max(np.abs(trajectory.target_displacement_m))),
-        "peak_target_velocity_m_per_s": float(np.max(np.abs(trajectory.target_velocity_m_per_s))),
-        "peak_target_acceleration_m_per_s2": float(np.max(np.abs(trajectory.target_acceleration_m_per_s2))),
-        "peak_attitude_deg": float(np.max(np.abs(attitude))),
-        "peak_angular_rate_rad_s": float(np.max(np.abs(trajectory.vehicle.angular_velocity_body_rad_s))),
-        "peak_vehicle_position_disturbance_m": float(np.max(np.linalg.norm(trajectory.vehicle.position_world_m - initial_position, axis=1))),
-        "motor_saturation_fraction": float(np.mean(trajectory.vehicle.motor_saturated)),
-        "minimum_actuator_reserve": float(np.min(trajectory.vehicle.actuator_reserve)),
     }
 
 
