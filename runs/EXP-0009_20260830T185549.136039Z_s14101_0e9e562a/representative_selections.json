@@ -1,0 +1,9 @@
+{
+  "successful": "exp0009_broad_s14101_c11",
+  "safe": "exp0009_broad_s14101_c11",
+  "non_safe": "exp0009_broad_s14106_c00",
+  "lightly_damped": "exp0009_broad_s14106_c00",
+  "stiff": "exp0009_broad_s14106_c23",
+  "boundary": "exp0009_boundary_s14201_c00",
+  "failure": "exp0009_boundary_s14201_c01"
+}

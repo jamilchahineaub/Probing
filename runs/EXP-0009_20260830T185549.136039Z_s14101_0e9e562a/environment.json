@@ -1,0 +1,8 @@
+{
+  "python": "3.10.12 (main, Jul 15 2026, 23:40:17) [GCC 11.4.0]",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "numpy": "1.26.4",
+  "git_sha": "591cb5f7dde0c2bcb5ab7dbbdee01be1017e6099",
+  "controller_freeze_sha": "0e9e562a1e6cb65754979a522d7d7f1db663c448",
+  "ffmpeg": null
+}

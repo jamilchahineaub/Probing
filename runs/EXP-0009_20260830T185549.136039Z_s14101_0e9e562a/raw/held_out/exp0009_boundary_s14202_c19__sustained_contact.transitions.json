@@ -1,0 +1,20 @@
+[
+  {
+    "time_s": 2.05,
+    "from_phase": "APPROACH",
+    "to_phase": "CONTACT_ACQUIRE",
+    "reason": "contact_detected",
+    "contact_force_n": 0.03345672393432915,
+    "penetration_m": 4.984169078537638e-06,
+    "relative_normal_velocity_m_per_s": 0.0008535878541640961
+  },
+  {
+    "time_s": 6.05,
+    "from_phase": "CONTACT_ACQUIRE",
+    "to_phase": "ABORT",
+    "reason": "acquisition_timeout",
+    "contact_force_n": 0.569391355914223,
+    "penetration_m": 9.994705715159506e-05,
+    "relative_normal_velocity_m_per_s": 0.006965607015624764
+  }
+]

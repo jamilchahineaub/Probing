@@ -1,0 +1,38 @@
+[
+  {
+    "time_s": 2.05,
+    "from_phase": "APPROACH",
+    "to_phase": "CONTACT_ACQUIRE",
+    "reason": "contact_detected",
+    "contact_force_n": 0.032929632524325375,
+    "penetration_m": 4.928995887956829e-06,
+    "relative_normal_velocity_m_per_s": 0.0008284653084541225
+  },
+  {
+    "time_s": 4.195,
+    "from_phase": "CONTACT_ACQUIRE",
+    "to_phase": "PRELOAD",
+    "reason": "stable_contact_acquired",
+    "contact_force_n": 0.05674878144069692,
+    "penetration_m": 1.1260890322794151e-05,
+    "relative_normal_velocity_m_per_s": 4.4432982672616575e-05
+  },
+  {
+    "time_s": 6.494,
+    "from_phase": "PRELOAD",
+    "to_phase": "PROBE",
+    "reason": "preload_stable",
+    "contact_force_n": 0.4932084305682749,
+    "penetration_m": 9.853168125509325e-05,
+    "relative_normal_velocity_m_per_s": 5.500242928086754e-05
+  },
+  {
+    "time_s": 7.824,
+    "from_phase": "PROBE",
+    "to_phase": "ABORT",
+    "reason": "force_limit",
+    "contact_force_n": 1.5211489288194078,
+    "penetration_m": 0.0002642305813509011,
+    "relative_normal_velocity_m_per_s": 0.019999602206490247
+  }
+]

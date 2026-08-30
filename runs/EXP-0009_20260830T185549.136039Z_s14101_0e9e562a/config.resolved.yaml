@@ -1,0 +1,349 @@
+schema_version: 1
+experiment:
+  id: EXP-0009
+  title: Hybrid Contact-Retention and Bounded Force Delivery
+  stage: 3A
+  scientific_question: Can a prospectively designed hybrid contact-retention and force-delivery
+    controller physically deliver the frozen probing experiment without repeated separation/recontact,
+    excessive impact forces, or controller-induced settling?
+frozen_references:
+  exp_0008_commit: a2058df8c584264358a7aee191ed2d544515144e
+  exp_0008_tag: exp-0008-complete-20260830
+  exp_0008_run: runs/EXP-0008_20260830T123909.142216Z_s13101_f41ef89f
+  exp_0008_artifact_fingerprint: 6bc6f762837f08d7574ff68b90c57ca80ee0eaa36bfdbfe8ad0a9d8cf9335ec0
+  stage2_commit: 95fcdbb5d08f2ffa46077aced7f5c882fb2627f8
+  locked_policy_bundle: configs/policies/exp_0007_locked_exp_0006_policy.json
+  locked_policy_sha256: 7cc1669f897ea1c917b5f3b289412bdbbc0187ac9a3979ca38240078f1d8c015
+  stage1_fingerprints:
+    exp_0001: fc8d3375b320d6fa81843a5dc8819f17de7ea36c50f1a258bc6e0578f88aba39
+    exp_0002: f01de13653e8ae65b143b88db3c008a456d4a4239559c5fcb39ab77922f32efc
+    exp_0003: 067d0a7669da40c3d49401fbff6ca70abf2b941f7bab5626296d1e65545b84a8
+    exp_0004: d17c85e6e520d08ee4c59650675a3c0135d7371484c030ca2ce36b1952c45968
+    exp_0005: 19193f839a4b7939a24d90373af44c6a021614dacef805c7b2a2c33518a1774a
+    exp_0006: 81c05ece204531c27db87760bd90ef92fbde30572bdab9706a2ec2103083d497
+    exp_0007: 6fad8bf7508908814acce9c190fb1a53053be780930ea702106d062059ea00f3
+frames:
+  world: ENU, z up
+  body: FLU, x forward, y left, z up
+  quaternion: scalar-first Hamilton q_WB rotating body vectors into world
+  target_normal: positive world x
+  force_sign: positive contact force pushes target along positive normal
+simulation:
+  integration: fixed-step classical RK4
+  integration_step_s: 0.001
+  recorded_sample_period_s: 0.002
+  maximum_experiment_duration_s: 14.0
+vehicle:
+  mass_kg: 1.5
+  inertia_body_kg_m2:
+  - - 0.029
+    - 0.0
+    - 0.0
+  - - 0.0
+    - 0.029
+    - 0.0
+  - - 0.0
+    - 0.0
+    - 0.055
+  center_of_mass_body_m:
+  - 0.0
+  - 0.0
+  - 0.0
+  arm_length_m: 0.23
+  rotor_numbering:
+  - front
+  - left
+  - rear
+  - right
+  rotor_positions_body_m:
+  - - 0.23
+    - 0.0
+    - 0.0
+  - - 0.0
+    - 0.23
+    - 0.0
+  - - -0.23
+    - 0.0
+    - 0.0
+  - - 0.0
+    - -0.23
+    - 0.0
+  rotor_spin_directions:
+  - 1
+  - -1
+  - 1
+  - -1
+  thrust_coefficient_n_per_rad2: 1.9e-05
+  reaction_torque_coefficient_nm_per_rad2: 2.6e-07
+  motor_time_constant_s: 0.03
+  minimum_rotor_speed_rad_s: 0.0
+  maximum_rotor_speed_rad_s: 900.0
+vehicle_controller:
+  architecture: cascaded position-velocity plus geometric attitude/body-rate
+  position_p:
+  - 4.0
+  - 4.0
+  - 6.0
+  velocity_d:
+  - 8.0
+  - 4.0
+  - 5.0
+  attitude_p:
+  - 8.0
+  - 8.0
+  - 1.2
+  body_rate_d:
+  - 0.7
+  - 0.7
+  - 0.4
+  maximum_acceleration_m_per_s2: 8.0
+  contact_torque_compensation: true
+probe_geometry:
+  tip_offset_body_m:
+  - 0.3
+  - 0.0
+  - -0.08
+  probe_length_m: 0.3
+  probe_mass_kg: 0.0
+  structure: rigid
+contact:
+  mode: unilateral
+  surface_origin_world_m:
+  - 0.0
+  - 0.0
+  - 0.92
+  normal_world:
+  - 1.0
+  - 0.0
+  - 0.0
+  interface_stiffness_n_per_m: 5000.0
+  interface_damping_n_s_per_m: 10.0
+  friction_coefficient: 0.0
+locked_probe:
+  type: linear_frequency_chirp
+  amplitude_n: 0.5
+  start_frequency_hz: 0.5
+  end_frequency_hz: 5.0
+  duration_s: 3.0
+  observation_duration_s: 0.5
+  passive_force_n: 0.0
+  source_definition: src/probeing/experiments/coupled_uav_contact.py::locked_probe_force
+hybrid_controller:
+  status: frozen_before_held_out
+  freeze_tag: exp-0009-controller-freeze-20260830
+  allowed_states:
+  - APPROACH
+  - CONTACT_ACQUIRE
+  - PRELOAD
+  - PROBE
+  - CONTROLLED_UNLOAD
+  - PASSIVE_OBSERVE
+  - DECISION
+  - ABORT
+  initial_clearance_m: 0.002
+  approach_velocity_m_per_s: 0.001
+  maximum_approach_velocity_m_per_s: 0.0013
+  reacquisition_velocity_m_per_s: 0.001
+  contact_detection_force_n: 0.03
+  acquisition_force_n: 0.05
+  acquisition_ramp_duration_s: 0.2
+  acquisition_minimum_dwell_s: 0.2
+  acquisition_force_error_n: 0.04
+  acquisition_relative_velocity_m_per_s: 0.015
+  acquisition_timeout_s: 4.0
+  preload_force_n: 0.5
+  preload_ramp_duration_s: 2.0
+  preload_minimum_dwell_s: 0.3
+  preload_force_error_n: 0.2
+  preload_relative_velocity_m_per_s: 0.02
+  preload_timeout_s: 4.0
+  unload_duration_s: 0.4
+  passive_retraction_m: 0.01
+  decision_hold_s: 0.05
+  force_feedforward_error_gain: 0.0
+  force_velocity_damping_n_per_m_per_s: 0.0
+  force_integral_gain_per_s: 0.0
+  force_integral_limit_n_s: 0.5
+  force_admittance_velocity_gain_m_per_n_s: 0.0
+  target_velocity_feedforward_gain: 1.0
+  contact_compression_velocity_m_per_s: 0.001
+  separated_retention_force_command_n: 0.0
+  interface_force_derivative_feedforward_gain: 1.0
+  reference_derivative_filter_time_constant_s: 0.02
+  force_control_mode: direct
+  force_error_acceleration_gain_m_per_s2_per_n: 2.0
+  relative_velocity_acceleration_gain_per_s: 5.0
+  target_acceleration_feedforward_gain: 1.0
+  maximum_normal_control_acceleration_m_per_s2: 1.5
+  contact_control_filter_time_constant_s: 0.03
+  minimum_force_command_n: -0.2
+  maximum_force_command_n: 0.5
+  near_loss_force_n: 0.08
+  near_loss_closing_speed_m_per_s: -0.005
+  retention_force_boost_n: 0.12
+  retention_position_boost_m: 0.0005
+  maximum_commanded_normal_velocity_m_per_s: 0.08
+  maximum_commanded_normal_acceleration_m_per_s2: 2.0
+  abort_force_n: 1.5
+  abort_attitude_deg: 15.0
+  abort_penetration_m: 0.002
+  transition_parameters_may_change_on_development_targets_only: true
+controller_development_audit:
+  held_out_targets_seen: false
+  classifier_evaluated: false
+  selected_architecture: Direct bounded force feedforward plus target-velocity and
+    interface-force- derivative feedforward, slow contact acquisition, a 0.50 N preload,
+    and raised-cosine controlled unload.
+  explored_on_development_targets_only:
+  - force PI and admittance corrections
+  - acceleration-matching force control
+  - target-acceleration following
+  - position and velocity gain variations
+  - acquisition force and dwell variations
+  - separated-contact recovery thrust
+  - actuator-side force-command caps from 0.50 N to 1.00 N
+  rejected_behaviors:
+  - repeated acquisition chatter or timeout
+  - impact-force growth
+  - probe separation and recontact
+  - realized force above the 1.50 N abort bound
+  freeze_reason: 'The selected controller was the safest interpretable development
+    candidate: it completed four of eight declared targets with uninterrupted PROBE
+    contact and zero passive force, while the four difficult compliant/high- mass/boundary
+    cases aborted on the prospectively defined acquisition timeout. Higher force-command
+    caps increased impact, separation, and aborts instead of improving faithful delivery.
+    These failures are retained rather than weakening the stable-contact dwell or
+    safety limits.'
+development_population:
+  seeds:
+  - 14001
+  targets:
+  - name: stiff
+    stiffness_n_per_m: 2200.0
+    damping_n_s_per_m: 12.0
+    effective_mass_kg: 1.2
+  - name: compliant
+    stiffness_n_per_m: 90.0
+    damping_n_s_per_m: 3.0
+    effective_mass_kg: 1.2
+  - name: lightly_damped
+    stiffness_n_per_m: 450.0
+    damping_n_s_per_m: 0.5
+    effective_mass_kg: 1.0
+  - name: highly_damped
+    stiffness_n_per_m: 450.0
+    damping_n_s_per_m: 55.0
+    effective_mass_kg: 1.0
+  - name: low_mass
+    stiffness_n_per_m: 450.0
+    damping_n_s_per_m: 8.0
+    effective_mass_kg: 0.12
+  - name: high_mass
+    stiffness_n_per_m: 450.0
+    damping_n_s_per_m: 8.0
+    effective_mass_kg: 5.5
+  - name: exp0008_boundary
+    stiffness_n_per_m: 170.0
+    damping_n_s_per_m: 2.0
+    effective_mass_kg: 2.5
+  - name: contact_loss_stress
+    stiffness_n_per_m: 120.0
+    damping_n_s_per_m: 0.45
+    effective_mass_kg: 3.8
+held_out_population:
+  broad_seeds:
+  - 14101
+  - 14102
+  - 14103
+  - 14104
+  - 14105
+  - 14106
+  broad_cases_per_seed: 25
+  boundary_seeds:
+  - 14201
+  - 14202
+  - 14203
+  boundary_cases_per_seed: 30
+  boundary_candidate_multiplier: 8
+  target_count: 240
+  stiffness_n_per_m:
+  - 75.0
+  - 2500.0
+  damping_n_s_per_m:
+  - 0.3
+  - 60.0
+  effective_mass_kg:
+  - 0.1
+  - 6.0
+  boundary_generation: prospective candidates selected by frozen reduced-order severity
+    ratio, without coupled-controller outcomes
+  noise_regimes:
+  - low
+  - nominal
+  - high
+  measurement_seed_offset: 15000000
+  execution_workers: 6
+sensing:
+  source: frozen EXP-0006 causal_low_pass assumptions
+  sample_rate_hz: 200.0
+  synchronized: true
+  low_pass_cutoff_hz: 10.0
+  base_noise:
+    displacement_std_m: 5.0e-05
+    velocity_std_m_per_s: 0.002
+    acceleration_std_m_per_s2: 0.1
+    force_std_n: 0.02
+  noise_multipliers:
+    low: 0.5
+    nominal: 1.0
+    high: 2.0
+prospective_delivery_gates:
+  population_peak_force_p99_n: 1.25
+  absolute_peak_force_n: 1.5
+  zero_separation_during_probe_fraction: 0.9
+  median_separation_count_during_probe: 0.0
+  p95_separation_count_during_probe: 1.0
+  passive_recontact_trial_fraction: 0.05
+  median_rms_force_error_n: 0.2
+  p95_rms_force_error_n: 0.35
+  median_normalized_rms_force_error: 0.75
+  median_absolute_lag_s: 0.1
+  p95_absolute_lag_s: 0.175
+  median_faithful_bandwidth_hz: 3.0
+  no_faithful_bin_fraction: 0.1
+  first_contact_peak_force_n: 0.75
+  first_contact_impulse_n_s: 0.03
+  recontact_peak_force_n: 1.25
+  absolute_unload_impulse_n_s: 0.1
+  minimum_actuator_reserve: 0.25
+  motor_saturation_fraction: 0.01
+  maximum_attitude_deg: 10.0
+  passive_residual_force_rms_n: 0.03
+  passive_force_squared_energy_n2_s: 0.0005
+  zero_probe_command_during_passive: true
+  justification: Gates preserve the existing 1.25 N physical force limit and require
+    roughly a factor-of-two RMS/lag improvement over EXP-0008, contact retention in
+    at least 90 percent of trials, extension of useful delivery from about 2 Hz to
+    3 Hz, ample rotor reserve, and a passive window whose residual force is small
+    relative to the 0.5 N probing amplitude. They demand substantial improvement without
+    assuming perfect 5 Hz tracking.
+policy_evaluation_gate:
+  policy_is_evaluated_only_after_controller_freeze: true
+  nominal_false_safe_rate: 0.01
+  high_noise_false_safe_rate: 0.02
+  boundary_false_safe_rate: 0.02
+  interpretation: These retain the Stage 1 point-estimate safety requirements. Confidence
+    bounds are always reported, but EXP-0009 is not required to reproduce the Stage
+    2 point estimates merely to count as a valid controller experiment.
+scope_exclusions:
+- any safety-policy refit, threshold change, or feature change
+- chirp or observation-duration change
+- vehicle, rotor, target, probe, or contact-physics redesign
+- Gazebo
+- PX4
+- ROS 2
+- MPC
+- reinforcement learning
+- Isaac Sim
+- camera perception
+- hardware integration

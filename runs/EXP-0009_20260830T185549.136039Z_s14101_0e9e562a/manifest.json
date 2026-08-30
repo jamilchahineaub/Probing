@@ -1,0 +1,26 @@
+{
+  "experiment_id": "EXP-0009",
+  "run_id": "EXP-0009_20260830T185549.136039Z_s14101_0e9e562a",
+  "created_utc": "2026-08-30T19:14:40.290073+00:00",
+  "git_sha": "591cb5f7dde0c2bcb5ab7dbbdee01be1017e6099",
+  "controller_freeze_sha": "0e9e562a1e6cb65754979a522d7d7f1db663c448",
+  "config_sha256": "01701072bf7d7aaf82148c7d66d3baa52c3a34feeeec1badafe912d4d4f77bb1",
+  "locked_policy_sha256": "7cc1669f897ea1c917b5f3b289412bdbbc0187ac9a3979ca38240078f1d8c015",
+  "exp_0008_artifact_fingerprint": "6bc6f762837f08d7574ff68b90c57ca80ee0eaa36bfdbfe8ad0a9d8cf9335ec0",
+  "seeds": {
+    "broad": [
+      14101,
+      14102,
+      14103,
+      14104,
+      14105,
+      14106
+    ],
+    "boundary": [
+      14201,
+      14202,
+      14203
+    ]
+  },
+  "artifact_index_pending": true
+}

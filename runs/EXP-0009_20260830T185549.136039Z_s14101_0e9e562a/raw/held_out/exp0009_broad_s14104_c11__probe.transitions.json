@@ -1,0 +1,56 @@
+[
+  {
+    "time_s": 2.05,
+    "from_phase": "APPROACH",
+    "to_phase": "CONTACT_ACQUIRE",
+    "reason": "contact_detected",
+    "contact_force_n": 0.033100225305865434,
+    "penetration_m": 4.9465737002920604e-06,
+    "relative_normal_velocity_m_per_s": 0.0008367356804405134
+  },
+  {
+    "time_s": 6.021,
+    "from_phase": "CONTACT_ACQUIRE",
+    "to_phase": "PRELOAD",
+    "reason": "stable_contact_acquired",
+    "contact_force_n": 0.05942508677205272,
+    "penetration_m": 1.1996671654775754e-05,
+    "relative_normal_velocity_m_per_s": -5.5827150182604464e-05
+  },
+  {
+    "time_s": 8.32,
+    "from_phase": "PRELOAD",
+    "to_phase": "PROBE",
+    "reason": "preload_stable",
+    "contact_force_n": 0.5079784891137954,
+    "penetration_m": 0.00010160747387482922,
+    "relative_normal_velocity_m_per_s": -5.88802603507272e-06
+  },
+  {
+    "time_s": 11.32,
+    "from_phase": "PROBE",
+    "to_phase": "CONTROLLED_UNLOAD",
+    "reason": "probe_complete",
+    "contact_force_n": 0.48460488358045356,
+    "penetration_m": 9.685514443063831e-05,
+    "relative_normal_velocity_m_per_s": 3.291614272619731e-05
+  },
+  {
+    "time_s": 11.72,
+    "from_phase": "CONTROLLED_UNLOAD",
+    "to_phase": "PASSIVE_OBSERVE",
+    "reason": "unload_complete",
+    "contact_force_n": 0.0,
+    "penetration_m": 0.0,
+    "relative_normal_velocity_m_per_s": -0.07243693221889697
+  },
+  {
+    "time_s": 12.22,
+    "from_phase": "PASSIVE_OBSERVE",
+    "to_phase": "DECISION",
+    "reason": "observation_complete",
+    "contact_force_n": 0.0,
+    "penetration_m": 0.0,
+    "relative_normal_velocity_m_per_s": -0.011646992705544855
+  }
+]

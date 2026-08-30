@@ -1,0 +1,22 @@
+{
+  "ffmpeg_available": false,
+  "mp4_generated": false,
+  "files": [
+    "EXP-0009__boundary_target.gif",
+    "EXP-0009__contact_acquisition.gif",
+    "EXP-0009__exp0008_vs_exp0009.gif",
+    "EXP-0009__failure_case.gif",
+    "EXP-0009__lightly_damped.gif",
+    "EXP-0009__stiff_target.gif",
+    "EXP-0009__successful_probe.gif"
+  ],
+  "selections": {
+    "successful": "exp0009_broad_s14101_c11",
+    "safe": "exp0009_broad_s14101_c11",
+    "non_safe": "exp0009_broad_s14106_c00",
+    "lightly_damped": "exp0009_broad_s14106_c00",
+    "stiff": "exp0009_broad_s14106_c23",
+    "boundary": "exp0009_boundary_s14201_c00",
+    "failure": "exp0009_boundary_s14201_c01"
+  }
+}
