@@ -37,7 +37,7 @@ simulation:
   integration: fixed-step classical RK4
   integration_step_s: 0.001
   recorded_sample_period_s: 0.002
-  maximum_experiment_duration_s: 8.0
+  maximum_experiment_duration_s: 14.0
 
 vehicle:
   mass_kg: 1.50
@@ -55,8 +55,8 @@ vehicle:
 
 vehicle_controller:
   architecture: cascaded position-velocity plus geometric attitude/body-rate
-  position_p: [3.0, 4.0, 6.0]
-  velocity_d: [3.5, 4.0, 5.0]
+  position_p: [4.0, 4.0, 6.0]
+  velocity_d: [8.0, 4.0, 5.0]
   attitude_p: [8.0, 8.0, 1.2]
   body_rate_d: [0.70, 0.70, 0.40]
   maximum_acceleration_m_per_s2: 8.0
@@ -87,43 +87,86 @@ locked_probe:
   source_definition: src/probeing/experiments/coupled_uav_contact.py::locked_probe_force
 
 hybrid_controller:
-  status: development
+  status: frozen_before_held_out
+  freeze_tag: exp-0009-controller-freeze-20260830
   allowed_states: [APPROACH, CONTACT_ACQUIRE, PRELOAD, PROBE, CONTROLLED_UNLOAD, PASSIVE_OBSERVE, DECISION, ABORT]
-  initial_clearance_m: 0.010
-  approach_velocity_m_per_s: 0.006
-  maximum_approach_velocity_m_per_s: 0.008
+  initial_clearance_m: 0.002
+  approach_velocity_m_per_s: 0.001
+  maximum_approach_velocity_m_per_s: 0.0013
+  reacquisition_velocity_m_per_s: 0.001
   contact_detection_force_n: 0.03
-  acquisition_force_n: 0.12
+  acquisition_force_n: 0.05
+  acquisition_ramp_duration_s: 0.20
   acquisition_minimum_dwell_s: 0.20
-  acquisition_force_error_n: 0.08
+  acquisition_force_error_n: 0.04
   acquisition_relative_velocity_m_per_s: 0.015
-  acquisition_timeout_s: 1.0
-  preload_force_n: 0.30
-  preload_ramp_duration_s: 0.40
+  acquisition_timeout_s: 4.0
+  preload_force_n: 0.50
+  preload_ramp_duration_s: 2.00
   preload_minimum_dwell_s: 0.30
-  preload_force_error_n: 0.10
+  preload_force_error_n: 0.20
   preload_relative_velocity_m_per_s: 0.020
-  preload_timeout_s: 1.5
+  preload_timeout_s: 4.0
   unload_duration_s: 0.40
   passive_retraction_m: 0.010
   decision_hold_s: 0.05
-  force_feedforward_error_gain: 0.35
-  force_position_proportional_m_per_n: 0.0015
-  force_position_integral_m_per_n_s: 0.010
-  force_position_integral_limit_m: 0.010
-  maximum_position_correction_m: 0.012
+  force_feedforward_error_gain: 0.00
+  force_velocity_damping_n_per_m_per_s: 0.0
+  force_integral_gain_per_s: 0.0
+  force_integral_limit_n_s: 0.50
+  force_admittance_velocity_gain_m_per_n_s: 0.0
+  target_velocity_feedforward_gain: 1.0
+  contact_compression_velocity_m_per_s: 0.001
+  separated_retention_force_command_n: 0.0
+  interface_force_derivative_feedforward_gain: 1.0
+  reference_derivative_filter_time_constant_s: 0.020
+  force_control_mode: direct
+  force_error_acceleration_gain_m_per_s2_per_n: 2.0
+  relative_velocity_acceleration_gain_per_s: 5.0
+  target_acceleration_feedforward_gain: 1.0
+  maximum_normal_control_acceleration_m_per_s2: 1.5
+  contact_control_filter_time_constant_s: 0.030
   minimum_force_command_n: -0.20
-  maximum_force_command_n: 1.10
+  maximum_force_command_n: 0.50
   near_loss_force_n: 0.08
   near_loss_closing_speed_m_per_s: -0.005
   retention_force_boost_n: 0.12
   retention_position_boost_m: 0.0005
   maximum_commanded_normal_velocity_m_per_s: 0.08
   maximum_commanded_normal_acceleration_m_per_s2: 2.0
-  abort_force_n: 1.25
+  abort_force_n: 1.50
   abort_attitude_deg: 15.0
   abort_penetration_m: 0.002
   transition_parameters_may_change_on_development_targets_only: true
+
+controller_development_audit:
+  held_out_targets_seen: false
+  classifier_evaluated: false
+  selected_architecture: >-
+    Direct bounded force feedforward plus target-velocity and interface-force-
+    derivative feedforward, slow contact acquisition, a 0.50 N preload, and
+    raised-cosine controlled unload.
+  explored_on_development_targets_only:
+    - force PI and admittance corrections
+    - acceleration-matching force control
+    - target-acceleration following
+    - position and velocity gain variations
+    - acquisition force and dwell variations
+    - separated-contact recovery thrust
+    - actuator-side force-command caps from 0.50 N to 1.00 N
+  rejected_behaviors:
+    - repeated acquisition chatter or timeout
+    - impact-force growth
+    - probe separation and recontact
+    - realized force above the 1.50 N abort bound
+  freeze_reason: >-
+    The selected controller was the safest interpretable development candidate:
+    it completed four of eight declared targets with uninterrupted PROBE
+    contact and zero passive force, while the four difficult compliant/high-
+    mass/boundary cases aborted on the prospectively defined acquisition
+    timeout. Higher force-command caps increased impact, separation, and aborts
+    instead of improving faithful delivery. These failures are retained rather
+    than weakening the stable-contact dwell or safety limits.
 
 development_population:
   seeds: [14001]
